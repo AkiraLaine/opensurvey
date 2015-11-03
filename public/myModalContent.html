@@ -1,22 +1,37 @@
 <div ng-controller="formCtrl">
 
         <div class="modal-header">
-            <h3 class="modal-title">I'm a modal!</h3>
+            <h3 class="modal-title">Add Question</h3>
             </div>
         <div class="modal-body">
-            <ul>
-                <li ng-repeat="item in items">
-                    <a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a>
-                </li>
-            </ul>
-            Selected: <b>{{ selected.item }}</b>
+            Question:
+            <input class="form-control"></input></br>
+             Question Type: <div class="btn-group" uib-dropdown is-open="status.isopen">
+      <button id="single-button" type="button" class="btn btn-default" uib-dropdown-toggle ng-disabled="disabled">
+        {{(selected.type) || "Select"}} <span class="caret"></span>
+      </button>
+      <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
+        <li role="menuitem"><a href="#" ng-click="selected.type = 'open question'">Open Question</a></li>
+        <li role="menuitem"><a href="#" ng-click="selected.type = 'multiple choice'">Multiple Choice</a></li>
+        <li role="menuitem"><a href="#" ng-click="selected.type = 'scale'">Scale (x to y)</a></li>
+      </ul>
+      </div></br></br>
+        <div ng-show="selected.type==='multiple choice'" ng-init='testlog()'>
+            <p>A Multiple choice Question will present the user with several different options to choose from. 
+            The question can either be set to only receive one answer or multiple answers. You can enter the different answer options below.</p></br>
+        Option 1:<input class='form-control'></input>
+        Option 2:<input class='form-control'></input>
         </div>
+    </div>
+           
+        
+        
         <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+            <button class="btn btn-primary" type="button" ng-click="ok()">Add</button>
             <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
         </div>
+  
 
 
-
-    <div ng-show="selected">Selection from a modal: {{ selected }}</div>
+ 
 </div>

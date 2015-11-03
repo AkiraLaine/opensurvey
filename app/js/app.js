@@ -1,6 +1,7 @@
 var app = angular.module('votingapp',['ui.bootstrap']);
 var counter = 1;
-app.controller('formCtrl',function($http,$scope,$uibModal){
+app.controller('formCtrl',function($http,$scope,$uibModal,$log){
+	$scope.animationsEnabled = true;
   	$scope.items = ['item1', 'item2', 'item3'];
 	$scope.saveData = function(){
 	console.log($scope.form)
@@ -12,6 +13,10 @@ app.controller('formCtrl',function($http,$scope,$uibModal){
 			console.log($scope.recentQuestions)
 	});
 	}
+$scope.testlog = function(){
+	console.log('test')
+}
+	
  $scope.setTab = function(x){
 	$scope.currentTab = x;
  }
@@ -40,9 +45,17 @@ $scope.open = function(size){
           return $scope.items;
         }
       }
+      
     });
+     modalInstance.result.then(function (selectedItem) {
+     
+      $scope.selected = selectedItem;
+    }, function () {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+  };
 }
-});
+);
 
 angular.module('votingapp').controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) {
 
@@ -52,7 +65,7 @@ angular.module('votingapp').controller('ModalInstanceCtrl', function ($scope, $u
   };
 
   $scope.ok = function () {
-    $uibModalInstance.close($scope.selected.item);
+    $uibModalInstance.close($scope.selected);
   };
 
   $scope.cancel = function () {

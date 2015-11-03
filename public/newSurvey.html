@@ -7,13 +7,12 @@
         Project* <input type='text' class='form-control' ng-model='form.question' required />
         Survey Name* <input type='text' class='form-control' ng-model='form.username' required />
           <div id='moreFormQuestions'></div><br/>
-        <button class='btn btn-success' type='button' ng-click='addField()'><i class="fa fa-plus fa-fw"></i> Add Question</button>
+        <button class='btn btn-success' type='button' ng-click='open("lg")'><i class="fa fa-plus fa-fw"></i> Add Question</button>
         <button class='btn btn-danger' type='button' ng-click='removeField()'><i class="fa fa-minus fa-fw"></i> Remove field</button>
         </div>
 
       </form>
-        <button class="btn" ng-click="open()">Open Modal</button>
-
+   <div ng-show="selected">Selection from a Dialogue: {{ selected }}</div>
     </div>
   </div>
 
