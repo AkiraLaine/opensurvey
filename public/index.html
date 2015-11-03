@@ -14,11 +14,10 @@
 
 <body ng-app="votingapp" ng-controller='formCtrl'  ng-init='updateQuestions()'>
 <div class='container-fluid'>
+  <div class='sidebar'></div>
+  <div class='content'>
   <nav class='navbar navbar-default'></nav>
   <div class='jumbotron'>
-    <div class='row'>
-    <h1>What's on your mind?</h1>
-  </div>
   <div class='row'>
 
 <form novalidate class="questions">
@@ -39,6 +38,7 @@ Tell us your name <input type='text' class='form-control' ng-model='form.usernam
   voted yes:{{element.yes}}
   voted no:{{element.no}}</br>
   -{{element.username}}
+</div>
 </div>
 </div>
 </div>

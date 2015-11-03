@@ -1,0 +1,11 @@
+
+  <div class='content'>
+    <h1>My Surveys</h1>
+
+    <div ng-repeat="element in recentQuestions" class='question-element'>
+      <span class='question-title'>  "{{element.question}}"</span></br>
+      voted yes:{{element.yes}}
+      voted no:{{element.no}}</br>
+      -{{element.username}}
+    </div>
+  </div>

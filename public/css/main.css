@@ -3,10 +3,18 @@
 body {
 	font-family: 'Roboto', sans-serif;
 	font-size: 16px;
+	background: #ecf0f1;
 }
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
 body,html,.container-fluid{
 	margin:0px;
 	padding:0px;
+	height:100%;
+}
+.container-flex {
+	position:relative;
+	display:flex;
 }
 .question-title{
 
@@ -17,4 +25,44 @@ body,html,.container-fluid{
 .question-element{
 		text-align:center;
 	margin-bottom:20px;
+}
+.sidebar-container {
+	position:relative;
+
+	width:300px;
+}
+
+.sidebar {
+
+	position:fixed;
+	background:#111;
+	width:300px;
+	height:100%;
+}
+.content{
+	width:78%;
+	margin-left:25px;
+ display:flex;
+ flex-flow:column;
+
+}
+
+.menu-item{
+	border-bottom:1px solid #222;
+	padding:20px;
+	color:#ddd;
+}
+.menu-brand{
+	font-family:bitter;
+	border-bottom:1px solid #222;
+	padding:20px;
+	font-size:1.5em;
+	color:#ddd;
+}
+.menu-item:hover{
+	cursor:pointer;
+	background-color:#222;
+}
+.blue {
+	color:#3498db;
 }

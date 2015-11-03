@@ -30,6 +30,10 @@ module.exports = function (app, db) {
           res.send(data)
         })
       })
+  app.route('/backend')
+  .get(function(req,res){
+    res.sendFile(process.cwd() + '/public/backend.html')
+  });
    app.route('/api/clicks')
       .get(clickHandler.getClicks)
       .post(clickHandler.addClick)
