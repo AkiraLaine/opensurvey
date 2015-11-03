@@ -19,15 +19,19 @@
         <div ng-show="selected.type==='multiple choice'" ng-init='testlog()'>
             <p>A Multiple choice Question will present the user with several different options to choose from. 
             The question can either be set to only receive one answer or multiple answers. You can enter the different answer options below.</p></br>
-        Option 1:<input class='form-control'></input>
-        Option 2:<input class='form-control'></input>
+            <div ng-repeat="element in options">
+                Option {{element.number}}:<input class='form-control'></input>
+            </div></br>
+        
+       
+        <button class='btn btn-default' type="button" ng-click="addField(); selected.Options = options.length"><i class='fa fa-plus fa-fw'></i> Add Option</button>
         </div>
     </div>
            
         
         
         <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-click="ok()">Add</button>
+            <button class="btn btn-success" type="button" ng-click="ok()">Add</button>
             <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
         </div>
   

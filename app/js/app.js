@@ -1,11 +1,17 @@
 var app = angular.module('votingapp',['ui.bootstrap']);
 var counter = 1;
+
 app.controller('formCtrl',function($http,$scope,$uibModal,$log){
+	$scope.options = [{number:'1',value:''},{number:'2',value:''}];
 	$scope.animationsEnabled = true;
   	$scope.items = ['item1', 'item2', 'item3'];
 	$scope.saveData = function(){
 	console.log($scope.form)
 	$http.post('/',$scope.form).then($scope.updateQuestions());
+}
+$scope.addField = function(){
+	
+	$scope.options.push({number:$scope.options.length+1,value:''})
 }
 	$scope.updateQuestions = function(){
 		$http.get('/questions').then(function(data){
@@ -23,11 +29,7 @@ $scope.testlog = function(){
  $scope.updateTab = function(){
 	 return "/public/"+$scope.currentTab+".html"
  }
- $scope.addField = function(){
-	 console.log('test')
-	 angular.element(document.getElementById('moreFormQuestions')).append('Question '+counter+'. <input type="text" class="form-control"></input>')
-	 counter+=1;
- }
+ 
  $scope.open = function() {
   $scope.showModal = true;
 };
