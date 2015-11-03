@@ -1,25 +1,63 @@
 <div ng-controller="formCtrl">
-    <script type="text/ng-template" id="myModalContent.html">
+
         <div class="modal-header">
-            <h3 class="modal-title">I'm a modal!</h3>
+            <h3 class="modal-title">Add Question</h3>
             </div>
         <div class="modal-body">
-            <ul>
-                <li ng-repeat="item in items">
-                    <a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a>
-                </li>
-            </ul>
-            Selected: <b>{{ selected.item }}</b>
+            Question:
+            <input class="form-control"></input></br>
+             Question Type: <div class="btn-group" uib-dropdown is-open="status.isopen">
+      <button id="single-button" type="button" class="btn btn-default" uib-dropdown-toggle ng-disabled="disabled">
+        {{(selected.type) || "Select"}} <span class="caret"></span>
+      </button>
+      <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
+        <li role="menuitem"><a href="#" ng-click="selected.type = 'open question'">Open Question</a></li>
+        <li role="menuitem"><a href="#" ng-click="selected.type = 'multiple choice'">Multiple Choice</a></li>
+        <li role="menuitem"><a href="#" ng-click="selected.type = 'scale'">Scale</a></li>
+      </ul>
+      </div></br></br>
+        <div ng-show="selected.type==='multiple choice'" ng-init='testlog()'>
+            <p>A Multiple choice Question will present the user with several different options to choose from. 
+            The question can either be set to only receive one answer or multiple answers. You can enter the different answer options below.</p></br>
+            <div ng-repeat="element in options">
+                Option {{element.number}}:<input class='form-control'></input>
+            </div></br>
+        
+       
+        <button class='btn btn-default' type="button" ng-click="addField(); selected.Options = options.length"><i class='fa fa-plus fa-fw'></i> Add Option</button>
         </div>
+        <div ng-show="selected.type==='open question'" ng-init='testlog()'>
+            <p>An open question will present the user with a textbox of varialbe size in order to answer in their own words. This allows to capture in-depth qualitative data 
+            and comments which usually would not be captured by other question types</p></br>
+         </div>
+          <div ng-show="selected.type==='scale'">
+            <p>A numerical scale enables quantifiable opinions and attitude to an asked questions. The scale will offer a positive and a negative end. </p></br>
+             <div class='row'>
+                <div class='col-xs-5'>Negative: <input class="form-control" ng-model='scaleNegative'></input></div>
+               <div class='col-xs-5'>Positive: <input class="form-control" ng-model='scalePositive'></input></div>
+               <div class='col-xs-2'>Scale Max. <input type='number' class="form-control" ng-model='scaleMax'></input></div>
+                </div></br>
+             <h3>Live Preview</h3>
+           
+    </div>
+    
+    </div>
+       <div ng-show="selected.type==='scale'" class='modal-middle'>  
+              
+               <div class='row'>
+                <div class='col-xs-3 text-align-right'><span ng-bind='scaleNegative'></span></div>
+               <div class='col-xs-6'><uib-progressbar value='7' max='scaleMax'>7/<span ng-bind='scaleMax'></span></uib-progressbar></div>
+               <div class='col-xs-3'><span ng-bind='scalePositive'></span></div>
+                </div>
+         </div></div>     
+        
+        
         <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+            <button class="btn btn-success" type="button" ng-click="ok()">Add</button>
             <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
         </div>
-    </script>
+  
 
-    <button type="button" class="btn btn-default" ng-click="open()">Open me!</button>
-    <button type="button" class="btn btn-default" ng-click="open('lg')">Large modal</button>
-    <button type="button" class="btn btn-default" ng-click="open('sm')">Small modal</button>
-    <button type="button" class="btn btn-default" ng-click="toggleAnimation()">Toggle Animation ({{ animationsEnabled }})</button>
-    <div ng-show="selected">Selection from a modal: {{ selected }}</div>
+
+ 
 </div>

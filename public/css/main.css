@@ -5,6 +5,11 @@ body {
 	font-size: 16px;
 	background: #ecf0f1;
 }
+h3 {
+	margin-bottom:0;
+	line-height:normal;
+	font-size:22px;
+}
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
 body,html,.container-fluid{
@@ -65,4 +70,16 @@ body,html,.container-fluid{
 }
 .blue {
 	color:#3498db;
+}
+.modal-header {
+	background:#222;
+	color:#ddd;
+}
+.text-align-right {
+	text-align:right;
+}
+.modal-middle {
+	padding-top:15px;
+	padding-bottom:15px;
+	border-top:1px solid #e5e5e5;
 }
