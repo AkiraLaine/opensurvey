@@ -2,6 +2,9 @@ var app = angular.module('votingapp',['ui.bootstrap']);
 var counter = 1;
 
 app.controller('formCtrl',function($http,$scope,$uibModal,$log){
+	$scope.scaleNegative = "Don't Agree";
+	$scope.scalePositive = "Highly Agree";
+	$scope.scaleMax = 10;
 	$scope.options = [{number:'1',value:''},{number:'2',value:''}];
 	$scope.animationsEnabled = true;
   	$scope.items = ['item1', 'item2', 'item3'];

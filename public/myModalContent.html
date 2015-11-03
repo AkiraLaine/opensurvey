@@ -13,7 +13,7 @@
       <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
         <li role="menuitem"><a href="#" ng-click="selected.type = 'open question'">Open Question</a></li>
         <li role="menuitem"><a href="#" ng-click="selected.type = 'multiple choice'">Multiple Choice</a></li>
-        <li role="menuitem"><a href="#" ng-click="selected.type = 'scale'">Scale (x to y)</a></li>
+        <li role="menuitem"><a href="#" ng-click="selected.type = 'scale'">Scale</a></li>
       </ul>
       </div></br></br>
         <div ng-show="selected.type==='multiple choice'" ng-init='testlog()'>
@@ -26,8 +26,30 @@
        
         <button class='btn btn-default' type="button" ng-click="addField(); selected.Options = options.length"><i class='fa fa-plus fa-fw'></i> Add Option</button>
         </div>
-    </div>
+        <div ng-show="selected.type==='open question'" ng-init='testlog()'>
+            <p>An open question will present the user with a textbox of varialbe size in order to answer in their own words. This allows to capture in-depth qualitative data 
+            and comments which usually would not be captured by other question types</p></br>
+         </div>
+          <div ng-show="selected.type==='scale'">
+            <p>A numerical scale enables quantifiable opinions and attitude to an asked questions. The scale will offer a positive and a negative end. </p></br>
+             <div class='row'>
+                <div class='col-xs-5'>Negative: <input class="form-control" ng-model='scaleNegative'></input></div>
+               <div class='col-xs-5'>Positive: <input class="form-control" ng-model='scalePositive'></input></div>
+               <div class='col-xs-2'>Scale Max. <input type='number' class="form-control" ng-model='scaleMax'></input></div>
+                </div></br>
+             <h3>Live Preview</h3>
            
+    </div>
+    
+    </div>
+       <div ng-show="selected.type==='scale'" class='modal-middle'>  
+              
+               <div class='row'>
+                <div class='col-xs-3 text-align-right'><span ng-bind='scaleNegative'></span></div>
+               <div class='col-xs-6'><uib-progressbar value='7' max='scaleMax'>7/<span ng-bind='scaleMax'></span></uib-progressbar></div>
+               <div class='col-xs-3'><span ng-bind='scalePositive'></span></div>
+                </div>
+         </div></div>     
         
         
         <div class="modal-footer">
