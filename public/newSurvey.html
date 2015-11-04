@@ -4,14 +4,28 @@
     <h1>New Survey</h1>
     <div>
       <form novalidate class="questions">
-        Project* <input type='text' class='form-control' ng-model='form.question' required />
-        Survey Name* <input type='text' class='form-control' ng-model='form.username' required />
-          <div id='formQuestionContainer'></div><br/>
+        Project* <input type='text' class='form-control' ng-model='newQuestion.project' required />
+        Survey Name* <input type='text' class='form-control' ng-model='newQuestion.Identity' required />
+          <div ng-show='newFormQuestions' ng-repeat='question in newFormQuestions'>
+            <h4 ng-bind='question.name'></h4>
+            <textarea class='form-control' rows='6' ng-show='question.type==="open question"' readonly></textarea>
+            <div ng-show='question.type==="multiple choice"' ng-repeat='option in question.options'>
+            <input type='radio' name='optRadio' readonly><span ng-bind='option.value'></span></input><br>
+          </div>
+          <div ng-show='question.type==="numerical scale"'>
+            <div class="row">
+            <div class='col-xs-3'><span ng-bind='question.rangeOptions.scaleNegative'></span></div>
+            <div class='col-xs-6'><input type='range' min='0' max='question.rangeOptions.scaleMax'></input></div>
+            <div class='col-xs-3'><span ng-bind='question.rangeOptions.scalePositive'></span></div>
+            </div>
+          </div>
+          </div><br/>
         <button class='btn btn-success' type='button' ng-click='open("lg")'><i class="fa fa-plus fa-fw"></i> Add Question</button>
+        <button class='btn btn-default' type='button' ng-click='saveDraft()'>Save Draft</button>
         </div>
 
       </form>
-   <div ng-show="selected">Selection from a Dialogue: {{ selected }}</div>
+
     </div>
   </div>
 

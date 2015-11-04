@@ -4,24 +4,31 @@ var ClickHandler = require(process.cwd() + '/app/controllers/clickHandler.server
 module.exports = function (app, db) {
    var clickHandler = new ClickHandler(db);
    var questions = db.collection('questions');
+   var drafts = db.collection('drafts');
    app.route('/')
       .get(function (req, res) {
          res.sendFile(process.cwd() + '/public/index.html');
 
       })
       .post(function(req,res){
-        console.log(req.body)
-        req.body.yes = 0;
-        req.body.no = 0;
-        questions.insert(req.body,function(err,data){
+      console.log('parsing body: 'req.body)
+       drafts.insert(req.body,function(err,data){
           if (err) throw err;
-          console.log(data)
+          console.log('data for export: 'data)
         });
-        questions.find().toArray(function(err,data){
+        drafts.find().toArray(function(err,data){
           if (err) throw err;
           console.log(data)
         });
       })
+  app.route('/drafts')
+    .get(function(req,res){
+          res.setHeader('Content-Type','application/json');
+      drafts.find().toArray(function(err,data){
+        if (err) throw err;
+        res.send(data)
+      })
+    })
   app.route('/questions')
       .get(function(req,res){
         res.setHeader('Content-Type','application/json');
