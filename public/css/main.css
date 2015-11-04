@@ -8,7 +8,7 @@ body {
 h3 {
 	margin-bottom:0;
 	line-height:normal;
-	font-size:22px;
+	font-size:20px;
 }
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
@@ -79,7 +79,10 @@ body,html,.container-fluid{
 	text-align:right;
 }
 .modal-middle {
-	padding-top:15px;
-	padding-bottom:15px;
+	background: #fafafa;
+	padding-top:30px;
+	padding-bottom:45px;
+	padding-left:15px;
+	padding-right:15px;
 	border-top:1px solid #e5e5e5;
 }

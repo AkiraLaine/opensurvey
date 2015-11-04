@@ -37,8 +37,24 @@ $scope.testlog = function(){
   $scope.showModal = true;
 };
 $scope.close = function() {
+ 
  $scope.showModal = false;
 };
+    $scope.addQuestion = function() {
+console.log($scope.newQuestion);
+
+console.log($scope.newQuestionType);
+angular.element('#formQuestionContainer').append('TEST');
+switch ($scope.newQuestionType){
+    case 'open question':
+        break;
+    case 'numerical scale':
+        break;
+    case 'multiple choice':
+        break;
+}
+       
+    }
 $scope.open = function(size){
 	 var modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
@@ -63,7 +79,7 @@ $scope.open = function(size){
 );
 
 angular.module('votingapp').controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) {
-
+   
   $scope.items = items;
   $scope.selected = {
     item: $scope.items[0]
