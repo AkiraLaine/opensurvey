@@ -2,20 +2,37 @@ var app = angular.module('votingapp',['ui.bootstrap']);
 var counter = 1;
 
 app.controller('formCtrl',function($http,$scope,$uibModal,$log){
-	$scope.scaleNegative = "Don't Agree";
-	$scope.scalePositive = "Highly Agree";
-	$scope.scaleMax = 10;
-	$scope.options = [{number:'1',value:''},{number:'2',value:''}];
+	$scope.newFormQuestions = [];
+	$scope.newQuestion = {};
+	$scope.newQuestion.rangeOptions = {};
+	$scope.newQuestion.rangeOptions.scaleNegative = "Don't Agree";
+	$scope.newQuestion.rangeOptions.scalePositive = "Highly Agree";
+	$scope.newQuestion.rangeOptions.scaleMax = 10;
+
+	$scope.newQuestion.options = [{number:'1',value:''},{number:'2',value:''}];
 	$scope.animationsEnabled = true;
   	$scope.items = ['item1', 'item2', 'item3'];
 	$scope.saveData = function(){
 	console.log($scope.form)
 	$http.post('/',$scope.form).then($scope.updateQuestions());
 }
-$scope.addField = function(){
-	
-	$scope.options.push({number:$scope.options.length+1,value:''})
+$scope.saveDraft = function(){
+	console.log($scope.newFormQuestions)
+	$http.post('/',$scope.newFormQuestions);
 }
+
+$scope.addField = function(){
+
+	$scope.newQuestion.options.push({number:$scope.newQuestion.options.length+1,value:''})
+}
+
+$scope.getDrafts = function(){
+		$http.get('/drafts').then(function(data){
+			$scope.drafts = data.data;
+			console.log($scope.drafts)
+		})
+}
+
 	$scope.updateQuestions = function(){
 		$http.get('/questions').then(function(data){
 			$scope.recentQuestions = data.data.reverse();
@@ -25,36 +42,27 @@ $scope.addField = function(){
 $scope.testlog = function(){
 	console.log('test')
 }
-	
+
  $scope.setTab = function(x){
 	$scope.currentTab = x;
  }
  $scope.updateTab = function(){
 	 return "/public/"+$scope.currentTab+".html"
  }
- 
+
  $scope.open = function() {
   $scope.showModal = true;
 };
 $scope.close = function() {
- 
+
  $scope.showModal = false;
 };
     $scope.addQuestion = function() {
-console.log($scope.newQuestion);
 
-console.log($scope.newQuestionType);
-angular.element('#formQuestionContainer').append('TEST');
-switch ($scope.newQuestionType){
-    case 'open question':
-        break;
-    case 'numerical scale':
-        break;
-    case 'multiple choice':
-        break;
+			console.log($scope.newFormQuestions)
 }
-       
-    }
+
+
 $scope.open = function(size){
 	 var modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
@@ -62,31 +70,25 @@ $scope.open = function(size){
       controller: 'ModalInstanceCtrl',
       size: size,
       resolve: {
-        items: function () {
-          return $scope.items;
-        }
+				questions: function () {
+					return $scope.newFormQuestions;
+				}
       }
-      
+
     });
-     modalInstance.result.then(function (selectedItem) {
-     
-      $scope.selected = selectedItem;
-    }, function () {
-      $log.info('Modal dismissed at: ' + new Date());
-    });
+
   };
 }
 );
 
-angular.module('votingapp').controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) {
-   
-  $scope.items = items;
-  $scope.selected = {
-    item: $scope.items[0]
-  };
+angular.module('votingapp').controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, questions) {
+	$scope.newFormQuestions = questions;
 
-  $scope.ok = function () {
-    $uibModalInstance.close($scope.selected);
+
+  $scope.ok = function (newQuestion) {
+		$scope.newQuestion = newQuestion;
+		$scope.newFormQuestions.push($scope.newQuestion);
+    $uibModalInstance.close();
   };
 
   $scope.cancel = function () {
