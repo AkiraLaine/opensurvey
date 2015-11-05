@@ -11,10 +11,10 @@ module.exports = function (app, db) {
 
       })
       .post(function(req,res){
-      console.log('parsing body: 'req.body)
+      console.log('parsing body:'+req.body)
        drafts.insert(req.body,function(err,data){
           if (err) throw err;
-          console.log('data for export: 'data)
+          console.log('data for export: '+data)
         });
         drafts.find().toArray(function(err,data){
           if (err) throw err;
