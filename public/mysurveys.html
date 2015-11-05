@@ -1,11 +1,8 @@
 
   <div class='content' ng-init='getDrafts()'>
     <h1>My Surveys</h1>
-
-    <div ng-repeat="element in recentQuestions" class='question-element'>
-      <span class='question-title'>  "{{element.question}}"</span></br>
-      voted yes:{{element.yes}}
-      voted no:{{element.no}}</br>
-      -{{element.username}}
+      <uib-accordion >
+        <uib-accordion-group heading="{{element.name}}" ng-repeat="element in drafts" panel-class='panel-primary'>Testcontent</uib-accordion-group>
+      </uib-accordion>
     </div>
   </div>
