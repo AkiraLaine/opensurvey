@@ -18,7 +18,6 @@ body,html,.container-fluid{
 	height:100%;
 }
 .container-flex {
-	position:relative;
 	display:flex;
 }
 .question-title{
@@ -34,7 +33,7 @@ body,html,.container-fluid{
 .sidebar-container {
 	position:relative;
 
-	width:300px;
+	width:0px;
 }
 
 .sidebar {
@@ -45,11 +44,11 @@ body,html,.container-fluid{
 	height:100%;
 }
 .content{
-	width:78%;
-	margin-left:25px;
+	width:calc(100% - 150px) ;
+margin-left:150px;
+
  display:flex;
  flex-flow:column;
-
 }
 
 .menu-item{
@@ -60,7 +59,7 @@ body,html,.container-fluid{
 .menu-brand{
 	font-family:bitter;
 	border-bottom:1px solid #222;
-	padding:20px;
+	padding:25px;
 	font-size:1.5em;
 	color:#ddd;
 }
@@ -85,4 +84,67 @@ body,html,.container-fluid{
 	padding-left:15px;
 	padding-right:15px;
 	border-top:1px solid #e5e5e5;
+}
+
+.question-container {
+
+	display:inline-block;
+	float:left;
+	width:95%;
+	padding-top:20px;
+	padding-left:30px;
+	padding-right:50px;
+	padding-bottom:50px;
+}
+.full-container {
+
+	display:inline-block;
+	float:left;
+	width:100%;
+	padding-top:20px;
+	padding-left:30px;
+	padding-right:50px;
+	padding-bottom:50px;
+}
+
+
+.question-button-container {
+
+	display:inline-block;
+	float:left;
+	min-height:inherit;
+}
+.question-odd {
+	background:#e5e5e5;
+}
+.question-even {
+	background:#ebebeb;
+}
+.fa-button {
+	cursor:pointer;
+}
+
+.fa-button-danger {
+	color:#a00;
+}
+.header-top {
+	box-shadow:0 4px 10px rgba(0, 0, 0, 0.3),inset 7px 0 15px -7px rgba(0,0,0,0.6);
+	padding:15px;
+	font-size:18px;
+	color:#ddd;
+	width:calc(100% - 300px) ;
+margin-left:300px;
+height:50px;
+background:#2980b9;
+}
+.header-right-menu {
+font-size:18px;
+
+
+	float:right;
+}
+.content-container-flex {
+	display:flex;
+	flex-flow:column;
+	width:100%;
 }

@@ -1,14 +1,14 @@
-var app = angular.module('votingapp',['ui.bootstrap']);
+var app = angular.module('votingapp',['ngAnimate','ui.bootstrap']);
 var counter = 1;
 
 app.controller('formCtrl',function($http,$scope,$uibModal,$log){
+	$scope.survey = {};
 	$scope.newFormQuestions = [];
 	$scope.newQuestion = {};
 	$scope.newQuestion.rangeOptions = {};
 	$scope.newQuestion.rangeOptions.scaleNegative = "Don't Agree";
 	$scope.newQuestion.rangeOptions.scalePositive = "Highly Agree";
 	$scope.newQuestion.rangeOptions.scaleMax = 10;
-
 	$scope.newQuestion.options = [{number:'1',value:''},{number:'2',value:''}];
 	$scope.animationsEnabled = true;
   	$scope.items = ['item1', 'item2', 'item3'];
@@ -17,10 +17,27 @@ app.controller('formCtrl',function($http,$scope,$uibModal,$log){
 	$http.post('/',$scope.form).then($scope.updateQuestions());
 }
 $scope.saveDraft = function(){
-	console.log($scope.newFormQuestions)
-	$http.post('/',$scope.newFormQuestions);
-}
+	var date = new Date();
 
+	$scope.draft = {
+		project: $scope.survey.project,
+		name: $scope.survey.name,
+		questions: $scope.newFormQuestions,
+		edited:date.toLocaleString()
+	}
+	if ($scope.currentId !== undefined){
+		$scope.draft._id = $scope.currentId;
+		console.log('saving draft as '+$scope.currentId)
+	}
+	else {
+		console.log('creating new entry')
+	}
+	$http.post('/',$scope.draft);
+}
+$scope.removeQuestion = function(question) {
+	console.log(question)
+	$scope.newFormQuestions.splice(	$scope.newFormQuestions.indexOf(question),1);
+}
 $scope.addField = function(){
 
 	$scope.newQuestion.options.push({number:$scope.newQuestion.options.length+1,value:''})
@@ -29,24 +46,28 @@ $scope.addField = function(){
 $scope.getDrafts = function(){
 		$http.get('/drafts').then(function(data){
 			$scope.drafts = data.data;
-			console.log($scope.drafts)
+			console.log('the drafts: '+JSON.stringify($scope.drafts))
 		})
 }
-
-	$scope.updateQuestions = function(){
-		$http.get('/questions').then(function(data){
-			$scope.recentQuestions = data.data.reverse();
-			console.log($scope.recentQuestions)
-	});
-	}
-$scope.testlog = function(){
-	console.log('test')
+$scope.editDraft = function(draft){
+	console.log(JSON.stringify(draft))
+	$scope.setTab('newSurvey');
+	$scope.currentId = draft._id;
+	console.log('woring on '+$scope.currentId)
+	$scope.updateTab();
+	$scope.survey.name = draft.name;
+	$scope.newFormQuestions = draft.questions;
 }
-
+$scope.createEmptySurvey = function() {
+	$scope.currentId = undefined;
+	$scope.survey = {};
+	$scope.newFormQuestions = [];
+}
  $scope.setTab = function(x){
 	$scope.currentTab = x;
  }
  $scope.updateTab = function(){
+	 $scope.pageTitle = $scope.currentTab.toUpperCase();
 	 return "/public/"+$scope.currentTab+".html"
  }
 
@@ -57,11 +78,6 @@ $scope.close = function() {
 
  $scope.showModal = false;
 };
-    $scope.addQuestion = function() {
-
-			console.log($scope.newFormQuestions)
-}
-
 
 $scope.open = function(size){
 	 var modalInstance = $uibModal.open({

@@ -1,8 +1,9 @@
-
+<div class='full-container'>
   <div class='content' ng-init='getDrafts()'>
-    <h1>My Surveys</h1>
       <uib-accordion >
-        <uib-accordion-group heading="{{element.name}}" ng-repeat="element in drafts" panel-class='panel-primary'>Testcontent</uib-accordion-group>
+        <uib-accordion-group heading="{{element.name}}" ng-repeat="element in drafts" panel-class='panel-primary'><button class='btn btn-default' ng-click="editDraft(element)">Edit</button></br></br>
+        <p>last edited: <span ng-bind='element.edited'></span></uib-accordion-group>
       </uib-accordion>
     </div>
+  </div>
   </div>
