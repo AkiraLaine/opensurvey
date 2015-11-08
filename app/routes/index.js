@@ -1,26 +1,42 @@
 'use strict';
 
 var ClickHandler = require(process.cwd() + '/app/controllers/clickHandler.server.js');
-module.exports = function (app, db) {
-   var clickHandler = new ClickHandler(db);
+module.exports = function (app, db, bcrypt,jwt) {
 
+
+   var clickHandler = new ClickHandler(db);
    var questions = db.collection('questions');
    var drafts = db.collection('drafts');
+   var users = db.collection('users');
+   var serveForm;
+
+   app.route('/api/profile')
+    .get(function(req,res){
+     jwt.verify(req.headers.authorization,'cookiesandcream',function(err,decoded){
+       res.send(decoded)
+     })
+   })
    app.route('/')
       .get(function (req, res) {
          res.sendFile(process.cwd() + '/public/index.html');
 
       })
       .post(function(req,res){
+        jwt.verify(req.headers.authorization, 'cookiesandcream', function(err, decoded) {
+            console.log(decoded)
+            req.body.email = decoded.email;
         var shortId = require('short-mongo-id');
         if (req.body._id !== undefined) {
+
 
           var ObjectID = require('mongodb').ObjectID;
           console.log('saving draft with id '+req.body._id);
           console.log(typeof req.body._id)
           var id = new ObjectID(req.body._id);
           delete req.body._id;
+
           req.body.link = shortId(id);
+          console.log(req.body);
           drafts.find().toArray(function(err,data){
             if (err) throw err;
             console.log('looking for drafts in general and found '+JSON.stringify(data))
@@ -45,16 +61,61 @@ module.exports = function (app, db) {
 
         });
         res.end();
-      })
+      })})
   app.route('/drafts')
     .get(function(req,res){
-
+          console.log(req.headers)
           res.setHeader('Content-Type','application/json');
+          jwt.verify(req.headers.authorization, 'cookiesandcream', function(err, decoded) {
+          drafts.find({'email':decoded.email}).toArray(function(err,data){
+              if (err) throw err;
+              res.send(data)
+});
 
-      drafts.find().toArray(function(err,data){
-        if (err) throw err;
-        res.send(data)
-      })
+
+      });
+    });
+  app.route('/api/surveydata')
+  .post(function(req,res){
+    console.log('arrived')
+    console.log(req.body.surveyLink.match(/[^/survey].*/g)[0].toString())
+    var survey = req.body.surveyLink.match(/[^/survey].*/g).toString();
+    drafts.find({"link":survey}).limit(1).toArray(function(err,data){
+      if (err) throw err;
+      res.send(data[0])
+  })
+})
+  app.route('/survey/*')
+  .get(function(req,res){
+    res.sendFile(process.cwd()+'/public/survey-live.html');
+  })
+  app.route('/login')
+  .post(function(req,res){
+    var email = req.body.email;
+    var password = req.body.password;
+
+    users.find({email:email}).limit(1).toArray(function(err,data){
+    if (err) throw err;
+    if (data[0] === undefined)
+    console.log('user not found.')
+    else {
+    if (bcrypt.compareSync(password,data[0].password))
+    {console.log('Successful Login.');
+    delete data[0].password;
+    var token = jwt.sign(data[0],'cookiesandcream',{expiresIn:14400});
+    res.send({
+      success:true,
+      message:'your token is ready',
+      token: token
+    });}
+    else {console.log('Bad Login')
+    res.end();}}
+    })
+
+
+  })
+    .get(function(req,res){
+      res.sendFile(process.cwd() + '/public/login.html')
     })
   app.route('/questions')
       .get(function(req,res){
@@ -64,12 +125,26 @@ module.exports = function (app, db) {
           res.send(data)
         })
       })
+  app.route('/signup')
+  .post(function(req,res){
+    var email = req.body.email;
+    var hash = bcrypt.hashSync(req.body.password,bcrypt.genSaltSync(10));
+    users.insert({email: email, password:hash})
+
+  })
   app.route('/backend')
   .get(function(req,res){
-    res.sendFile(process.cwd() + '/public/backend.html')
+    console.log('test123')
+    jwt.verify(req.headers.authorization, 'cookiesandcream', function(err, decoded) {
+      console.log(decoded)
+      if (err) res.send(401);
+      else {
+        res.sendFile(process.cwd() + '/public/backend.html')};
+  })
   });
    app.route('/api/clicks')
       .get(clickHandler.getClicks)
       .post(clickHandler.addClick)
       .delete(clickHandler.resetClicks);
+
 };

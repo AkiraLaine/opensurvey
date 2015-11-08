@@ -24,9 +24,16 @@
   "author": "Blake Johnston",
   "license": "MIT",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.14.1",
     "express": "^4.13.3",
+    "jsonwebtoken": "^5.4.1",
+    "jwt-simple": "^0.3.1",
     "mongodb": "^2.0.47",
+    "passport": "^0.3.0",
+    "passport-facebook": "^2.0.0",
+    "passport-http": "^0.3.0",
+    "passport-local": "^1.0.0",
     "short-mongo-id": "^0.1.1"
   }
 }

@@ -1,7 +1,9 @@
 var app = angular.module('votingapp',['ngAnimate','ui.bootstrap']);
 var counter = 1;
 
-app.controller('formCtrl',function($http,$scope,$uibModal,$log){
+
+app.controller('formCtrl',function($http,$scope,$window,$uibModal,$log){
+	$scope.user = {};
 	$scope.survey = {};
 	$scope.newFormQuestions = [];
 	$scope.newQuestion = {};
@@ -16,6 +18,12 @@ app.controller('formCtrl',function($http,$scope,$uibModal,$log){
 	console.log($scope.form)
 	$http.post('/',$scope.form).then($scope.updateQuestions());
 }
+$scope.getUserProfile = function() {
+	$http.get('/api/profile',{headers:{authorization:$window.localStorage.token}}).then(function(data){
+		$scope.user.email = data.data.email;
+	})
+}
+
 $scope.saveDraft = function(){
 	var date = new Date();
 
@@ -32,19 +40,39 @@ $scope.saveDraft = function(){
 	else {
 		console.log('creating new entry')
 	}
-	$http.post('/',$scope.draft);
+	$http.post('/',$scope.draft,{headers: {'Authorization':$window.localStorage.token}});
+}
+$scope.createUser = function(user){
+
+	$http.post('/signup',user)
 }
 $scope.removeQuestion = function(question) {
 	console.log(question)
 	$scope.newFormQuestions.splice(	$scope.newFormQuestions.indexOf(question),1);
 }
+$scope.loadLiveSurvey = function(){
+	console.log(window.location.pathname)
+	var path = {surveyLink:window.location.pathname}
+	$http.post('/api/surveydata/',path).then(function(data){
+		$scope.activeSurvey = data.data;
+	})
+}
+
 $scope.addField = function(){
 
 	$scope.newQuestion.options.push({number:$scope.newQuestion.options.length+1,value:''})
 }
-
+$scope.authorizeLogin = function(login){
+	$http.post('/login',$scope.login).then(function(data){
+		if (data.data.token !== undefined)
+		$window.localStorage.token = data.data.token;
+		$http.get('/backend',{headers:{'Authorization':$window.localStorage.token}}).then(function(data){
+			console.log(data)
+		});
+	});
+}
 $scope.getDrafts = function(){
-		$http.get('/drafts').then(function(data){
+		$http.get('/drafts',{headers: {'Authorization':$window.localStorage.token}}).then(function(data){
 			$scope.drafts = data.data;
 			console.log('the drafts: '+JSON.stringify($scope.drafts))
 		})
@@ -70,7 +98,10 @@ $scope.createEmptySurvey = function() {
 	 $scope.pageTitle = $scope.currentTab.toUpperCase();
 	 return "/public/"+$scope.currentTab+".html"
  }
-
+$scope.logout = function() {
+	console.log('logging out')
+	$window.localStorage.removeItem('token')
+}
  $scope.open = function() {
   $scope.showModal = true;
 };
