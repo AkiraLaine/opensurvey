@@ -1,6 +1,26 @@
 var app = angular.module('votingapp',['ngAnimate','ui.bootstrap']);
 var counter = 1;
 
+app.factory('authInterceptor',function($q,$location,$window){
+	return {
+		request: function(request){
+			return request;
+		},
+		response: function(response){
+			return response;
+		},
+		responseError: function(response){
+		
+
+			$window.location.href = '/login';
+			return $q.reject(response)
+		}
+	}
+});
+
+app.config(function($httpProvider){
+	$httpProvider.interceptors.push('authInterceptor')
+});
 
 app.controller('formCtrl',function($http,$scope,$window,$uibModal,$log){
 	$scope.user = {};
@@ -73,6 +93,8 @@ $scope.authorizeLogin = function(login){
 }
 $scope.getDrafts = function(){
 		$http.get('/drafts',{headers: {'Authorization':$window.localStorage.token}}).then(function(data){
+
+
 			$scope.drafts = data.data;
 			console.log('the drafts: '+JSON.stringify($scope.drafts))
 		})

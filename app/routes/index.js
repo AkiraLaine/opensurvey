@@ -64,9 +64,11 @@ module.exports = function (app, db, bcrypt,jwt) {
       })})
   app.route('/drafts')
     .get(function(req,res){
-          console.log(req.headers)
+
           res.setHeader('Content-Type','application/json');
-          jwt.verify(req.headers.authorization, 'cookiesandcream', function(err, decoded) {
+            if (req.headers.authorization === undefined) res.sendStatus(401);
+            else jwt.verify(req.headers.authorization, 'cookiesandcream', function(err, decoded) {
+            if (err) throw err;
           drafts.find({'email':decoded.email}).toArray(function(err,data){
               if (err) throw err;
               res.send(data)
@@ -134,14 +136,9 @@ module.exports = function (app, db, bcrypt,jwt) {
   })
   app.route('/backend')
   .get(function(req,res){
-    console.log('test123')
-    jwt.verify(req.headers.authorization, 'cookiesandcream', function(err, decoded) {
-      console.log(decoded)
-      if (err) res.send(401);
-      else {
-        res.sendFile(process.cwd() + '/public/backend.html')};
-  })
-  });
+res.sendFile(process.cwd() + '/public/backend.html')}
+  )
+
    app.route('/api/clicks')
       .get(clickHandler.getClicks)
       .post(clickHandler.addClick)
