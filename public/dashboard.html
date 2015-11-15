@@ -1,10 +1,12 @@
 
-  <div class='content'>
-    <div ng-repeat="element in recentQuestions" class='question-element'>
-      <span class='question-title'>  "{{element.question}}"</span></br>
-      voted yes:{{element.yes}}
-      voted no:{{element.no}}</br>
-      -{{element.username}}
-    </div>
 
+  <div class='content' ng-init='getDashboard()'>
+    <div ng-repeat='survey in activeSurveys' class='small-tile float-left'>
+      <h2 ng-bind='survey.name'></h2>
+      <canvas my-chart id='test123'></canvas>
+      <p> Published:<span ng-bind='survey.publishedDate'><span></p>
+      <p> Responses:<span ng-bind='survey.responsesAmount'><span></p>
+      <p> Responses date:<span ng-repeat='response in survey.responses'>{{response.date}}</span>
+      <p> Link: <a href='/survey/{{survey.link}}' target='_blank'><span ng-bind='survey.link'></span></a></p>  
+    </div>
   </div>

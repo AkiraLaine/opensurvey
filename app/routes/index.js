@@ -8,6 +8,7 @@ module.exports = function (app, db, bcrypt,jwt) {
    var questions = db.collection('questions');
    var drafts = db.collection('drafts');
    var users = db.collection('users');
+   var answers = db.collection('answers')
    var serveForm;
 
    app.route('/api/profile')
@@ -22,7 +23,9 @@ module.exports = function (app, db, bcrypt,jwt) {
 
       })
       .post(function(req,res){
+        console.log(req.headers)
         jwt.verify(req.headers.authorization, 'cookiesandcream', function(err, decoded) {
+          if (err) throw err;
             console.log(decoded)
             req.body.email = decoded.email;
         var shortId = require('short-mongo-id');
@@ -53,8 +56,14 @@ module.exports = function (app, db, bcrypt,jwt) {
         else {
             console.log('adding new draft')
        drafts.insert(req.body,function(err,data){
+         var ObjectID = require('mongodb').ObjectID;
+         var id = new ObjectID(req.body._id);
+         var link = shortId(id);
           if (err) throw err;
-
+          console.log("DEBUG inserted document: "+JSON.stringify(data));
+          drafts.update({_id: data.insertedIds[0]},{ $set: {link:link}},function(err,data){
+            if (err) throw err;
+          })
         })};
         drafts.find().toArray(function(err,data){
           if (err) throw err;
@@ -66,7 +75,8 @@ module.exports = function (app, db, bcrypt,jwt) {
     .get(function(req,res){
 
           res.setHeader('Content-Type','application/json');
-            if (req.headers.authorization === undefined) res.sendStatus(401);
+          console.log(req.headers)
+            if (req.headers.authorization === undefined) {res.sendStatus(401); console.log('draft access denied')}
             else jwt.verify(req.headers.authorization, 'cookiesandcream', function(err, decoded) {
             if (err) throw err;
           drafts.find({'email':decoded.email}).toArray(function(err,data){
@@ -87,6 +97,46 @@ module.exports = function (app, db, bcrypt,jwt) {
       res.send(data[0])
   })
 })
+app.route('/api/active')
+.get(function(req,res){
+  if (req.headers.authorization === undefined) {res.sendStatus(401); console.log('draft access denied')}
+  else jwt.verify(req.headers.authorization, 'cookiesandcream', function(err, decoded) {
+  if (err) throw err;
+drafts.find({'email':decoded.email, 'published':true}).toArray(function(err,data){
+    if (err) throw err;
+    res.send(data)
+});
+})
+})
+app.route('/api/results')
+.post(function(req,res){
+  var date = new Date();
+  var answer = req.body;
+  var currentDate = "newanswers."+date.toLocaleDateString();
+  var response = {};
+  var query = {};
+  query.newanswers = {};
+  query.newanswers[date.toLocaleDateString()];
+  query.newanswers[date.toLocaleDateString()] = [];
+  query.newanswers[date.toLocaleDateString()] = [answer];
+  console.log(query.newanswers[date.toLocaleDateString()])
+  var update = {}
+  update[currentDate] = answer;
+  drafts.update(query,{$push: update})
+  drafts.update({"link":answer.origin}, {$push: update});
+
+})
+.get(function(req,res){
+  if (req.headers.authorization === undefined) {res.sendStatus(401); console.log('draft access denied')}
+  else jwt.verify(req.headers.authorization, 'cookiesandcream', function(err, decoded) {
+  if (err) throw err;
+answers.find({'email':decoded.email}).toArray(function(err,data){
+
+    if (err) throw err;
+    res.send(data)
+});
+})
+});
   app.route('/survey/*')
   .get(function(req,res){
     res.sendFile(process.cwd()+'/public/survey-live.html');
@@ -135,9 +185,11 @@ module.exports = function (app, db, bcrypt,jwt) {
 
   })
   app.route('/backend')
+
   .get(function(req,res){
-res.sendFile(process.cwd() + '/public/backend.html')}
-  )
+
+res.sendFile(process.cwd() + '/public/backend.html')})
+
 
    app.route('/api/clicks')
       .get(clickHandler.getClicks)

@@ -15,7 +15,38 @@
 
 
 	<body ng-init='loadLiveSurvey()'>
-	SURVEY TITLE: {{activeSurvey.name}}
+
+		<div class='question-container-live'>
+		<h1 ng-bind='activeSurvey.name'></h1>
+		<div ng-repeat='question in activeSurvey.questions' >
+
+			<h4 ng-bind='question.name'></h4>
+			<textarea class='form-control' rows='6' ng-show='question.type==="open question"' ng-model='answers[question.name]'></textarea>
+			<div ng-show='question.type==="multiple choice"' ng-repeat='option in question.options'>
+			<input type='radio' name='{{question.name}}' ng-model='answers[question.name]' value='{{option.value}}'><span ng-bind='option.value'></span></input><br>
+		</div>
+		<div ng-show='question.type==="numerical scale"'>
+			<div class="row">
+			<div class='col-xs-3'><span ng-bind='question.rangeOptions.scaleNegative'></span></div>
+			<div class='col-xs-6'><input type='range' min='0' max='question.rangeOptions.scaleMax' ng-model='answers[question.name]'></input></div>
+			<div class='col-xs-3'><span ng-bind='question.rangeOptions.scalePositive'></span></div>
+			</div>
+		</div>
+		<div ng-show='question.type==="demographic information"'>
+			<span ng-show='question.fullName'>Full Name:<input class='form-horizontal'></input></span>
+			<span ng-show='question.age'>Age:<input class='form-horizontal' type='number'></input></span>
+			<span ng-show='question.income'>Income:<input class='form-horizontal' type='number'></input></span>
+			<span ng-show='question.gender'>Gender:<input class='form-horizontal' type='text'></input></span>
+		</div>
+		<div ng-show='question.type==="text paragraph"'>
+			<p><span ng-bind='question.text'></span></p>
+		</div>
+
+	</div>
+
+<button class='btn btn-primary' ng-click='submitSurvey(activeSurvey)'>Submit</button>
+</div>
+
 	</body>
 
 </html>

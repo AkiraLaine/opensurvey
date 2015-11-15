@@ -11,9 +11,13 @@
         {{(newQuestion.type) || "Select"}} <span class="caret"></span>
       </button>
       <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
+
         <li role="menuitem"><a href="#" ng-click="newQuestion.type = 'open question'">open question</a></li>
         <li role="menuitem"><a href="#" ng-click="newQuestion.type = 'multiple choice'">multiple choice</a></li>
         <li role="menuitem"><a href="#" ng-click="newQuestion.type = 'numerical scale'">numerical scale</a></li>
+         <li role="separator" class="divider"></li>
+         <li role="menuitem"><a href='#' ng-click="newQuestion.type = 'demographic information'">demographic information</a></li>
+        <li role="menuitem"><a href='#' ng-click="newQuestion.type = 'text paragraph'">text paragraph</a></li>
       </ul>
       </div></br></br>
         <div ng-show="newQuestion.type==='multiple choice'">
@@ -42,8 +46,23 @@
 
 
     </div>
-
+    <div ng-show='newQuestion.type==="demographic information"'>
+      <p>Gathering Demographic data of respondants might be important for your survey.</p></br>
+      <div>
+      <input type='checkbox' ng-model='newQuestion.fullName'>Full Name</input>
+      <input type='checkbox' ng-model='newQuestion.age'>Age</input>
+      <input type='checkbox' ng-model='newQuestion.gender'>Gender</input>
+      <input type='checkbox' ng-model='newQuestion.income'>Income</input>
     </div>
+  </div>
+  <div ng-show='newQuestion.type === "text paragraph"'>
+ <p>Sometimes it's helpful to give survey participant an introduction or some context to the questions. Enter any text below:</p>
+ <textarea ng-model='newQuestion.text'>
+  </div>
+</div>
+
+
+
        <div ng-show="newQuestion.type ==='numerical scale'" class='modal-middle'>
               <h4 ng-bind='newQuestion.name || "Your Question"'></h4>
               </br>
