@@ -5,8 +5,6 @@
       <h2 ng-bind='survey.name'></h2>
       <canvas my-chart id='test123'></canvas>
       <p> Published:<span ng-bind='survey.publishedDate'><span></p>
-      <p> Responses:<span ng-bind='survey.responsesAmount'><span></p>
-      <p> Responses date:<span ng-repeat='response in survey.responses'>{{response.date}}</span>
-      <p> Link: <a href='/survey/{{survey.link}}' target='_blank'><span ng-bind='survey.link'></span></a></p>  
+      <p> Link: <a href='/survey/{{survey.link}}' target='_blank'><span ng-bind='survey.link'></span></a></p>
     </div>
   </div>

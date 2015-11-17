@@ -7,11 +7,24 @@ app.directive('myChart', function(){
     return {
 			  restrict: 'A',
         link: function(scope,elm){
+					console.log()
 					console.log('test')
 				console.log(elm[0])
+		var graphDataset = [];
+		var today = new Date();
+		var tomorrow = new Date();
 
-				var data = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
+		for (var key in scope.survey.newanswers){
+			graphDataset.push(scope.survey.newanswers[key].length)
+
+		}
+		tomorrow.setDate(today.getDate()+1);
+		var labels = Object.keys(scope.survey.newanswers);
+		labels.push(tomorrow.toLocaleDateString())
+		console.log(graphDataset)
+		console.log(tomorrow.toLocaleDateString())
+		var data = {
+    labels: labels,
     datasets: [
 
         {
@@ -20,7 +33,7 @@ app.directive('myChart', function(){
             strokeColor: "rgba(151,187,205,0.8)",
             highlightFill: "rgba(151,187,205,0.75)",
             highlightStroke: "rgba(151,187,205,1)",
-            data: [0, 5, 3, 4, 1, 0, 8]
+            data: graphDataset
         }
     ]
 };
