@@ -1,8 +1,23 @@
 var app = angular.module('votingapp',['ngAnimate','ui.bootstrap']);
 var counter = 1;
 
+function weeklyView(data) {
+	console.log(data.length)
+	if (data.length < 7){
+		console.log('latest date is '+data[data.length])
+		var mon1   = parseInt(data[data.length-1].substring(0,2));
+		var dt1  = parseInt(data[data.length-1].substring(3,5));
+		var yr1   = parseInt(data[data.length-1].substring(6,10));
+		var d = new Date(yr1,mon1-1,dt1);
+		for (var i = data.length;i < 7;i++){
+		d.setDate(d.getDate()+1)
+		data.push(d.toLocaleDateString())
+	}
+	}
+}
 app.directive('myChart', function(){
-
+	Chart.defaults.global.responsive = true;
+	Chart.defaults.global.maintainAspectRatio = false;
 	console.log('directive running')
     return {
 			  restrict: 'A',
@@ -13,15 +28,17 @@ app.directive('myChart', function(){
 		var graphDataset = [];
 		var today = new Date();
 		var tomorrow = new Date();
-
+		if (scope.survey.newanswers !== undefined){
 		for (var key in scope.survey.newanswers){
 			graphDataset.push(scope.survey.newanswers[key].length)
 
 		}
-		tomorrow.setDate(today.getDate()+1);
-		var labels = Object.keys(scope.survey.newanswers);
-		labels.push(tomorrow.toLocaleDateString())
-		console.log(graphDataset)
+		var labels = Object.keys(scope.survey.newanswers)
+	}
+		else labels = [today.toLocaleDateString()];
+
+		;
+		weeklyView(labels);
 		console.log(tomorrow.toLocaleDateString())
 		var data = {
     labels: labels,

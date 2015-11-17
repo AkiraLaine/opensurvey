@@ -3,8 +3,9 @@
   <div class='content' ng-init='getDashboard()'>
     <div ng-repeat='survey in activeSurveys' class='small-tile float-left'>
       <h2 ng-bind='survey.name'></h2>
-      <canvas my-chart id='test123'></canvas>
+      <div><canvas my-chart id='timeline-chart'></canvas></div>
       <p> Published:<span ng-bind='survey.publishedDate'><span></p>
       <p> Link: <a href='/survey/{{survey.link}}' target='_blank'><span ng-bind='survey.link'></span></a></p>
+      <a ng-click=''>View Answers</a>
     </div>
   </div>
