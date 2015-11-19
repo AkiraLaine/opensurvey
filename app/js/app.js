@@ -15,6 +15,34 @@ function weeklyView(data) {
 	}
 	}
 }
+app.directive('numericalGraph',function(){
+	return{
+			restrict:'E',
+			template:'<canvas></canvas>',
+			replace:true,
+			link: function(scope,elm){
+				var data = {
+    labels: ['a','b','c'],
+    datasets: [
+
+        {
+            label: "My Second dataset",
+            fillColor: "rgba(151,187,205,0.5)",
+            strokeColor: "rgba(151,187,205,0.8)",
+            highlightFill: "rgba(151,187,205,0.75)",
+            highlightStroke: "rgba(151,187,205,1)",
+            data: [1,2,2]
+        }
+    ]
+				}
+				console.log('testtesttesttest')
+				console.log(elm)
+				var ctx = elm[0].getContext("2d");
+				var myNewChart = new Chart(ctx).Bar(data);
+			}
+	}
+
+});
 app.directive('myChart', function(){
 	
 	Chart.defaults.global.responsive = true;
@@ -24,9 +52,7 @@ app.directive('myChart', function(){
 			  restrict: 'E',
 			  templateUrl:'/public/dashboard-graph.html' ,
 			  replace:true,
-			  controller: function($scope,$element){
-			  	console.log('controllerTEST')
-			  },
+			scope:false,		
         link: function(scope,elm){
 	console.log(elm[0].children[1].children[0])
 		var graphDataset = [];
@@ -198,7 +224,34 @@ $scope.loadLiveSurvey = function(){
 		console.log($scope.answers)
 	})
 }
-
+$scope.setSurveyResults = function(survey){
+	var temp = [];
+	var results = [];
+	var counter = 0;
+	$scope.surveyResults = survey;
+	for (var key in survey.newanswers) {
+		counter += survey.newanswers[key].length;
+	}
+	$scope.surveyResultsAmount = counter;
+	console.log($scope.surveyResults)
+	for (var x in $scope.surveyResults.questions){
+	for (var key in $scope.surveyResults.newanswers){
+	
+		
+		for (var i=0; i<$scope.surveyResults.newanswers[key].length;i++){	
+			temp.push($scope.surveyResults.newanswers[key][i][$scope.surveyResults.questions[x].name]);
+	console.log($scope.surveyResults.newanswers[key][i][$scope.surveyResults.questions[x].name])
+	
+	}
+	
+		}
+	results.push(temp);
+	temp = [];
+	$scope.surveyResults.all = results;	
+	}
+	console.log($scope.surveyResults.all)
+	counter = 0;
+}
 $scope.addField = function(){
 
 	$scope.newQuestion.options.push({number:$scope.newQuestion.options.length+1,value:''})
@@ -234,8 +287,9 @@ $scope.createEmptySurvey = function() {
 	$scope.newFormQuestions = [];
 }
  $scope.setTab = function(x){
- 	console.log('setting tab')
+ 	console.log('setting tab to '+x)
 	$scope.currentTab = "/public/"+x+".html";
+	console.log($scope.currentTab)
  }
  $scope.updateTab = function(){
  	console.log('updating tab.')
