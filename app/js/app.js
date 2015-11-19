@@ -1,6 +1,10 @@
 var app = angular.module('votingapp',['ngAnimate','ui.bootstrap']);
 var counter = 1;
 
+function countArrayStrings(array){
+	console.log('exec array count')
+}
+
 function weeklyView(data) {
 	console.log(data.length)
 	if (data.length < 7){
@@ -15,6 +19,39 @@ function weeklyView(data) {
 	}
 	}
 }
+app.directive('barGraph',function(){
+	return{
+		restrict:'E',
+		scope: { obj: '=',
+						more: '='},
+		template:'<canvas></canvas>',
+		replace:true,
+		link:function(scope,elm){
+			console.log('object test'+JSON.stringify(scope.obj))
+			var labels = [];
+			for (var key in scope.more.options){
+				labels.push(scope.more.options[key].value)
+			}
+			console.log(scope.obj)
+			countArrayStrings(scope.obj);
+			var data = {
+			labels:labels,
+			datasets: [
+				{
+						label: "My Second dataset",
+						fillColor: "rgba(151,187,205,0.6)",
+						strokeColor: "rgba(151,187,205,0.8)",
+						highlightFill: "rgba(151,187,205,0.75)",
+						highlightStroke: "rgba(151,187,205,1)",
+						data: [1,3,2]
+				}
+			]
+		}
+			var ctx = elm[0].getContext("2d");
+			var myNewChart = new Chart(ctx).Bar(data);
+	}
+	}
+})
 app.directive('numericalGraph',function(){
 	return{
 			restrict:'E',
@@ -22,29 +59,28 @@ app.directive('numericalGraph',function(){
 			replace:true,
 			link: function(scope,elm){
 				var data = {
-    labels: ['a','b','c'],
+    labels: ['a','b','c','a','b','c','c'],
     datasets: [
 
         {
             label: "My Second dataset",
-            fillColor: "rgba(151,187,205,0.5)",
+            fillColor: "rgba(151,187,205,0)",
             strokeColor: "rgba(151,187,205,0.8)",
             highlightFill: "rgba(151,187,205,0.75)",
             highlightStroke: "rgba(151,187,205,1)",
-            data: [1,2,2]
+            data: [1,2,2,4,10,8,7]
         }
     ]
 				}
-				console.log('testtesttesttest')
-				console.log(elm)
+
 				var ctx = elm[0].getContext("2d");
-				var myNewChart = new Chart(ctx).Bar(data);
+				var myNewChart = new Chart(ctx).Line(data);
 			}
 	}
 
 });
 app.directive('myChart', function(){
-	
+
 	Chart.defaults.global.responsive = true;
 	Chart.defaults.global.maintainAspectRatio = false;
 	console.log('directive running')
@@ -52,24 +88,25 @@ app.directive('myChart', function(){
 			  restrict: 'E',
 			  templateUrl:'/public/dashboard-graph.html' ,
 			  replace:true,
-			scope:false,		
+			scope:false,
         link: function(scope,elm){
-	console.log(elm[0].children[1].children[0])
+	console.log('graph test'+ elm[0].children[1].children[0])
 		var graphDataset = [];
 		var today = new Date();
 		var tomorrow = new Date();
-		if (scope.survey.newanswers !== undefined){
-		for (var key in scope.survey.newanswers){
-			graphDataset.push(scope.survey.newanswers[key].length)
+		if (scope.survey.answers !== undefined){
+		for (var key in scope.survey.answers){
+
+			graphDataset.push(scope.survey.answers[key].length)
 
 		}
-	
-		var labels = Object.keys(scope.survey.newanswers)
+
+		var labels = Object.keys(scope.survey.answers)
 	}
 		else labels = [today.toLocaleDateString()];
 
 		weeklyView(labels);
-		console.log(data)
+		console.log('the data is '+graphDataset)
 		var data = {
     labels: labels,
     datasets: [
@@ -86,8 +123,8 @@ app.directive('myChart', function(){
 };				console.log(elm[0].children[1].children[0].getContext("2d"))
 				var ctx = elm[0].children[1].children[0].getContext("2d");
 				var myNewChart = new Chart(ctx).Bar(data);
-				
-					
+
+
 				}
     }
 })
@@ -229,25 +266,25 @@ $scope.setSurveyResults = function(survey){
 	var results = [];
 	var counter = 0;
 	$scope.surveyResults = survey;
-	for (var key in survey.newanswers) {
-		counter += survey.newanswers[key].length;
+	for (var key in survey.answers) {
+		counter += survey.answers[key].length;
 	}
 	$scope.surveyResultsAmount = counter;
 	console.log($scope.surveyResults)
 	for (var x in $scope.surveyResults.questions){
-	for (var key in $scope.surveyResults.newanswers){
-	
-		
-		for (var i=0; i<$scope.surveyResults.newanswers[key].length;i++){	
-			temp.push($scope.surveyResults.newanswers[key][i][$scope.surveyResults.questions[x].name]);
-	console.log($scope.surveyResults.newanswers[key][i][$scope.surveyResults.questions[x].name])
-	
+	for (var key in $scope.surveyResults.answers){
+
+
+		for (var i=0; i<$scope.surveyResults.answers[key].length;i++){
+			temp.push($scope.surveyResults.answers[key][i][$scope.surveyResults.questions[x].name]);
+	console.log($scope.surveyResults.answers[key][i][$scope.surveyResults.questions[x].name])
+
 	}
-	
+
 		}
 	results.push(temp);
 	temp = [];
-	$scope.surveyResults.all = results;	
+	$scope.surveyResults.all = results;
 	}
 	console.log($scope.surveyResults.all)
 	counter = 0;

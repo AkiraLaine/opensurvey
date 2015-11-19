@@ -112,14 +112,14 @@ app.route('/api/results')
 .post(function(req,res){
   var date = new Date();
   var answer = req.body;
-  var currentDate = "newanswers."+date.toLocaleDateString();
+  var currentDate = "answers."+date.toLocaleDateString();
   var response = {};
   var query = {};
-  query.newanswers = {};
-  query.newanswers[date.toLocaleDateString()];
-  query.newanswers[date.toLocaleDateString()] = [];
-  query.newanswers[date.toLocaleDateString()] = [answer];
-  console.log(query.newanswers[date.toLocaleDateString()])
+  query.answers = {};
+  query.answers[date.toLocaleDateString()];
+  query.answers[date.toLocaleDateString()] = [];
+  query.answers[date.toLocaleDateString()] = [answer];
+  console.log(query.answers[date.toLocaleDateString()])
   var update = {}
   update[currentDate] = answer;
   drafts.update(query,{$push: update})

@@ -4,13 +4,14 @@
 <h3>{{surveyResultsAmount}} responses</h3>
 <div ng-repeat='question in surveyResults.questions'>
     <h2><span ng-bind='question.name'></span></span></h2>
-    <div ng-show='question.type === "open question"'>
+    <div ng-if='question.type === "open question"'>
     <div ng-repeat='answer in surveyResults.all[$index] track by $index'><p>"<span ng-bind='answer'></span>"</p></div>
     </div>
-    <div ng-show='question.type === "multiple choice"'>
+    <div ng-if='question.type === "multiple choice"'>
+    <bar-graph obj='surveyResults.all[$index]' more='question'></bar-graph>
     <div ng-repeat='answer in surveyResults.all[$index] track by $index'><p>"<span ng-bind='answer'></span>"</p></div>
     </div>
-    <div ng-show='question.type === "numerical scale"'>
+    <div ng-if='question.type === "numerical scale"'>
     <numerical-graph></numerical-graph>
     <div ng-repeat='answer in surveyResults.all[$index] track by $index'><p>"<span ng-bind='answer'></span>"</p></div>
     </div>
