@@ -4,7 +4,7 @@ var counter = 1;
 function weeklyView(data) {
 	console.log(data.length)
 	if (data.length < 7){
-		console.log('latest date is '+data[data.length])
+		console.log('latest date is '+data[data.length-1])
 		var mon1   = parseInt(data[data.length-1].substring(0,2));
 		var dt1  = parseInt(data[data.length-1].substring(3,5));
 		var yr1   = parseInt(data[data.length-1].substring(6,10));
@@ -16,15 +16,19 @@ function weeklyView(data) {
 	}
 }
 app.directive('myChart', function(){
+	
 	Chart.defaults.global.responsive = true;
 	Chart.defaults.global.maintainAspectRatio = false;
 	console.log('directive running')
     return {
-			  restrict: 'A',
+			  restrict: 'E',
+			  templateUrl:'/public/dashboard-graph.html' ,
+			  replace:true,
+			  controller: function($scope,$element){
+			  	console.log('controllerTEST')
+			  },
         link: function(scope,elm){
-					console.log()
-					console.log('test')
-				console.log(elm[0])
+	console.log(elm[0].children[1].children[0])
 		var graphDataset = [];
 		var today = new Date();
 		var tomorrow = new Date();
@@ -33,13 +37,13 @@ app.directive('myChart', function(){
 			graphDataset.push(scope.survey.newanswers[key].length)
 
 		}
+	
 		var labels = Object.keys(scope.survey.newanswers)
 	}
 		else labels = [today.toLocaleDateString()];
 
-		;
 		weeklyView(labels);
-		console.log(tomorrow.toLocaleDateString())
+		console.log(data)
 		var data = {
     labels: labels,
     datasets: [
@@ -53,9 +57,11 @@ app.directive('myChart', function(){
             data: graphDataset
         }
     ]
-};
-				var ctx = elm[0].getContext("2d");
+};				console.log(elm[0].children[1].children[0].getContext("2d"))
+				var ctx = elm[0].children[1].children[0].getContext("2d");
 				var myNewChart = new Chart(ctx).Bar(data);
+				
+					
 				}
     }
 })
@@ -114,11 +120,13 @@ $scope.createChart = function(chartName) {
 
 
 $scope.getDashboard = function() {
-
+console.log('getting dashboard.')
 	$http.get('api/active').then(function(data){
+		console.log('request1 done.')
 		$scope.activeSurveys = data.data;
 		$http.get('api/results').then(function(data){
 			$scope.activeAnswers = data.data;
+				console.log('request2 done.')
 			$scope.activeSurveys.forEach(function(x){
 				x.responses = [];
 
@@ -127,7 +135,7 @@ $scope.getDashboard = function() {
 					if (x.link === y.origin){
 						x.responses.push(y);
 						x.responsesAmount = x.responses.length;
-						console.log(x.responses)
+						console.log('responses:' +x.responses)
 					}
 				})
 			})
@@ -162,6 +170,7 @@ $scope.saveDraft = function(){
 		console.log('creating new entry')
 	}
 	$http.post('/',$scope.draft);
+	$scope.getDashboard();
 }
 $scope.createUser = function(user){
 
@@ -225,9 +234,11 @@ $scope.createEmptySurvey = function() {
 	$scope.newFormQuestions = [];
 }
  $scope.setTab = function(x){
-	$scope.currentTab = x;
+ 	console.log('setting tab')
+	$scope.currentTab = "/public/"+x+".html";
  }
  $scope.updateTab = function(){
+ 	console.log('updating tab.')
 	 $scope.pageTitle = $scope.currentTab.toUpperCase();
 	 return "/public/"+$scope.currentTab+".html"
  }
