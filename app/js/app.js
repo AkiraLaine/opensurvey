@@ -1,8 +1,26 @@
-var app = angular.module('votingapp',['ngAnimate','ui.bootstrap']);
+var app = angular.module('votingapp',['ngAnimate','ui.bootstrap','ngRoute']);
 var counter = 1;
 
-function countArrayStrings(array){
+app.config(function($routeProvider,$locationProvider){
+	$routeProvider.when('/login',{templateUrl: '/public/login.html'}).
+	when('/backend',{templateUrl: '/public/backend.html'}).
+	when('/',{templateUrl:'/public/frontpage.html'})
+
+});
+function countArrayStrings(array,labels){
+	var results = [];
 	console.log('exec array count')
+	console.log(labels)
+	console.log(array)
+	labels.forEach(function(x){
+		var filtered = array.filter(function(value){
+			return value === x;
+		})
+		console.log(filtered)
+		results.push(filtered.length)
+	})
+return results;
+
 }
 
 function weeklyView(data) {
@@ -33,7 +51,7 @@ app.directive('barGraph',function(){
 				labels.push(scope.more.options[key].value)
 			}
 			console.log(scope.obj)
-			countArrayStrings(scope.obj);
+			countArrayStrings(scope.obj,labels);
 			var data = {
 			labels:labels,
 			datasets: [
@@ -43,7 +61,7 @@ app.directive('barGraph',function(){
 						strokeColor: "rgba(151,187,205,0.8)",
 						highlightFill: "rgba(151,187,205,0.75)",
 						highlightStroke: "rgba(151,187,205,1)",
-						data: [1,3,2]
+						data: countArrayStrings(scope.obj,labels),
 				}
 			]
 		}
@@ -59,7 +77,7 @@ app.directive('numericalGraph',function(){
 			replace:true,
 			link: function(scope,elm){
 				var data = {
-    labels: ['a','b','c','a','b','c','c'],
+    labels: ['1','2','3','4','5','6','7','8','9','10'],
     datasets: [
 
         {

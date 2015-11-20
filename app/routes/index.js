@@ -166,9 +166,7 @@ answers.find({'email':decoded.email}).toArray(function(err,data){
 
 
   })
-    .get(function(req,res){
-      res.sendFile(process.cwd() + '/public/login.html')
-    })
+
   app.route('/questions')
       .get(function(req,res){
         res.setHeader('Content-Type','application/json');
