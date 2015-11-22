@@ -21,7 +21,10 @@ mongo.connect('mongodb://localhost:27017/clementinejs', function (err, db) {
    app.use('/js', express.static(process.cwd() + '/app/js'));
 
    routes(app, db, bcrypt, jwt);
-
+   app.all('/*',function(req,res){
+     console.log('redirecting something')
+     res.sendFile(process.cwd()+'/public/index.html');
+   })
    app.listen(3000, function () {
       console.log('Node.js listening on port 3000...');
    });

@@ -2,5 +2,5 @@
       <div><canvas id='timeline-chart'></canvas></div>
       <p> Published:<span ng-bind='survey.publishedDate'><span></p>
       <p> Link: <a href='/survey/{{survey.link}}' target='_blank'><span ng-bind='survey.link'></span></a></p>
-      <button class='btn btn-primary' ng-click='setTab("answers"); setSurveyResults(survey)'>Show Responses</button>
+      <a ng-href='/results:{{survey.link}}'><button class='btn btn-primary' ng-click='setSurveyResults(survey)'>Show Responses</button></a>
       </div>

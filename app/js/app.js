@@ -1,28 +1,6 @@
 var app = angular.module('votingapp',['ngAnimate','ui.bootstrap','ngRoute']);
 var counter = 1;
-
-app.config(function($routeProvider,$locationProvider){
-	$routeProvider.when('/login',{templateUrl: '/public/login.html'}).
-	when('/backend',{templateUrl: '/public/backend.html'}).
-	when('/',{templateUrl:'/public/frontpage.html'})
-
-});
-function countArrayStrings(array,labels){
-	var results = [];
-	console.log('exec array count')
-	console.log(labels)
-	console.log(array)
-	labels.forEach(function(x){
-		var filtered = array.filter(function(value){
-			return value === x;
-		})
-		console.log(filtered)
-		results.push(filtered.length)
-	})
-return results;
-
-}
-
+//helper functions
 function weeklyView(data) {
 	console.log(data.length)
 	if (data.length < 7){
@@ -37,6 +15,26 @@ function weeklyView(data) {
 	}
 	}
 }
+
+app.config(function($routeProvider,$locationProvider){
+	$locationProvider.html5Mode(true);
+	$routeProvider.when('/dashboard',{templateUrl: '/public/backend.html',
+	controller:'dashboardCtrl'}).
+	when('/create',{templateUrl:'/public/backend.html',
+	controller:'surveyCreationCtrl'}).
+	when('/edit',{templateUrl:'/public/backend.html',
+	controller:'surveyCreationCtrl'}).
+	when('/edit:survey',{templateUrl:'/public/backend.html',
+	controller:'surveyCreationCtrl'}).
+	when('/',{templateUrl:'/public/frontpage.html'}).
+	when('/surveys',{templateUrl: '/public/backend.html',
+	controller:'surveyOverviewCtrl'}).
+	when('/results:survey',{templateUrl:'/public/backend.html',
+	controller:'surveyAnswersCtrl'}).
+	when('/login',{templateUrl:'/public/login.html'})
+});
+
+
 app.directive('barGraph',function(){
 	return{
 		restrict:'E',
@@ -99,8 +97,6 @@ app.directive('numericalGraph',function(){
 });
 app.directive('myChart', function(){
 
-	Chart.defaults.global.responsive = true;
-	Chart.defaults.global.maintainAspectRatio = false;
 	console.log('directive running')
     return {
 			  restrict: 'E',
@@ -153,14 +149,17 @@ app.factory('authInterceptor',function($q,$location,$window){
 			request.headers.authorization = $window.localStorage.token;
 			return request;
 		},
+		requestError: function(request){
+			console.log('test12345')
+			return request;
+		},
 		response: function(response){
+			console.log('intercepting response')
 			return response;
 		},
-		responseError: function(response){
-			console.log('ooops')
-
-			$window.location.href = '/login'
-			return $q.reject(response)
+		responseError: function(rejection){
+			console.log('rejection')
+			return 'abc'
 		}
 	}
 });
@@ -169,60 +168,44 @@ app.config(function($httpProvider){
 	$httpProvider.interceptors.push('authInterceptor')
 });
 
-app.controller('formCtrl',function($http,$scope,$window,$uibModal,$log,$timeout){
-	$scope.demographic = "demographic information";
+app.controller('loginCtrl',function($scope,$http,$window){
+	console.log('loginCtrl active!')
+	if ($window.localStorage.token !== undefined){
+		$http.get('/backend').then(function(data){
+			console.log('login ok')
+		});
+	}
+	$scope.authorizeLogin = function(login){
+		$http.post('/login',$scope.login).then(function(data){
+			if (data.data.token !== undefined)
+			$window.localStorage.token = data.data.token;
+			$http.get('/backend').then(function(data){
+				console.log(data)
+			});
+		});
+	}
+})
 
+app.controller('formCtrl',function($http,$scope,$window,$uibModal,$log,$timeout,$location,$routeParams){
+
+	console.log('backend activated')
+	$scope.demographic = "demographic information";
+	$scope.routeTest = $routeParams.page
+	console.log($scope.routeTest)
 	$scope.user = {};
-	$scope.survey = {};
-	$scope.newFormQuestions = [];
-	$scope.newQuestion = {};
-	$scope.newQuestion.rangeOptions = {};
-	$scope.newQuestion.rangeOptions.scaleNegative = "Don't Agree";
-	$scope.newQuestion.rangeOptions.scalePositive = "Highly Agree";
-	$scope.newQuestion.rangeOptions.scaleMax = 10;
-	$scope.newQuestion.options = [{number:'1',value:''},{number:'2',value:''}];
-	$scope.animationsEnabled = true;
-  	$scope.items = ['item1', 'item2', 'item3'];
-	$scope.saveData = function(){
-	console.log($scope.form)
-	$http.post('/',$scope.form).then($scope.updateQuestions());
-}
+
+
+
+
 $scope.getUserProfile = function() {
 	$http.get('/api/profile',{headers:{authorization:$window.localStorage.token}}).then(function(data){
 		$scope.user.email = data.data.email;
 	})
 }
-$scope.createChart = function(chartName) {
-        $timeout(function(){
-					console.log('made it' +chartName)
-
-				})
-        }
 
 
-$scope.getDashboard = function() {
-console.log('getting dashboard.')
-	$http.get('api/active').then(function(data){
-		console.log('request1 done.')
-		$scope.activeSurveys = data.data;
-		$http.get('api/results').then(function(data){
-			$scope.activeAnswers = data.data;
-				console.log('request2 done.')
-			$scope.activeSurveys.forEach(function(x){
-				x.responses = [];
 
-				$scope.activeAnswers.forEach(function(y){
 
-					if (x.link === y.origin){
-						x.responses.push(y);
-						x.responsesAmount = x.responses.length;
-						console.log('responses:' +x.responses)
-					}
-				})
-			})
-		})
-	})
-}
 $scope.submitSurvey = function(survey) {
 	var date = new Date();
 	$scope.answers.date = date.toLocaleDateString()
@@ -230,37 +213,11 @@ console.log($scope.answers)
 $http.post('/api/results',$scope.answers)
 }
 
-$scope.saveDraft = function(){
-	var date = new Date();
-	console.log($scope.survey.published)
-	$scope.draft = {
-		published: $scope.survey.published,
-		project: $scope.survey.project,
-		name: $scope.survey.name,
-		questions: $scope.newFormQuestions,
-		edited:date.toLocaleString()
-	}
-	if ($scope.survey.published === true){
-		$scope.draft.publishedDate = date.toLocaleString();
-	}
-	if ($scope.currentId !== undefined){
-		$scope.draft._id = $scope.currentId;
-		console.log('saving draft as '+$scope.currentId)
-	}
-	else {
-		console.log('creating new entry')
-	}
-	$http.post('/',$scope.draft);
-	$scope.getDashboard();
-}
 $scope.createUser = function(user){
 
 	$http.post('/signup',user)
 }
-$scope.removeQuestion = function(question) {
-	console.log(question)
-	$scope.newFormQuestions.splice(	$scope.newFormQuestions.indexOf(question),1);
-}
+
 $scope.loadLiveSurvey = function(){
 
 	console.log(window.location.pathname)
@@ -279,119 +236,23 @@ $scope.loadLiveSurvey = function(){
 		console.log($scope.answers)
 	})
 }
-$scope.setSurveyResults = function(survey){
-	var temp = [];
-	var results = [];
-	var counter = 0;
-	$scope.surveyResults = survey;
-	for (var key in survey.answers) {
-		counter += survey.answers[key].length;
-	}
-	$scope.surveyResultsAmount = counter;
-	console.log($scope.surveyResults)
-	for (var x in $scope.surveyResults.questions){
-	for (var key in $scope.surveyResults.answers){
 
 
-		for (var i=0; i<$scope.surveyResults.answers[key].length;i++){
-			temp.push($scope.surveyResults.answers[key][i][$scope.surveyResults.questions[x].name]);
-	console.log($scope.surveyResults.answers[key][i][$scope.surveyResults.questions[x].name])
-
-	}
-
-		}
-	results.push(temp);
-	temp = [];
-	$scope.surveyResults.all = results;
-	}
-	console.log($scope.surveyResults.all)
-	counter = 0;
+$scope.loadAnswers = function(){
+	console.log(window.localStorage['surveyResult']);
+	$scope.surveyResults = JSON.parse(window.localStorage['surveyResult']);
 }
-$scope.addField = function(){
 
-	$scope.newQuestion.options.push({number:$scope.newQuestion.options.length+1,value:''})
-}
-$scope.authorizeLogin = function(login){
-	$http.post('/login',$scope.login).then(function(data){
-		if (data.data.token !== undefined)
-		$window.localStorage.token = data.data.token;
-		$http.get('/backend',{headers:{'Authorization':$window.localStorage.token}}).then(function(data){
-			console.log(data)
-		});
-	});
-}
-$scope.getDrafts = function(){
-		$http.get('/drafts').then(function(data){
-
-			$scope.drafts = data.data;
-		});
-}
-$scope.editDraft = function(draft){
-	console.log(JSON.stringify(draft))
-	$scope.setTab('newSurvey');
-	$scope.currentId = draft._id;
-	console.log('woring on '+$scope.currentId)
-	$scope.updateTab();
-	$scope.survey.name = draft.name;
-	$scope.survey.published = draft.published;
-	$scope.newFormQuestions = draft.questions;
-}
 $scope.createEmptySurvey = function() {
 	$scope.currentId = undefined;
 	$scope.survey = {};
 	$scope.newFormQuestions = [];
 }
- $scope.setTab = function(x){
- 	console.log('setting tab to '+x)
-	$scope.currentTab = "/public/"+x+".html";
-	console.log($scope.currentTab)
- }
- $scope.updateTab = function(){
- 	console.log('updating tab.')
-	 $scope.pageTitle = $scope.currentTab.toUpperCase();
-	 return "/public/"+$scope.currentTab+".html"
- }
+
 $scope.logout = function() {
 	console.log('logging out')
 	$window.localStorage.removeItem('token')
 }
- $scope.open = function() {
-  $scope.showModal = true;
-};
-$scope.close = function() {
 
- $scope.showModal = false;
-};
-
-$scope.open = function(size){
-	 var modalInstance = $uibModal.open({
-      animation: $scope.animationsEnabled,
-      templateUrl: '/public/myModalContent.html',
-      controller: 'ModalInstanceCtrl',
-      size: size,
-      resolve: {
-				questions: function () {
-					return $scope.newFormQuestions;
-				}
-      }
-
-    });
-
-  };
 }
 );
-
-angular.module('votingapp').controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, questions) {
-	$scope.newFormQuestions = questions;
-
-
-  $scope.ok = function (newQuestion) {
-		$scope.newQuestion = newQuestion;
-		$scope.newFormQuestions.push($scope.newQuestion);
-    $uibModalInstance.close();
-  };
-
-  $scope.cancel = function () {
-    $uibModalInstance.dismiss('cancel');
-  };
-});

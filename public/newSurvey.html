@@ -1,5 +1,5 @@
 
-<body ng-app="votingapp" ng-controller='formCtrl'>
+<body ng-app="votingapp">
   <div class='content'>
 
     <div>
@@ -8,27 +8,27 @@
         Project* <input type='text' class='form-control' ng-model='survey.project' required />
         Survey Name* <input type='text' class='form-control' ng-model='survey.name' required />
       </div>
-          <div ng-show='newFormQuestions' ng-repeat='question in newFormQuestions' >
+          <div ng-if='newFormQuestions' ng-repeat='question in newFormQuestions' >
             <div class='question-container' ng-class-odd='"question-odd"' ng-class-even='"question-even"'>
             <h4 ng-bind='question.name'></h4>
             <textarea class='form-control' rows='6' ng-show='question.type==="open question"' readonly></textarea>
-            <div ng-show='question.type==="multiple choice"' ng-repeat='option in question.options'>
+            <div ng-if='question.type==="multiple choice"' ng-repeat='option in question.options'>
             <input type='radio' name='optRadio' readonly><span ng-bind='option.value'></span></input><br>
           </div>
-          <div ng-show='question.type==="numerical scale"'>
+          <div ng-if='question.type==="numerical scale"'>
             <div class="row">
             <div class='col-xs-3'><span ng-bind='question.rangeOptions.scaleNegative'></span></div>
             <div class='col-xs-6'><input type='range' min='0' max='question.rangeOptions.scaleMax'></input></div>
             <div class='col-xs-3'><span ng-bind='question.rangeOptions.scalePositive'></span></div>
             </div>
           </div>
-          <div ng-show='question.type==="demographic information"'>
+          <div ng-if='question.type==="demographic information"'>
             <span ng-show='question.fullName'>Full Name:<input class='form-horizontal'></input></span>
             <span ng-show='question.age'>Age:<input class='form-horizontal' type='number'></input></span>
             <span ng-show='question.income'>Income:<input class='form-horizontal' type='number'></input></span>
             <span ng-show='question.gender'>Gender:<input class='form-horizontal' type='text'></input></span>
           </div>
-          <div ng-show='question.type==="text paragraph"'>
+          <div ng-if='question.type==="text paragraph"'>
             <p><span ng-bind='question.text'></span></p>
           </div>
         </div>

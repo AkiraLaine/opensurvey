@@ -1,7 +1,7 @@
 <div class='sidebar'>
 	<div class='menu-brand'>Place<span class='blue'>Holder</span></div>
-	<div class='menu-item' ng-click='setTab("dashboard")'><i class='fa fa-line-chart fa-fw'></i>&nbsp; Dashboard</div>
-	<div class='menu-item' ng-click='setTab("newSurvey"); createEmptySurvey()'><i class='fa fa-plus-circle fa-fw'></i>&nbsp;  New Survey</div>
-	<div class='menu-item' ng-click='setTab("mysurveys")'><i class='fa fa-list-ul fa-fw'></i>&nbsp;  My Surveys</div>
-	<div class='menu-item'><i class='fa fa-gear fa-fw'></i>&nbsp;  Settings</div>
-</div>
+	<a href='/dashboard'><div class='menu-item'><i class='fa fa-line-chart fa-fw'></i>&nbsp; Dashboard</div></a>
+	<a href='/create'><div class='menu-item' ng-click='createEmptySurvey()'><i class='fa fa-plus-circle fa-fw'></i>&nbsp;  New Survey</div></a>
+	<a href='/surveys'><div class='menu-item'><i class='fa fa-list-ul fa-fw'></i>&nbsp;  My Surveys</div></a>
+	<a href='/settings'><div class='menu-item'><i class='fa fa-gear fa-fw'></i>&nbsp;  Settings</div>
+</div></a>

@@ -1,13 +1,10 @@
 
-
-
-<div>
-  <div class='container-flex' ng-init='getUserProfile()'>
-
-    <div class='sidebar-container' ng-include='"/public/sidebar.html"'></div>
-    <div class='content-container-flex'>
-      <div class='header' ng-include='"/public/header.html"'></div>
-      <div class='content' ng-init='setTab("dashboard")' ng-include='currentTab'></div>
-    </div>
-  </div>
+<div class='container-flex'>
+<div class='sidebar-container' ng-include='"/public/sidebar.html"'></div>
+<div class='content-container-flex'>
+<div class='header' ng-include='"/public/header.html"'></div>
+<div class='content'>
+  <div ng-include='viewContent'></div>
+</div>
+</div>
 </div>

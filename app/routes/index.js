@@ -97,6 +97,20 @@ module.exports = function (app, db, bcrypt,jwt) {
       res.send(data[0])
   })
 })
+//new api
+app.route('/api/survey')
+.get(function(req,res){
+  console.log(req.headers)
+  var id = req.headers.survey;
+  jwt.verify(req.headers.authorization,'cookiesandcream',function(err,decoded){
+    var email = decoded.email;
+    drafts.find({"link":id,"email":email}).limit(1).toArray(function(err,data){
+      if (err) throw err;
+      res.send(data[0])
+    })
+  })
+})
+
 app.route('/api/active')
 .get(function(req,res){
   if (req.headers.authorization === undefined) {res.sendStatus(401); console.log('draft access denied')}
@@ -166,7 +180,9 @@ answers.find({'email':decoded.email}).toArray(function(err,data){
 
 
   })
-
+    .get(function(req,res){
+      res.sendFile(process.cwd() + '/public/login.html')
+    })
   app.route('/questions')
       .get(function(req,res){
         res.setHeader('Content-Type','application/json');
@@ -186,12 +202,16 @@ answers.find({'email':decoded.email}).toArray(function(err,data){
 
   .get(function(req,res){
 
-res.sendFile(process.cwd() + '/public/backend.html')})
-
-
-   app.route('/api/clicks')
-      .get(clickHandler.getClicks)
-      .post(clickHandler.addClick)
-      .delete(clickHandler.resetClicks);
+    if (req.headers.authorization === undefined) {
+      res.redirect('/login')
+    }
+    else jwt.verify(req.headers.authorization, 'cookiesandcream', function(err, decoded) {
+      if (err) res.sendStatus(401);
+      else users.find({email: decoded.email}).toArray(function(data){
+        if (err) res.sendStatus(401);
+        else res.sendFile(process.cwd() + '/public/backend.html')
+        })
+      })
+    })
 
 };

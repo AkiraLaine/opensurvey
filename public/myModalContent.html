@@ -1,4 +1,4 @@
-<div ng-controller="formCtrl">
+<div ng-controller="surveyCreationCtrl">
 
         <div class="modal-header">
             <h3 class="modal-title">Add Question</h3>
@@ -12,15 +12,15 @@
       </button>
       <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
 
-        <li role="menuitem"><a href="#" ng-click="newQuestion.type = 'open question'">open question</a></li>
-        <li role="menuitem"><a href="#" ng-click="newQuestion.type = 'multiple choice'">multiple choice</a></li>
-        <li role="menuitem"><a href="#" ng-click="newQuestion.type = 'numerical scale'">numerical scale</a></li>
+        <li role="menuitem"><a ng-click="newQuestion.type = 'open question'">open question</a></li>
+        <li role="menuitem"><a ng-click="newQuestion.type = 'multiple choice'">multiple choice</a></li>
+        <li role="menuitem"><a ng-click="newQuestion.type = 'numerical scale'">numerical scale</a></li>
          <li role="separator" class="divider"></li>
-         <li role="menuitem"><a href='#' ng-click="newQuestion.type = 'demographic information'">demographic information</a></li>
-        <li role="menuitem"><a href='#' ng-click="newQuestion.type = 'text paragraph'">text paragraph</a></li>
+         <li role="menuitem"><a ng-click="newQuestion.type = 'demographic information'">demographic information</a></li>
+        <li role="menuitem"><a ng-click="newQuestion.type = 'text paragraph'">text paragraph</a></li>
       </ul>
       </div></br></br>
-        <div ng-show="newQuestion.type==='multiple choice'">
+        <div ng-if="newQuestion.type==='multiple choice'">
             <p>A multiple choice question will present the user with several different options to choose from.
             The question can either be set to only receive one answer or multiple answers. You can enter the different answer options below.</p></br>
             <div ng-repeat="element in newQuestion.options">
@@ -31,12 +31,12 @@
         <button class='btn btn-default' type="button" ng-click="addField()"><i class='fa fa-plus fa-fw'></i> Add Option</button></br>
 
         </div>
-        <div ng-show="newQuestion.type==='open question'">
+        <div ng-if="newQuestion.type==='open question'">
             <p>An open question will present the user with a textbox of varialbe size in order to answer in their own words. This allows to capture in-depth qualitative data
             and comments which usually would not be captured by other question types</p></br>
 
          </div>
-          <div ng-show="newQuestion.type==='numerical scale'">
+          <div ng-if="newQuestion.type==='numerical scale'">
             <p>A numerical scale enables quantifiable opinions and attitude to an asked questions. The scale will offer a positive and a negative end. </p></br>
              <div class='row'>
                 <div class='col-xs-5'>Negative: <input class="form-control" ng-model='newQuestion.rangeOptions.scaleNegative'></input></div>
@@ -46,7 +46,7 @@
 
 
     </div>
-    <div ng-show='newQuestion.type==="demographic information"'>
+    <div ng-if='newQuestion.type==="demographic information"'>
       <p>Gathering Demographic data of respondants might be important for your survey.</p></br>
       <div>
       <input type='checkbox' ng-model='newQuestion.fullName'>Full Name</input>
@@ -55,7 +55,7 @@
       <input type='checkbox' ng-model='newQuestion.income'>Income</input>
     </div>
   </div>
-  <div ng-show='newQuestion.type === "text paragraph"'>
+  <div ng-if='newQuestion.type === "text paragraph"'>
  <p>Sometimes it's helpful to give survey participant an introduction or some context to the questions. Enter any text below:</p>
  <textarea ng-model='newQuestion.text'>
   </div>
@@ -63,7 +63,7 @@
 
 
 
-       <div ng-show="newQuestion.type ==='numerical scale'" class='modal-middle'>
+       <div ng-if="newQuestion.type ==='numerical scale'" class='modal-middle'>
               <h4 ng-bind='newQuestion.name || "Your Question"'></h4>
               </br>
                <div class='row'>
@@ -72,11 +72,11 @@
                <div class='col-xs-3'><span ng-bind='newQuestion.rangeOptions.scalePositive'></span></div>
                 </div>
          </div>
-        <div ng-show="newQuestion.type ==='open question'" class='modal-middle'>
+        <div ng-if="newQuestion.type ==='open question'" class='modal-middle'>
               <h4 ng-bind='newQuestion.name || "Your Question"'></h4>
               </br> <textarea class='form-control' rows='6'></textarea>
          </div>
-         <div ng-show="newQuestion.type ==='multiple choice'" class='modal-middle'>
+         <div ng-if="newQuestion.type ==='multiple choice'" class='modal-middle'>
          <h4 ng-bind='newQuestion.name || "Your Question"'></h4>
               </br>
               <div ng-repeat='element in newQuestion.options'>

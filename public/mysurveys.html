@@ -1,7 +1,7 @@
 <div class='full-container'>
   <div class='content' ng-init='getDrafts()'>
       <uib-accordion >
-        <uib-accordion-group heading="{{element.name}}" ng-repeat="element in drafts" panel-class='panel-primary'><button class='btn btn-default' ng-click="editDraft(element)">Edit</button></br></br>
+        <uib-accordion-group heading="{{element.name}}" ng-repeat="element in drafts" panel-class='panel-primary'><a ng-href='/edit:{{element.link}}'><button class='btn btn-default' ng-click="editDraft(element)">Edit</button></a></br></br>
         <div>
         <p class='alignleft'>last edited: <span ng-bind='element.edited'></span></p>
         <p class='alignright' ng-show='element.published'><i class='fa fa-link'></i> Link: <a href='/survey/{{element.link}}'><span ng-bind='element.link' target='_blank'></a></p>
