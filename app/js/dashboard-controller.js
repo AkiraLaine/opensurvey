@@ -1,6 +1,5 @@
 angular.module('votingapp').controller('dashboardCtrl',function($scope,$http){
-	Chart.defaults.global.responsive = true;
-	Chart.defaults.global.maintainAspectRatio = false;
+
 	$scope.viewContent = '/public/dashboard.html'
 	$scope.getDashboard = function() {
 	console.log('getting dashboard.')
