@@ -1,6 +1,8 @@
 var app = angular.module('votingapp',['ngAnimate','ui.bootstrap','ngRoute']);
 var counter = 1;
-//helper functions
+//helper funcitons
+Chart.defaults.global.responsive = true;
+Chart.defaults.global.maintainAspectRatio = false;
 function weeklyView(data) {
 	console.log(data.length)
 	if (data.length < 7){
@@ -14,6 +16,21 @@ function weeklyView(data) {
 		data.push(d.toLocaleDateString())
 	}
 	}
+}
+function countArrayStrings(array,labels){
+	var results = [];
+	console.log('exec array count')
+	console.log(labels)
+	console.log(array)
+	labels.forEach(function(x){
+		var filtered = array.filter(function(value){
+			return value === x;
+		})
+		console.log(filtered)
+		results.push(filtered.length)
+	})
+return results;
+
 }
 
 app.config(function($routeProvider,$locationProvider){

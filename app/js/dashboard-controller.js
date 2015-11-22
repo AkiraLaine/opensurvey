@@ -120,6 +120,7 @@ angular.module('votingapp').controller('surveyCreationCtrl',function($scope,$htt
 })
 
 angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$http,$routeParams){
+		$scope.viewContent = '/public/answers.html'
 		var temp = [];
 		var results = [];
 		var counter = 0;
@@ -133,19 +134,20 @@ angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$http
 		console.log($scope.surveyResults)
 		for (var x in survey.questions){
 		for (var key in survey.answers){
-
-			for (var i=0; i<$scope.surveyResults.answers[key].length;i++){
-				temp.push($scope.surveyResults.answers[key][i][$scope.surveyResults.questions[x].name]);
-		console.log($scope.surveyResults.answers[key][i][$scope.surveyResults.questions[x].name])
+			for (var i=0; i<survey.answers[key].length;i++){
+		temp.push(survey.answers[key][i][survey.questions[x].name]);
+		console.log(survey.answers[key][i][survey.questions[x].name])
 
 		}
 
 			}
 		results.push(temp);
 		temp = [];
-		$scope.surveyResults.all = results;
+
 		}
-		console.log($scope.surveyResults.all)
+		console.log(survey.questions)
+		$scope.questions = survey.questions;
+		$scope.results = results;
 		counter = 0;
 	});
 
@@ -157,21 +159,7 @@ $scope.createChart = function(chartName) {
 
 					})
 	        }
-	function countArrayStrings(array,labels){
-		var results = [];
-		console.log('exec array count')
-		console.log(labels)
-		console.log(array)
-		labels.forEach(function(x){
-			var filtered = array.filter(function(value){
-				return value === x;
-			})
-			console.log(filtered)
-			results.push(filtered.length)
-		})
-	return results;
 
-	}
 
 
 })
