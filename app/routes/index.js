@@ -78,7 +78,7 @@ module.exports = function (app, db, bcrypt,jwt) {
           console.log(req.headers)
             if (req.headers.authorization === undefined) {res.sendStatus(401); console.log('draft access denied')}
             else jwt.verify(req.headers.authorization, 'cookiesandcream', function(err, decoded) {
-            if (err) throw err;
+            if (err) res.sendStatus(401);
           drafts.find({'email':decoded.email}).toArray(function(err,data){
               if (err) throw err;
               res.send(data)
@@ -115,11 +115,11 @@ app.route('/api/active')
 .get(function(req,res){
   if (req.headers.authorization === undefined) {res.sendStatus(401); console.log('draft access denied')}
   else jwt.verify(req.headers.authorization, 'cookiesandcream', function(err, decoded) {
-  if (err) throw err;
-drafts.find({'email':decoded.email, 'published':true}).toArray(function(err,data){
+  if (err) res.redirect('/login');
+  else {drafts.find({'email':decoded.email, 'published':true}).toArray(function(err,data){
     if (err) throw err;
     res.send(data)
-});
+})};
 })
 })
 app.route('/api/results')
@@ -138,17 +138,17 @@ app.route('/api/results')
   update[currentDate] = answer;
   drafts.update(query,{$push: update})
   drafts.update({"link":answer.origin}, {$push: update});
-
+  res.end();
 })
 .get(function(req,res){
   if (req.headers.authorization === undefined) {res.sendStatus(401); console.log('draft access denied')}
   else jwt.verify(req.headers.authorization, 'cookiesandcream', function(err, decoded) {
-  if (err) throw err;
-answers.find({'email':decoded.email}).toArray(function(err,data){
+  if (err) res.sendStatus(401);
+  else {answers.find({'email':decoded.email}).toArray(function(err,data){
 
     if (err) throw err;
     res.send(data)
-});
+});}
 })
 });
   app.route('/survey/*')
@@ -157,9 +157,9 @@ answers.find({'email':decoded.email}).toArray(function(err,data){
   })
   app.route('/login')
   .post(function(req,res){
+    console.log('trying login...')
     var email = req.body.email;
     var password = req.body.password;
-
     users.find({email:email}).limit(1).toArray(function(err,data){
     if (err) throw err;
     if (data[0] === undefined)
@@ -180,9 +180,6 @@ answers.find({'email':decoded.email}).toArray(function(err,data){
 
 
   })
-    .get(function(req,res){
-      res.sendFile(process.cwd() + '/public/login.html')
-    })
   app.route('/questions')
       .get(function(req,res){
         res.setHeader('Content-Type','application/json');

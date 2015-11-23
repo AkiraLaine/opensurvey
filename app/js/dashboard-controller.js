@@ -147,6 +147,7 @@ angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$http
 		console.log(survey.questions)
 		$scope.questions = survey.questions;
 		$scope.results = results;
+		$scope.name = survey.name
 		counter = 0;
 	});
 

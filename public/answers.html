@@ -1,18 +1,19 @@
 <div class='content'>
-<div class='jumbotron'>
-<h1>{{ surveyResults.name | uppercase}}</h1>
+<div class='margin'>
+<div class='small-tile'>  
+<h1>{{ name | uppercase}}</h1>
 <h3>{{surveyResultsAmount}} responses</h3>
-<div ng-repeat='question in questions'>
+</div>
+<div ng-repeat='question in questions' class='small-tile'>
     <h2><span ng-bind='question.name'></span></span></h2>
     <div ng-if='question.type === "open question"'>
-    <div ng-repeat='answer in results[$index] track by $index'><h4>Participant {{$index+1}}:</h4><p>"<span ng-bind='answer'></span>"</p></div>
+    <answer-container obj='results[$index]'></answer-container>
     </div>
     <div ng-if='question.type === "multiple choice"'>
     <bar-graph obj='results[$index]' more='question'></bar-graph>
     </div>
     <div ng-if='question.type === "numerical scale"'>
     <numerical-graph></numerical-graph>
-    <div ng-repeat='answer in results[$index] track by $index'><p>"<span ng-bind='answer'></span>"</p></div>
     </div>
 </div>
 </div>

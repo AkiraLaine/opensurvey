@@ -1,10 +1,8 @@
 var app = angular.module('votingapp',['ngAnimate','ui.bootstrap','ngRoute']);
 var counter = 1;
 //helper funcitons
-Chart.defaults.global.responsive = true;
-Chart.defaults.global.maintainAspectRatio = false;
+
 function weeklyView(data) {
-	console.log(data.length)
 	if (data.length < 7){
 		console.log('latest date is '+data[data.length-1])
 		var mon1   = parseInt(data[data.length-1].substring(0,2));
@@ -17,6 +15,7 @@ function weeklyView(data) {
 	}
 	}
 }
+
 function countArrayStrings(array,labels){
 	var results = [];
 	console.log('exec array count')
@@ -48,9 +47,27 @@ app.config(function($routeProvider,$locationProvider){
 	controller:'surveyOverviewCtrl'}).
 	when('/results:survey',{templateUrl:'/public/backend.html',
 	controller:'surveyAnswersCtrl'}).
-	when('/login',{templateUrl:'/public/login.html'})
+	when('/login',{templateUrl:'/public/login.html',
+	controller:'userCtrl'})
 });
 
+app.directive('answerContainer',function(){
+	return{
+		restrict:'E',
+		scope: {obj: '=',},
+		replace:true,
+		templateUrl:'/public/textscroll.html',
+		link:function(scope,elm){
+			scope.counter = 0;
+			scope.increase = function() {
+				if (scope.counter <= scope.obj.length) scope.counter +=1;
+			};
+			scope.decrease = function(){
+				if (scope.counter > 0) scope.counter -=1;
+			};
+		}
+	}
+})
 
 app.directive('barGraph',function(){
 	return{
@@ -60,6 +77,8 @@ app.directive('barGraph',function(){
 		template:'<canvas></canvas>',
 		replace:true,
 		link:function(scope,elm){
+			Chart.defaults.global.responsive = true;
+			Chart.defaults.global.maintainAspectRatio = false;
 			console.log('object test'+JSON.stringify(scope.obj))
 			var labels = [];
 			for (var key in scope.more.options){
@@ -91,6 +110,8 @@ app.directive('numericalGraph',function(){
 			template:'<canvas></canvas>',
 			replace:true,
 			link: function(scope,elm){
+				Chart.defaults.global.responsive = true;
+				Chart.defaults.global.maintainAspectRatio = false;
 				var data = {
     labels: ['1','2','3','4','5','6','7','8','9','10'],
     datasets: [
@@ -121,6 +142,8 @@ app.directive('myChart', function(){
 			  replace:true,
 			scope:false,
         link: function(scope,elm){
+					Chart.defaults.global.responsive = true;
+					Chart.defaults.global.maintainAspectRatio = false;
 	console.log('graph test'+ elm[0].children[1].children[0])
 		var graphDataset = [];
 		var today = new Date();
@@ -176,7 +199,8 @@ app.factory('authInterceptor',function($q,$location,$window){
 		},
 		responseError: function(rejection){
 			console.log('rejection')
-			return 'abc'
+			$location.path('/login')
+			return rejection;
 		}
 	}
 });
@@ -190,20 +214,23 @@ app.controller('loginCtrl',function($scope,$http,$window){
 	if ($window.localStorage.token !== undefined){
 		$http.get('/backend').then(function(data){
 			console.log('login ok')
+
 		});
 	}
+
+})
+app.controller('userCtrl',function($scope,$http,$location,$window){
+	$scope.test = 'ABCACDA'
+	console.log('userCtrlm initiated')
 	$scope.authorizeLogin = function(login){
 		$http.post('/login',$scope.login).then(function(data){
 			if (data.data.token !== undefined)
 			$window.localStorage.token = data.data.token;
-			$http.get('/backend').then(function(data){
-				console.log(data)
-			});
+			$location.path('/dashboard')
 		});
 	}
 })
-
-app.controller('formCtrl',function($http,$scope,$window,$uibModal,$log,$timeout,$location,$routeParams){
+app.controller('mainCtrl',function($http,$scope,$window,$uibModal,$log,$timeout,$location,$routeParams){
 
 	console.log('backend activated')
 	$scope.demographic = "demographic information";
@@ -211,14 +238,10 @@ app.controller('formCtrl',function($http,$scope,$window,$uibModal,$log,$timeout,
 	console.log($scope.routeTest)
 	$scope.user = {};
 
-
-
-
-$scope.getUserProfile = function() {
 	$http.get('/api/profile',{headers:{authorization:$window.localStorage.token}}).then(function(data){
 		$scope.user.email = data.data.email;
 	})
-}
+
 
 
 
