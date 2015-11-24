@@ -1,9 +1,9 @@
 /****** Main Styling ******/
-@import url(https://fonts.googleapis.com/css?family=Bitter);
+@import url(https://fonts.googleapis.com/css?family=Roboto);
 body {
 	font-family: 'Roboto', sans-serif;
 	font-size: 16px;
-	background: #ecf0f1;
+	background: #ccc;
 }
 h3 {
 	margin-bottom:0;
@@ -44,8 +44,9 @@ body,html,.container-fluid{
 	width:300px;
 	height:100%;
 }
+
 .content{
-	width:calc(100% - 150px) ;
+width:calc(100% - 150px) ;
 margin-left:150px;
 
 
@@ -69,7 +70,7 @@ margin-left:150px;
 	background-color:#222;
 }
 .blue {
-	color:#3498db;
+	color:#406BCC;
 }
 .modal-header {
 	background:#222;
@@ -147,7 +148,7 @@ margin-left:150px;
 	width:calc(100% - 300px) ;
 margin-left:300px;
 height:50px;
-background:#2980b9;
+background:#5C9BCC;
 }
 .header-right-menu {
 font-size:18px;
@@ -192,4 +193,116 @@ canvas{
 	}
 .jumbotron {
 	background:#fff;
+}
+
+.textbox-heading {
+  color:#436482;
+  margin-bottom:0px;
+  display:flex;
+  align-self:flex-start;
+}
+.textbox {
+	float:left;
+	min-height:400px;
+	margin-bottom:15px;
+  box-shadow: 2px 3px 10px rgba(0,0,0,0.3);
+  flex-flow:column;
+  position:relative;
+  box-sizing:border-box;
+  align-items:center;
+  display:flex;
+  background:#f4f4f4;
+  width:calc(50% - 7.5px);
+  padding: 30px 80px 50px 80px;
+
+}
+
+.three-quarter {
+width:calc(75% - 7.5px);
+}
+div.question-wrapper:nth-child(even) .textbox{
+		margin-right:15px;
+}
+.scroll-btn {
+    transition:opacity .5s ease-out;
+  cursor:pointer;
+  opacity:0.2;
+    font-size:2.5em;
+    position:absolute;
+   top:40%;
+}
+.left-scroll {
+
+
+  left:15px;
+
+
+}
+.right-scroll {
+
+  right:15px;
+
+}
+
+.textbox:hover .scroll-btn{
+  opacity:0.5;
+}
+.textbox:hover .counter{
+  opacity:0.3;
+}
+.counter {
+  transition:opacity .5s ease-out;
+  opacity:0.2;
+	width:100%;
+  cursor:pointer;
+  color:#fff;
+  position:absolute;
+  bottom:10px;
+  left:40px;
+}
+.counter li {
+  text-align:center;
+  display:inline-block;
+  width:5%;
+  background:#000;
+  padding:5px;
+}
+.counter li:first-child {
+  border-top-left-radius:15px;
+  border-bottom-left-radius:15px;
+}
+.counter li:last-child {
+  border-top-right-radius:15px;
+  border-bottom-right-radius:15px;
+}
+a {
+  text-decoration:none;
+  color:inherit;
+}
+.counter li.active{
+  background:#3F0D94;
+}
+.counter li:hover {
+  background:#306699;
+}
+.scroll-btn:hover{
+  color:#306699;
+}
+.full-width {
+	width:100%;
+
+}
+
+.survey-header {
+margin-bottom:15px;
+font-family:lora;
+	box-shadow: 2px 3px 10px rgba(0,0,0,0.3);
+	flex-flow:column;
+	position:relative;
+	box-sizing:border-box;
+	align-items:center;
+	display:flex;
+	background:#f4f4f4;
+	padding: 30px 80px 50px 80px;
+
 }

@@ -1,7 +1,10 @@
-<div>
-	<a ng-click="decrease()">prev</a>
-	<h3>participant {{counter}}:
-		<div>{{obj[counter]}}
-		</div>
-	<a ng-click="increase()">next</a>
-</div>
+<div class='textbox'>
+	<h2><span ng-bind='content.name'></h2>
+	<i class='fa fa-arrow-circle-left scroll-btn left-scroll' ng-click='decrease()'></i><h3 class='textbox-heading'>Participant {{counter+1}}</h3><p ng-bind='shown[counter]'></p>
+  <ul class='counter'>
+    <li><a href='#'>&laquo;</a>
+		<li ng-show='lower.length > 0'><a>...</a>
+    <li ng-class="number === counter+1 ? 'active' : 'inactive'" ng-repeat='number in pageNumbers' ng-click='setCounter(number)'><a href='#'><span ng-bind='number'></span></a>
+		<li ng-show='higher.length > 0'><a>...</a>
+    <li><a href='#'>&raquo;</a></li>
+  </ul></p><i class='fa fa-arrow-circle-right scroll-btn right-scroll' ng-click='increase()'></i></div>
