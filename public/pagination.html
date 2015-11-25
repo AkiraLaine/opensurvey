@@ -1,0 +1,8 @@
+
+<ul class='counter'>
+	<li ng-click='first()'><a href='#' >&laquo;</a>
+	<li ng-if='lower.length > 0'><a>...</a>
+	<li ng-class="number === counter+1 ? 'active' : 'inactive'" ng-repeat='number in pageNumbers' ng-click='setCounter(number)'><a href='#'><span ng-bind='number'></span></a>
+	<li ng-if='higher.length > 0'><a>...</a>
+	<li><a href='#' ng-click='last()'>&raquo;</a></li>
+</ul>

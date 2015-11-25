@@ -48,6 +48,73 @@ app.config(function($routeProvider,$locationProvider){
 	controller:'userCtrl'})
 });
 
+app.directive('pageNumbers',function(){
+	return {
+		restrict:'E',
+		scope: {content: '=',
+						limit: '=',
+						counter: '='},
+		replace:true,
+		templateUrl:'/public/pagination.html',
+		link:function(scope,elm){
+			scope.higher = [];
+			scope.lower = [];
+			scope.counter = 0;
+			scope.pageNumbers = [];
+			for (var i = 1;i<=scope.content.length;i++){
+				scope.pageNumbers.push(i);
+			}
+			while (scope.pageNumbers.length > scope.limit) {
+				scope.higher.push(scope.pageNumbers.pop())
+			}
+
+			scope.$watch('counter',function(newVal,oldVal){
+
+				if (scope.pageNumbers.indexOf(newVal) === -1){
+				var add = scope.limit;
+				var addNegative = scope.limit-1;
+				}
+				else {
+				var add = scope.pageNumbers.indexOf(newVal)/2;
+				var addNegative = (scope.limit-scope.pageNumbers.indexOf(newVal)-2)/2;
+				}
+
+				if (newVal > oldVal){
+				for (i=0;i<add;i++){
+
+				if (scope.higher.length>0 && newVal > scope.limit/2-1){
+					scope.pageNumbers.push(scope.higher.pop());
+					scope.lower.push(scope.pageNumbers.shift());
+				}
+				}
+				}
+				else if (newVal < oldVal){
+				for (i=0;i<addNegative;i++){
+								console.log('backloop'+i);
+				if (scope.lower.length > 0 && newVal < scope.content.length-scope.limit/2-1){
+					scope.pageNumbers.unshift(scope.lower.pop());
+					scope.higher.push(scope.pageNumbers.pop());
+				}
+			}}
+			})
+			scope.last = function(){
+
+				scope.counter = scope.content.length-1;
+
+			}
+			scope.first = function(){
+				scope.counter = 0;
+			}
+			scope.setCounter = function(number) {
+				scope.counter=number-1;
+		}
+
+
+		}
+	}
+});
+
+
 app.directive('answerContainer',function(){
 	return{
 		restrict:'E',
@@ -56,47 +123,17 @@ app.directive('answerContainer',function(){
 		replace:true,
 		templateUrl:'/public/textscroll.html',
 		link:function(scope,elm){
-			scope.higher = [];
-			scope.lower = [];
-			scope.counter = 0;
-			scope.pageNumbers = [];
-			for (var i = 1;i<=scope.obj.length;i++){
-				scope.pageNumbers.push(i);
+			scope.increase = function(){
+				if (scope.counter < scope.obj.length-1) scope.counter += 1;
+
 			}
-			while (scope.pageNumbers.length > 10) {
-				scope.higher.push(scope.pageNumbers.pop())
-			}
-			console.log('higher numbers '+scope.higher)
-			scope.increase = function() {
-				if (scope.counter < scope.obj.length-1){
-				scope.counter +=1;
-				if (scope.higher.length > 0 && scope.counter > 4){
-				scope.pageNumbers.push(scope.higher.pop());
-				scope.lower.push(scope.pageNumbers.shift())
-			}
-			}
-			};
-			scope.setCounter = function(number) {
-				var change = number-scope.counter;
-				scope.counter=number-1;
-				console.log(change)
-				for(i=0;i<=change-3;i++){
-				if (scope.higher.length > 0 && scope.counter > 4){
-				scope.pageNumbers.push(scope.higher.pop());
-				scope.lower.push(scope.pageNumbers.shift())
-			}
-		}
-			}
+
 			scope.decrease = function(){
 				if (scope.counter > 0) scope.counter -=1;
-				if(scope.lower.length > 0 && scope.counter < scope.obj.length-5){
-				scope.pageNumbers.unshift(scope.lower.pop());
-				scope.higher.push(scope.pageNumbers.pop());
 			}
-			};
 		}
-	}
-})
+}
+});
 
 app.directive('barGraph',function(){
 	return{
@@ -112,8 +149,9 @@ app.directive('barGraph',function(){
 				labels.push(scope.content.options[key].value)
 			}
 			countArrayStrings(scope.obj,labels);
-Chart.defaults.global.scaleFontSize = 'Roboto';
-			Chart.defaults.global.scaleFontSize = 14;
+	Chart.defaults.global.scaleFontFamily = "'Roboto'";
+		Chart.defaults.global.scaleFontColor = "#333";
+			Chart.defaults.global.scaleFontSize = 16;
 		Chart.defaults.global.responsive = true;
 		Chart.defaults.global.maintainAspectRatio = false;
 			var ctx = elm[0].getElementsByTagName('canvas')[0].getContext("2d");
@@ -138,6 +176,7 @@ datasets: [
 	}
 })
 app.directive('numericalGraph',function(){
+				Chart.defaults.global.scaleFontSize = 16;
 	return{
 			restrict:'E',
 			templateUrl:'/public/resultgraph.html',
@@ -147,10 +186,13 @@ app.directive('numericalGraph',function(){
 				content:'='
 			},
 			link: function(scope,elm){
-				console.log('numerical graph checking in '+JSON.stringify(scope.obj))
 				Chart.defaults.global.responsive = true;
 				Chart.defaults.global.maintainAspectRatio = false;
 				console.log('test '+countArrayStrings(scope.obj,['1','2','3','4','5','6','7','8','9','10']));
+								var ctx = elm[0].getElementsByTagName('canvas')[0].getContext("2d");
+				var gradient = ctx.createLinearGradient(0, 0, 0, 300);
+	gradient.addColorStop(0, 'rgba(92,155,204,1)');
+	gradient.addColorStop(1, 'rgba(81,17,109,0.6)');
 				var data = {
     labels: ['1','2','3','4','5','6','7','8','9','10'],
     datasets: [
@@ -158,7 +200,8 @@ app.directive('numericalGraph',function(){
         {
             label: "My Second dataset",
             fillColor: "rgba(151,187,205,0)",
-            strokeColor: "rgba(81,17,109,0.6)",
+            strokeColor: gradient,
+						pointColor: gradient,
             highlightFill: "rgba(151,187,205,0.75)",
             highlightStroke: "rgba(151,187,205,1)",
             data: countArrayStrings(scope.obj,['1','2','3','4','5','6','7','8','9','10'])
@@ -166,8 +209,11 @@ app.directive('numericalGraph',function(){
     ]
 				}
 
-				var ctx = elm[0].getElementsByTagName('canvas')[0].getContext("2d");
-				var myNewChart = new Chart(ctx).Line(data);
+
+				var myNewChart = new Chart(ctx).Line(data,{
+					pointDot:false,
+					    datasetStrokeWidth : 8,
+				});
 			}
 	}
 
@@ -199,21 +245,23 @@ app.directive('myChart', function(){
 		else labels = [today.toLocaleDateString()];
 
 		weeklyView(labels);
+		var ctx = elm[0].children[1].children[0].getContext("2d");
+		var gradient = ctx.createLinearGradient(0, 0, 0, 500);
+gradient.addColorStop(0, 'rgba(92,155,204,1)');
+gradient.addColorStop(1, 'rgba(81,17,109,0.6)');
 		var data = {
     labels: labels,
     datasets: [
 
         {
             label: "My Second dataset",
-            fillColor: "rgba(151,187,205,0.5)",
-            strokeColor: "rgba(151,187,205,0.8)",
-            highlightFill: "rgba(151,187,205,0.75)",
-            highlightStroke: "rgba(151,187,205,1)",
+            fillColor: gradient,
+			highlightFill: "rgba(92,155,204,1)",
             data: graphDataset
         }
     ]
-};				console.log(elm[0].children[1].children[0].getContext("2d"))
-				var ctx = elm[0].children[1].children[0].getContext("2d");
+};
+
 				var myNewChart = new Chart(ctx).Bar(data);
 
 
@@ -258,7 +306,6 @@ app.controller('loginCtrl',function($scope,$http,$window){
 
 })
 app.controller('userCtrl',function($scope,$http,$location,$window){
-	$scope.test = 'ABCACDA'
 	console.log('userCtrlm initiated')
 	$scope.authorizeLogin = function(login){
 		$http.post('/login',$scope.login).then(function(data){

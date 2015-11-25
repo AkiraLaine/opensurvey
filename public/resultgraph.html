@@ -1,4 +1,21 @@
-<div class='textbox'>
+
+	<div class='textbox'>
+		<div class='textbox-top-menu'><button class=' btn btn-default alignleft'>Overall Absolute Numbers.</button>
+				<button class='btn btn-default alignright'><i class='fa fa-filter'></i> Add Filter</button>
+
+		</div>
+	<div style="clear: both;"></div>
+		<div class='textbox-content'>
+
+
 	<h2><span ng-bind='content.name'></h2>
 		<div class='full-width'><canvas></canvas></div>
+
+		</div>
+		<div ng-if='content.type === "multiple choice"' class='textbox-info'>
+		<p class='alignleft'><i class='fa fa-arrow-circle-o-up fa-fw fa-lg blue'></i> Highest Answer: <span class='blue'>Alpha (15%)</span></p><p class='alignright'><i class='fa fa-arrow-circle-o-down fa-lg fa-fw purple'></i> Lowest Answer: <span class='purple'>Beta (35%)</span><p>
+</div>
+<div ng-if='content.type === "numerical scale"' class='textbox-info'>
+<p class='alignleft'><i class='fa fa-compass fa-fw fa-lg blue'></i> Average: <span class='blue'> 3.78</span></p><p class='alignright'><i class='fa fa-bullseye fa-lg fa-fw purple'></i> Median: <span class='purple'>5.00</span><p>
+</div>
 </div>
