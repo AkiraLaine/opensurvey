@@ -1,60 +1,113 @@
 
 <body ng-app="votingapp">
   <div class='content'>
-
     <div>
       <form novalidate class="questions">
         <div class='question-container'>
-        Project* <input type='text' class='form-control' ng-model='survey.project' required />
-        Survey Name* <input type='text' class='form-control' ng-model='survey.name' required />
+        <div id='copy1'>
+        <h2><span class=blue>Step 1:</span> Let's get started</h2>
+        <p>One project might contain several surveys. Naming your projects will make it easier for you to quickly
+          find your different surveys in the overview. The project title won't be visible to participants.
+          The survey title is the official name of your survey and will be visible to all participants.</p>
+        </div>
+        <div id='container'>
+        <input type='text' placeholder='Project Name' class='form-control title-form' ng-model='survey.project' required />
+        <input type='text' placeholder='Survey Title' class='form-control title-form' ng-model='survey.name' required /><br>
+        <div id='copy2'>
+        <h2><span class=blue>Step 2:</span> Demographic Data</h2>
+          <p>Collecting demographic data will help you to filter your survey results based on the age, gender income and other factors. Please select those demographic factors that will be relevant for your survey. Don't worry - you will be able to adapt the wording of your selected demographic questions in the next step.</p>
+        </div>
+        <div id='container2'>
+          <div class='check-container'>
+<input type='checkbox' id='name'></input>
+<label for='name'></label>
+<span class='tag'>Name</span>
+</div>
+<div class='check-container'>
+<input type='checkbox' id='gender'></input>
+<label for='gender'></label>
+<span class='tag'>Gender</span>
+</div>
+<div class='check-container'>
+<input type='checkbox' id='age'></input>
+<label for='age'></label>
+<span class='tag'>Age</span>
+</div>
+<div class='check-container'>
+<input type='checkbox' id='income'></input>
+<label for='income'></label>
+<span class='tag'>Income</span>
+</div>
+<div class='check-container'>
+<input type='checkbox' id='profession'></input>
+<label for='profession'></label>
+<span class='tag'>Profession</span>
+</div>
+<div id='copy3' ng-if='newFormQuestions.length < 1'>
+<h2><span class=blue>Step 3:</span> Add your first Question</h2>
+  <p>This is where the real fun begins. You are now able to add as many questions to your survey as you like. If you want to take a break editing, you can always save your survey as a draft and come back at a later time.</p></div>
+  <div>
+
+
+      <div ng-if='newFormQuestions' ng-repeat='question in newFormQuestions'>
+        <div class='question-container' ng-class-odd='"question-odd"' ng-class-even='"question-even"'>
+        <h4 ng-bind='question.name'></h4>
+        <textarea class='form-control' rows='6' ng-if='question.type==="open question"' readonly></textarea>
+        <div ng-if='question.type==="multiple choice"' ng-repeat='option in question.options'>
+        <input type='radio' name='optRadio' readonly><span ng-bind='option.value'></span></input><br>
       </div>
-          <div ng-if='newFormQuestions' ng-repeat='question in newFormQuestions' >
-            <div class='question-container' ng-class-odd='"question-odd"' ng-class-even='"question-even"'>
-            <h4 ng-bind='question.name'></h4>
-            <textarea class='form-control' rows='6' ng-show='question.type==="open question"' readonly></textarea>
-            <div ng-if='question.type==="multiple choice"' ng-repeat='option in question.options'>
-            <input type='radio' name='optRadio' readonly><span ng-bind='option.value'></span></input><br>
-          </div>
-          <div ng-if='question.type==="numerical scale"'>
-            <div class="row">
-            <div class='col-xs-3'><span ng-bind='question.rangeOptions.scaleNegative'></span></div>
-            <div class='col-xs-6'><input type='range' min='0' max='question.rangeOptions.scaleMax'></input></div>
-            <div class='col-xs-3'><span ng-bind='question.rangeOptions.scalePositive'></span></div>
-            </div>
-          </div>
-          <div ng-if='question.type==="demographic information"'>
-            <span ng-show='question.fullName'>Full Name:<input class='form-horizontal'></input></span>
-            <span ng-show='question.age'>Age:<input class='form-horizontal' type='number'></input></span>
-            <span ng-show='question.income'>Income:<input class='form-horizontal' type='number'></input></span>
-            <span ng-show='question.gender'>Gender:<input class='form-horizontal' type='text'></input></span>
-          </div>
-          <div ng-if='question.type==="text paragraph"'>
-            <p><span ng-bind='question.text'></span></p>
-          </div>
+      <div ng-if='question.type==="numerical scale"'>
+        <div class="row">
+        <div class='col-xs-3'><span ng-bind='question.rangeOptions.scaleNegative'></span></div>
+        <div class='col-xs-6'><input type='range' min='0' max='question.rangeOptions.scaleMax'></input></div>
+        <div class='col-xs-3'><span ng-bind='question.rangeOptions.scalePositive'></span></div>
         </div>
-        <div class='question-button-container' ng-click='removeQuestion(question)'>
-          <span class='fa-stack fa-fw fa-button'>
-            <i class='fa fa-square fa-stack-2x fa-fw danger '></i>
-              <i class='fa fa-times fa-inverse fa-stack-1x fa-fw fa-lg'></i>
-          </span><br>
-          <span class='fa-stack fa-fw fa-button'>
-            <i class='fa fa-square fa-stack-2x fa-fw'></i>
-              <i class='fa fa-pencil fa-inverse fa-stack-1x fa-fw'></i>
-          </span><br>
-          <span class='fa-stack fa-fw fa-button'>
-            <i class='fa fa-square fa-stack-2x fa-fw'></i>
-              <i class='fa fa-arrows fa-inverse fa-stack-1x fa-fw'></i>
-          </span><br>
-        </div>
-      </div><br/><div class='full-container'>
-        <button class='btn btn-success' type='button' ng-click='open("lg")'><i class="fa fa-plus fa-fw"></i> Add Question</button>
-        <button class='btn btn-primary' type='button' ng-click='survey.published = true; saveDraft()' ng-if='!survey.published'><i class='fa fa-paper-plane'></i> Send out</button>
-        <button class='btn btn-danger' type='button'  ng-if='survey.published' ng-click='survey.published = false; saveDraft()'>Unpublish</button>
-        <button class='btn btn-default' type='button' ng-click='saveDraft()'>Save Draft</button>
-      </div></div>
+      </div>
+      <div ng-if='question.type==="demographic information"'>
+        <span ng-show='question.fullName'>Full Name:<input class='form-horizontal'></input></span>
+        <span ng-show='question.age'>Age:<input class='form-horizontal' type='number'></input></span>
+        <span ng-show='question.income' ng-init='addIncome()'>Income:<input class='form-horizontal' type='number'></input></span>
+        <span ng-show='question.gender' ng-init='addGender()'>Gender:<input class='form-horizontal' type='text'></input></span>
+      </div>
+      <div ng-if='question.type==="text paragraph"'>
+        <p><span ng-bind='question.text'></span></p>
+      </div>
+    </div>
+    <div class='question-button-container' ng-click='removeQuestion(question)'>
+      <span class='fa-stack fa-fw fa-button'>
+        <i class='fa fa-square fa-stack-2x fa-fw danger '></i>
+          <i class='fa fa-times fa-inverse fa-stack-1x fa-fw fa-lg'></i>
+      </span><br>
+      <span class='fa-stack fa-fw fa-button'>
+        <i class='fa fa-square fa-stack-2x fa-fw'></i>
+          <i class='fa fa-pencil fa-inverse fa-stack-1x fa-fw'></i>
+      </span><br>
+      <span class='fa-stack fa-fw fa-button'>
+        <i class='fa fa-square fa-stack-2x fa-fw'></i>
+          <i class='fa fa-arrows fa-inverse fa-stack-1x fa-fw'></i>
+      </span><br>
+    </div>
+  </div><br/></div>
+</div>
+
+      </div>
+
+
+      </div>
+      <div class='btn-center-nav'>
+        <button class='btn btn-danger' ng-if='currentStep > 1' ng-click='prevStep()'>Back</button>
+        <button class='btn btn-default' ng-if='currentStep < 3' ng-click='nextStep()'>Continue</button>
+          <button class='btn btn-success' ng-if='currentStep ===3' type='button' ng-click='open("lg")'><i class="fa fa-plus fa-fw"></i> Add Question</button>
+          <button class='btn btn-default' type='button' ng-if='currentStep === 3' ng-click='saveDraft()'>Save Draft</button>          <button class='btn btn-primary' type='button' ng-click='survey.published = true; saveDraft()' ng-if='!survey.published && currentStep === 3'><i class='fa fa-paper-plane'></i> Publish</button>
+          <button class='btn btn-danger' type='button'  ng-if='survey.published && currentStep === 3' ng-click='survey.published = false; saveDraft()'>Unpublish</button>
+
+      </div>
+
+
 
       </form>
 
+</div>
     </div>
 
 

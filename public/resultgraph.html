@@ -1,21 +1,28 @@
 
 	<div class='textbox'>
 		<div class='textbox-top-menu'><button class=' btn btn-default alignleft'>Overall Absolute Numbers.</button>
-				<button class='btn btn-default alignright'><i class='fa fa-filter'></i> Add Filter</button>
-
+			 <div class="btn-group alignright" uib-dropdown is-open="status.isopen">
+			<button id="filter-button" type="button" class="btn btn-default" uib-dropdown-toggle ng-disabled="disabled"><i class='fa fa-filter'></i> Add Filter <span class="caret"></span></button>
+				<ul class="uib-dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="filter-button">
+					<li role='menuitem'><a>Gender</a></li>
+					<li role='menuitem'><a>Income</a></li>
+					<li role='menuitem'><a>Age</a></li>
+				</ul>
+</div>
 		</div>
 	<div style="clear: both;"></div>
 		<div class='textbox-content'>
 
 
-	<h2><span ng-bind='content.name'></h2>
+	<h2><span ng-bind='content.name'></span></h2>
 		<div class='full-width'><canvas></canvas></div>
 
 		</div>
 		<div ng-if='content.type === "multiple choice"' class='textbox-info'>
-		<p class='alignleft'><i class='fa fa-arrow-circle-o-up fa-fw fa-lg blue'></i> Highest Answer: <span class='blue'>Alpha (15%)</span></p><p class='alignright'><i class='fa fa-arrow-circle-o-down fa-lg fa-fw purple'></i> Lowest Answer: <span class='purple'>Beta (35%)</span><p>
+		<p class='alignleft'><i class='fa fa-arrow-circle-o-up fa-fw fa-lg blue'></i> Highest Answer: <span class='blue'><span ng-bind='highestResult'></span> (<span ng-bind='highestResultPercent'></span>%)</span></p><p class='alignright'><i class='fa fa-arrow-circle-o-down fa-lg fa-fw purple'></i> Lowest Answer: <span class='purple'>
+		<span ng-bind='lowestResult'></span> (<span ng-bind='lowestResultPercent'></span>%)</span><p>
 </div>
-<div ng-if='content.type === "numerical scale"' class='textbox-info'>
-<p class='alignleft'><i class='fa fa-compass fa-fw fa-lg blue'></i> Average: <span class='blue'> 3.78</span></p><p class='alignright'><i class='fa fa-bullseye fa-lg fa-fw purple'></i> Median: <span class='purple'>5.00</span><p>
+<div ng-if='content.type === "numerical scale"' class='textbox-info flex'>
+<p><i class='fa fa-compass fa-fw fa-lg blue'></i> Average: <span class='blue' ng-bind='avg'> </span></p><p><i class='fa fa-arrow-circle-o-up fa-lg fa-fw blue'></i> 75th Percentile: <span class='purple' ng-bind='lowPercentile'></span></p><p><i class='fa fa-arrow-circle-o-down fa-fw purple fa-lg'></i> 25th Percentile: <span class='purple' ng-bind='highPercentile'></span></p>
 </div>
 </div>

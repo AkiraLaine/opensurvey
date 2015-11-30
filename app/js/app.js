@@ -2,9 +2,54 @@ var app = angular.module('votingapp',['ngAnimate','ui.bootstrap','ngRoute']);
 var counter = 1;
 //helper funcitons
 
+
+Object.defineProperty(Array.prototype, "min", {
+  value: function(obj) {
+		var result = 0;
+		this.forEach(function(x){
+			if (result - x > 0) result = x;
+		});
+		return result;
+    }
+});
+
+Object.defineProperty(Array.prototype, "max", {
+  value: function(obj) {
+		var result = 0;
+		this.forEach(function(x){
+			if (result - x < 0) result = x;
+		});
+		return result;
+    }
+});
+function fadeOut(id,speed){
+  var element = document.getElementById(id)
+  element.style.opacity = 1;
+  var fade = window.setInterval(function(){
+    element.style.opacity -= 0.1;
+    if (element.style.opacity <= 0){
+      element.style.visibility = 'hidden';
+      window.clearInterval(fade)
+    };
+  },speed)
+}
+
+function fadeIn(id,speed){
+  var element = document.getElementById(id)
+  var counter = 0;
+  element.style.opacity = 0;
+  element.style.visibility = 'visible';
+  var fade = window.setInterval(function(){
+    counter+=0.1;
+    element.style.opacity = counter;
+      if (document.getElementById(id).style.opacity >= 1) {
+        window.clearInterval(fade);
+    }
+  },speed)
+}
 function weeklyView(data) {
 	if (data.length < 7){
-		console.log('latest date is '+data[data.length-1])
+
 		var mon1   = parseInt(data[data.length-1].substring(0,2));
 		var dt1  = parseInt(data[data.length-1].substring(3,5));
 		var yr1   = parseInt(data[data.length-1].substring(6,10));
@@ -22,7 +67,6 @@ function countArrayStrings(array,labels){
 		var filtered = array.filter(function(value){
 			return value === x;
 		})
-		console.log(filtered)
 		results.push(filtered.length)
 	})
 return results;
@@ -89,8 +133,7 @@ app.directive('pageNumbers',function(){
 				}
 				}
 				else if (newVal < oldVal){
-				for (i=0;i<addNegative;i++){
-								console.log('backloop'+i);
+				for (i=0;i<addNegative+1;i++){
 				if (scope.lower.length > 0 && newVal < scope.content.length-scope.limit/2-1){
 					scope.pageNumbers.unshift(scope.lower.pop());
 					scope.higher.push(scope.pageNumbers.pop());
@@ -143,12 +186,18 @@ app.directive('barGraph',function(){
 		templateUrl:'/public/resultgraph.html',
 		replace:true,
 		link:function(scope,elm){
-
+			console.log('rethinking the graph for filters' +JSON.stringify(scope.obj))
 			var labels = [];
 			for (var key in scope.content.options){
+				console.log(scope.content.options)
 				labels.push(scope.content.options[key].value)
 			}
-			countArrayStrings(scope.obj,labels);
+			var results = countArrayStrings(scope.obj,labels)
+			scope.highestResult = labels[results.indexOf(results.max())];
+			scope.highestResultPercent = results.max()/scope.obj.length*100;
+			scope.lowestResult = labels[results.indexOf(results.min())];
+			scope.lowestResultPercent = results.min()/scope.obj.length*100;
+
 	Chart.defaults.global.scaleFontFamily = "'Roboto'";
 		Chart.defaults.global.scaleFontColor = "#333";
 			Chart.defaults.global.scaleFontSize = 16;
@@ -165,7 +214,7 @@ datasets: [
 			label: "My Second dataset",
 			fillColor: gradient,
 			highlightFill: "rgba(92,155,204,1)",
-			data: countArrayStrings(scope.obj,labels),
+			data: results,
 	}
 ]
 }
@@ -193,12 +242,30 @@ app.directive('numericalGraph',function(){
 				var gradient = ctx.createLinearGradient(0, 0, 0, 300);
 	gradient.addColorStop(0, 'rgba(92,155,204,1)');
 	gradient.addColorStop(1, 'rgba(81,17,109,0.6)');
+	var results = countArrayStrings(scope.obj,['1','2','3','4','5','6','7','8','9','10']);
+	var labels = ['1','2','3','4','5','6','7','8','9','10']
+	var values = []
+	 			for(i=0;i<10;i++){
+					values.push(results[i] * labels[i])
+				}
+				console.log('test123' +values)
+
+				var sorted = scope.obj.sort();
+	scope.lowPercentile = scope.obj[Math.ceil(scope.obj.length*0.75)-1];
+	scope.highPercentile = scope.obj[Math.ceil(scope.obj.length*0.25)-1];
+	var valuesSum = values.reduce(function(prev,curr){
+		return prev + curr;
+	})
+	var answerAmount = results.reduce(function(prev,curr){
+		return prev + curr;
+	})
+	scope.avg = valuesSum/answerAmount
 				var data = {
-    labels: ['1','2','3','4','5','6','7','8','9','10'],
+    labels: labels,
     datasets: [
 
         {
-            label: "My Second dataset",
+            label: 'blabla',
             fillColor: "rgba(151,187,205,0)",
             strokeColor: gradient,
 						pointColor: gradient,
@@ -229,6 +296,9 @@ app.directive('myChart', function(){
         link: function(scope,elm){
 					Chart.defaults.global.responsive = true;
 					Chart.defaults.global.maintainAspectRatio = false;
+					Chart.defaults.global.scaleFontFamily = "'Roboto'";
+						Chart.defaults.global.scaleFontColor = "#333";
+							Chart.defaults.global.scaleFontSize = 16;
 	console.log('graph test'+ elm[0].children[1].children[0])
 		var graphDataset = [];
 		var today = new Date();
@@ -331,36 +401,13 @@ app.controller('mainCtrl',function($http,$scope,$window,$uibModal,$log,$timeout,
 
 
 
-$scope.submitSurvey = function(survey) {
-	var date = new Date();
-	$scope.answers.date = date.toLocaleDateString()
-console.log($scope.answers)
-$http.post('/api/results',$scope.answers)
-}
+
 
 $scope.createUser = function(user){
 
 	$http.post('/signup',user)
 }
 
-$scope.loadLiveSurvey = function(){
-
-	console.log(window.location.pathname)
-	var path = {surveyLink:window.location.pathname}
-	$http.post('/api/surveydata/',path).then(function(data){
-	$scope.answers = {};
-		$scope.activeSurvey = data.data;
-		$scope.answers = {
-			title: $scope.activeSurvey.name,
-			origin: $scope.activeSurvey.link
-		};
-			console.log($scope.activeSurvey)
-			$scope.activeSurvey.questions.forEach(function(question){
-						$scope.answers[question.name] = '';
-		});
-		console.log($scope.answers)
-	})
-}
 
 
 $scope.loadAnswers = function(){
@@ -381,3 +428,28 @@ $scope.logout = function() {
 
 }
 );
+
+app.controller('liveCtrl',function($scope,$window,$http){
+		var path = {surveyLink:window.location.pathname}
+		$http.post('/api/surveydata/',path).then(function(data){
+		$scope.answers = {};
+			$scope.activeSurvey = data.data;
+			$scope.answers = {
+				title: $scope.activeSurvey.name,
+				origin: $scope.activeSurvey.link,
+				gender: '',
+				income: '',
+			};
+				console.log($scope.activeSurvey)
+				$scope.activeSurvey.questions.forEach(function(question){
+							$scope.answers[question.name] = '';
+			});
+		})
+
+	$scope.submitSurvey = function(survey) {
+		var date = new Date();
+		$scope.answers.date = date.toLocaleDateString()
+	console.log($scope.answers)
+	$http.post('/api/results',$scope.answers)
+	}
+})

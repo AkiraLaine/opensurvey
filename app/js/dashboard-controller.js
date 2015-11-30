@@ -8,19 +8,7 @@ angular.module('votingapp').controller('dashboardCtrl',function($scope,$http){
 			$scope.activeSurveys = data.data;
 			$http.get('api/results').then(function(data){
 				$scope.activeAnswers = data.data;
-					console.log('request2 done.')
-				$scope.activeSurveys.forEach(function(x){
-					x.responses = [];
-
-					$scope.activeAnswers.forEach(function(y){
-
-						if (x.link === y.origin){
-							x.responses.push(y);
-							x.responsesAmount = x.responses.length;
-							console.log('responses:' +x.responses)
-						}
-					})
-				})
+					console.log('request2 done.');
 			})
 		})
 	}
@@ -36,11 +24,14 @@ angular.module('votingapp').controller('surveyOverviewCtrl',function($scope,$htt
 	}
 })
 angular.module('votingapp').controller('surveyCreationCtrl',function($scope,$http,$uibModal,$routeParams){
+
+			$scope.currentStep = 1;
 	$scope.items = ['item1', 'item2', 'item3'];
 	$scope.viewContent = '/public/newSurvey.html'
 	$scope.animationsEnabled = true;
 	$scope.survey = {};
 	$scope.newFormQuestions = [];
+	$scope.filters = {};
 	$scope.newQuestion = {};
 	$scope.newQuestion.rangeOptions = {};
 	$scope.newQuestion.rangeOptions.scaleNegative = "Don't Agree";
@@ -59,18 +50,71 @@ angular.module('votingapp').controller('surveyCreationCtrl',function($scope,$htt
 		})
 	}
 
+	var progressView = true;
+	$scope.nextStep = function() {
+		if ($scope.currentStep < 3)$scope.currentStep += 1;
+		console.log($scope.currentStep)
+		fieldAction($scope.currentStep)
+	}
+	$scope.prevStep = function() {
+		console.log($scope.currentStep)
+		fieldAction($scope.currentStep)
+			if ($scope.currentStep > 1) $scope.currentStep -= 1;
+	}
+var fieldAction = function() {
+	if ($scope.currentStep === 2){
+	if (progressView) fadeOut('copy1',30)
+	else {
+	fadeOut('copy2',30);
+	fadeOut('container2',30);
+	}
+
+		window.setTimeout(function(){
+			document.getElementById('container').classList.toggle('move-up')
+		window.setTimeout(function(){
+			var arr = document.getElementsByClassName('title-form')
+			for(var i=0; i<arr.length;i++){
+				if(progressView) arr[i].disabled = true;
+				else arr[i].disabled = false;
+			}
+	if (progressView) {
+		fadeIn('copy2',50);
+		fadeIn('container2',50)
+		progressView = false;
+	}
+	else {
+	fadeIn('copy1',50);
+	progressView = true;
+	}
+},100)
+
+		},200)
+}
+	else if ($scope.currentStep === 3) {
+		fadeOut('copy2',30)
+		window.setTimeout(function(){
+		document.getElementById('container2').classList.toggle('move-up')
+		window.setTimeout(function(){
+		fadeIn('copy3',50)
+		},100)
+		},200)
+
+	}
+}
 	$scope.removeQuestion = function(question) {
 		console.log(question)
 		$scope.newFormQuestions.splice(	$scope.newFormQuestions.indexOf(question),1);
 	}
 
 	$scope.saveDraft = function(){
+				console.log(JSON.stringify($scope.filters))
 		var date = new Date();
 		console.log($scope.survey.published)
 		$scope.draft = {
 			published: $scope.survey.published,
 			project: $scope.survey.project,
 			name: $scope.survey.name,
+			filters: $scope.filters,
 			questions: $scope.newFormQuestions,
 			edited:date.toLocaleString()
 		}
@@ -119,34 +163,37 @@ angular.module('votingapp').controller('surveyCreationCtrl',function($scope,$htt
 })
 
 angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$http,$routeParams){
+
 		$scope.viewContent = '/public/answers.html'
 		var temp = [];
 		var results = [];
 		var counter = 0;
 	$http.get('/api/survey',{headers:{survey:$routeParams.survey.match(/[^:].*/g)[0]}}).then(function(data){
 		var survey = data.data;
-		console.log(data.data)
 		for (var key in survey.answers) {
 			counter += survey.answers[key].length;
 		}
+
 		$scope.surveyResultsAmount = counter;
-		console.log($scope.surveyResults)
 		for (var x in survey.questions){
 		for (var key in survey.answers){
 			for (var i=0; i<survey.answers[key].length;i++){
 		temp.push(survey.answers[key][i][survey.questions[x].name]);
-		console.log(survey.answers[key][i][survey.questions[x].name])
+
 
 		}
 
 			}
+
 		results.push(temp);
 		temp = [];
 
 		}
-		console.log(survey.questions)
+		var demographics = [];
+
 		$scope.questions = survey.questions;
 		$scope.results = results;
+		$scope.demographics = demographics;
 		$scope.name = survey.name
 		counter = 0;
 	});
@@ -156,12 +203,8 @@ angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$http
 $scope.createChart = function(chartName) {
 	        $timeout(function(){
 						console.log('made it' +chartName)
-
 					})
 	        }
-
-
-
 })
 
 angular.module('votingapp').controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, questions) {
@@ -169,8 +212,17 @@ angular.module('votingapp').controller('ModalInstanceCtrl', function ($scope, $u
 
 
   $scope.ok = function (newQuestion) {
+		console.log('approving demographic stuff:'+newQuestion.gender)
 		$scope.newQuestion = newQuestion;
+		$scope.filters = {
+			'gender': newQuestion.gender,
+			'income': newQuestion.income,
+			'age': newQuestion.age
+
+		}
+
 		$scope.newFormQuestions.push($scope.newQuestion);
+
     $uibModalInstance.close();
   };
 
