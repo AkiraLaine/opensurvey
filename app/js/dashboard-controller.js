@@ -25,7 +25,10 @@ angular.module('votingapp').controller('surveyOverviewCtrl',function($scope,$htt
 })
 angular.module('votingapp').controller('surveyCreationCtrl',function($scope,$http,$uibModal,$routeParams){
 
-			$scope.currentStep = 1;
+
+
+
+	$scope.currentStep = 1;
 	$scope.items = ['item1', 'item2', 'item3'];
 	$scope.viewContent = '/public/newSurvey.html'
 	$scope.animationsEnabled = true;
@@ -62,6 +65,7 @@ angular.module('votingapp').controller('surveyCreationCtrl',function($scope,$htt
 			if ($scope.currentStep > 1) $scope.currentStep -= 1;
 	}
 var fieldAction = function() {
+		console.log(window.getComputedStyle(document.getElementById('copy2')).height);	
 	if ($scope.currentStep === 2){
 	if (progressView) fadeOut('copy1',30)
 	else {
@@ -91,11 +95,25 @@ var fieldAction = function() {
 		},200)
 }
 	else if ($scope.currentStep === 3) {
-		fadeOut('copy2',30)
+		console.log(progressView)
+		if (!progressView) fadeOut('copy2',30);
+		else fadeOut('copy3',30);
 		window.setTimeout(function(){
+			var arr = document.getElementsByClassName('filter-checkbox')
+			for(var i=0; i<arr.length;i++){
+				if(!progressView) arr[i].disabled = true;
+				else arr[i].disabled = false;
+			}
 		document.getElementById('container2').classList.toggle('move-up')
 		window.setTimeout(function(){
-		fadeIn('copy3',50)
+		if (!progressView){
+		progressView = true;
+		fadeIn('copy3',50);
+		}
+		else {
+		fadeIn('copy2',50);
+		progressView = false;
+		}
 		},100)
 		},200)
 

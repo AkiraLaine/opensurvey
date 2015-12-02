@@ -233,8 +233,12 @@ canvas{
   width:98%;
 
 }
-.dashboard-tile:hover {
-	  box-shadow: 2px 3px 10px rgba(0,0,0,0.3);
+.new-survey-tile {
+	float:left;
+	background:#f4f4f4;
+  width:98%;
+	padding: 25px 50px 25px 50px;
+	margin:15px;
 }
 .dashboard-content {
 	padding: 25px 50px 25px 50px;
@@ -485,19 +489,27 @@ input[type="radio"]:checked + label span {
 .title-form:focus {
 	background:rgba(0,0,0,0.05)
 }
+input[type=checkbox]:checked[disabled] + label {
+	opacity:1;
+}
+input[type=checkbox][disabled] + label {
+	transition: all .5s ease;
+	opacity:0.1;
+	cursor: default;
+}
 input.title-form:disabled {
 	cursor:default;
   background:transparent;
-  color:rebeccapurple;
+  color:rgba(92,155,204,1);
 	border-top:transparent;
 	border-left:transparent;
 	border-right:transparent;
 	transition:all .5s ease;
 	font-family:'Roboto';
 	font-weight:500;
-	font-size:1.7em;
+	font-size:1.9em;
 	box-shadow:none;
-  border-bottom: 1px solid #333;
+  border-bottom: 2px solid #bbb;
   padding-top:25px;
   box-sizing:border-box;
 		outline: 1px solid transparent;
@@ -515,20 +527,17 @@ input.title-form:disabled {
 	visibility:hidden;
 }
 #container2 {
-		transition: all .5s ease;
+	transition: all .5s ease;
 	visibility: hidden;
 }
 .btn-center-nav {
 
 	text-align:center;
-left:0;
-top:500px;
 
-right:0;
 margin-left:auto;
 margin-right:auto;
 	border:none;
-	position:absolute;
+
 
 }
 @media screen and (max-width: 1200px) {
