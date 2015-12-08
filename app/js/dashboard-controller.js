@@ -52,7 +52,7 @@ angular.module('votingapp').controller('surveyCreationCtrl',function($scope,$htt
 			$scope.currentId = data.data._id;
 		})
 	}
-	
+
 	var progressView = true;
 	$scope.nextStep = function() {
 		if ($scope.currentStep < 3)$scope.currentStep += 1;
@@ -65,7 +65,7 @@ angular.module('votingapp').controller('surveyCreationCtrl',function($scope,$htt
 			if ($scope.currentStep > 1) $scope.currentStep -= 1;
 	}
 var fieldAction = function() {
-		console.log(window.getComputedStyle(document.getElementById('copy2')).height);	
+		console.log(window.getComputedStyle(document.getElementById('copy2')).height);
 	if ($scope.currentStep === 2){
 	if (progressView) fadeOut('copy1',30)
 	else {
@@ -182,9 +182,10 @@ var fieldAction = function() {
 })
 
 angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$http,$routeParams){
-		
+
 		$scope.viewContent = '/public/answers.html'
 		var temp = [];
+		$scope.activeFilters = [];
 		var results = [];
 		var counter = 0;
 	$http.get('/api/survey',{headers:{survey:$routeParams.survey.match(/[^:].*/g)[0]}}).then(function(data){
@@ -202,10 +203,11 @@ angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$http
 		}
 		$scope.filter = results;
 			}
-
+	$scope.activeFilters.push('Gender')
+	$scope.gender = true;
 	console.log(results)
 		}
-			
+
 
 		for (var key in survey.answers) {
 			counter += survey.answers[key].length;
@@ -226,7 +228,7 @@ angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$http
 		temp = [];
 
 		}
-	
+
 
 		$scope.questions = survey.questions;
 		$scope.results = results;

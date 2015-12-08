@@ -197,19 +197,19 @@ app.directive('barGraph',function(){
 			console.log('scope obj '+JSON.stringify(scope.obj))
 			var results = countArrayStrings(scope.obj,labels)
 			scope.highestResult = labels[results.indexOf(results.max())];
-			scope.highestResultPercent = results.max()/scope.obj.length*100;
+			scope.highestResultPercent = (results.max()/scope.obj.length*100).toFixed(2);
 			scope.lowestResult = labels[results.indexOf(results.min())];
-			scope.lowestResultPercent = results.min()/scope.obj.length*100;
+			scope.lowestResultPercent = (results.min()/scope.obj.length*100).toFixed(2);
 			scope.$watch('filter',function(newThing,oldThing){
 				if (newThing !== undefined){
 				var result = countArrayStrings(newThing,labels)
 				var newDataset = {
-					label: "My Second dataset",
-					fillColor: "rgba(92,155,204,1)",
-					highlightFill: "rgba(92,155,204,1)",
+					label: "Women",
+					fillColor: "rgba(92,155,150,1)",
+					highlightFill: "rgba(92,155,204,0.5)",
 					data: result,
 				}
-				// WORK IN PROGRESS HERE DANGER :D
+
 				  var bars = []
     			newDataset.data.forEach(function (value, i) {
         			bars.push(new myNewChart.BarClass({
@@ -221,11 +221,11 @@ app.directive('barGraph',function(){
             		base: myNewChart.scale.endPoint,
             		strokeColor: newDataset.strokeColor,
             		fillColor: newDataset.fillColor
-        }))	
-        
+        }))
+
     })
     console.log(bars)
-				
+
 				console.log(myNewChart.datasets)
 				console.log(data.datasets)
 				myNewChart.datasets.push({
@@ -234,7 +234,7 @@ app.directive('barGraph',function(){
 				myNewChart.update();
 				}
 			})
-			
+
 	Chart.defaults.global.scaleFontFamily = "'Roboto'";
 		Chart.defaults.global.scaleFontColor = "#333";
 			Chart.defaults.global.scaleFontSize = 16;
@@ -296,7 +296,7 @@ app.directive('numericalGraph',function(){
 	var answerAmount = results.reduce(function(prev,curr){
 		return prev + curr;
 	})
-	scope.avg = valuesSum/answerAmount
+	scope.avg = (valuesSum/answerAmount).toFixed(2)
 				var data = {
     labels: labels,
     datasets: [
