@@ -540,6 +540,14 @@ margin-right:auto;
 
 
 }
+.create-btn {
+	border:none;
+	min-height:40px;
+	min-width:200px;
+}
+.btn-addfield {
+	margin:auto;
+}
 @media screen and (max-width: 1200px) {
     .textbox {
         width:100%;
