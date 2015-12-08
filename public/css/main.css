@@ -224,7 +224,6 @@ canvas{
 }
 .dashboard-tile {
 	margin:15px;
-  flex-flow:column;
   position:relative;
   box-sizing:border-box;
 	flex-flow:row;
@@ -300,7 +299,7 @@ border:none;
 .three-quarter {
 width: 75%;
 }
-div.question-wrapper:nth-child(even) .textbox{
+.question-wrapper:nth-child(even) .textbox{
 		margin-right:15px;
 }
 .scroll-btn {
@@ -340,7 +339,7 @@ div.question-wrapper:nth-child(even) .textbox{
 	right:5%;
 }
 .counter li {
-	heigth:100%;
+
 	width:auto;
 	display:table-cell;
   text-align:center;
@@ -546,7 +545,14 @@ margin-right:auto;
 	min-width:200px;
 }
 .btn-addfield {
+	background:#e6e6e6;
+	height:60px;
+	width:60%;
+	display:block;
 	margin:auto;
+}
+.btn-addfield:hover {
+	background:#e0e0e0;
 }
 @media screen and (max-width: 1200px) {
     .textbox {

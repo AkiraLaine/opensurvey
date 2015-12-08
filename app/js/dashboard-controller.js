@@ -34,7 +34,7 @@ angular.module('votingapp').controller('surveyCreationCtrl',function($scope,$htt
 	$scope.animationsEnabled = true;
 	$scope.survey = {};
 	$scope.newFormQuestions = [];
-	$scope.filters = {};
+	$scope.survey.filters = {};
 	$scope.newQuestion = {};
 	$scope.newQuestion.rangeOptions = {};
 	$scope.newQuestion.rangeOptions.scaleNegative = "Don't Agree";
@@ -52,7 +52,7 @@ angular.module('votingapp').controller('surveyCreationCtrl',function($scope,$htt
 			$scope.currentId = data.data._id;
 		})
 	}
-
+	
 	var progressView = true;
 	$scope.nextStep = function() {
 		if ($scope.currentStep < 3)$scope.currentStep += 1;
@@ -125,17 +125,18 @@ var fieldAction = function() {
 	}
 
 	$scope.saveDraft = function(){
-				console.log(JSON.stringify($scope.filters))
+
 		var date = new Date();
 		console.log($scope.survey.published)
 		$scope.draft = {
 			published: $scope.survey.published,
 			project: $scope.survey.project,
 			name: $scope.survey.name,
-			filters: $scope.filters,
+			filters: $scope.survey.filters,
 			questions: $scope.newFormQuestions,
 			edited:date.toLocaleString()
 		}
+		console.log("saving survey: "+JSON.stringify($scope.draft))
 		if ($scope.survey.published === true){
 			$scope.draft.publishedDate = date.toLocaleString();
 		}
@@ -181,13 +182,31 @@ var fieldAction = function() {
 })
 
 angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$http,$routeParams){
-
+		
 		$scope.viewContent = '/public/answers.html'
 		var temp = [];
 		var results = [];
 		var counter = 0;
 	$http.get('/api/survey',{headers:{survey:$routeParams.survey.match(/[^:].*/g)[0]}}).then(function(data){
 		var survey = data.data;
+		console.log(data.data)
+			$scope.filterGender = function(x){
+				console.log(x);
+				results = [];
+			for (var key in survey.answers){
+				for (var i=0; i<survey.answers[key].length;i++){
+					if (survey.answers[key][i].gender === 'female'){
+					results.push(survey.answers[key][i][survey.questions[x].name]);
+					}
+
+		}
+		$scope.filter = results;
+			}
+
+	console.log(results)
+		}
+			
+
 		for (var key in survey.answers) {
 			counter += survey.answers[key].length;
 		}
@@ -197,7 +216,7 @@ angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$http
 		for (var key in survey.answers){
 			for (var i=0; i<survey.answers[key].length;i++){
 		temp.push(survey.answers[key][i][survey.questions[x].name]);
-
+		console.log(survey.answers[key][i].gender)
 
 		}
 
@@ -207,11 +226,10 @@ angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$http
 		temp = [];
 
 		}
-		var demographics = [];
+	
 
 		$scope.questions = survey.questions;
 		$scope.results = results;
-		$scope.demographics = demographics;
 		$scope.name = survey.name
 		counter = 0;
 	});
@@ -232,13 +250,6 @@ angular.module('votingapp').controller('ModalInstanceCtrl', function ($scope, $u
   $scope.ok = function (newQuestion) {
 		console.log('approving demographic stuff:'+newQuestion.gender)
 		$scope.newQuestion = newQuestion;
-		$scope.filters = {
-			'gender': newQuestion.gender,
-			'income': newQuestion.income,
-			'age': newQuestion.age
-
-		}
-
 		$scope.newFormQuestions.push($scope.newQuestion);
 
     $uibModalInstance.close();

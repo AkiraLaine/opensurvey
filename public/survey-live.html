@@ -18,13 +18,18 @@
 	<body>
 
 		<div class='question-container-live'>
+
 		<h1 ng-bind='activeSurvey.name'></h1>
+		<div ng-if='activeSurvey.filters.gender'>
+		  Plx enter gender:<input type='text' ng-model='answers.gender'></input>
+		</div>  		
 		<div ng-repeat='question in activeSurvey.questions' >
 
 			<h4 ng-bind='question.name'></h4>
 			<textarea class='form-control' rows='6' ng-if='question.type==="open question"' ng-model='answers[question.name]'></textarea>
 			<div ng-if='question.type==="multiple choice"' ng-repeat='option in question.options'>
-			<input type='radio' name='{{question.name}}' ng-model='answers[question.name]' value='{{option.value}}'><span ng-bind='option.value'></span></input><br>
+			<input type='radio' name='{{question.name}}' ng-model='answers[question.name]' value='{{option.value}}' id='{{option.value}}'></input>
+			<label for='{{option.value}}'><span ng-bind='option.value'></span></label><br>
 		</div>
 		<div ng-if='question.type==="numerical scale"'>
 			<div class="row">
