@@ -182,7 +182,9 @@ app.directive('barGraph',function(){
 	return{
 		restrict:'E',
 		scope: { obj: '=',
-						content: '='},
+						content: '=',
+			filter:'='
+		},
 		templateUrl:'/public/resultgraph.html',
 		replace:true,
 		link:function(scope,elm){
@@ -192,12 +194,47 @@ app.directive('barGraph',function(){
 				console.log(scope.content.options)
 				labels.push(scope.content.options[key].value)
 			}
+			console.log('scope obj '+JSON.stringify(scope.obj))
 			var results = countArrayStrings(scope.obj,labels)
 			scope.highestResult = labels[results.indexOf(results.max())];
 			scope.highestResultPercent = results.max()/scope.obj.length*100;
 			scope.lowestResult = labels[results.indexOf(results.min())];
 			scope.lowestResultPercent = results.min()/scope.obj.length*100;
-
+			scope.$watch('filter',function(newThing,oldThing){
+				if (newThing !== undefined){
+				var result = countArrayStrings(newThing,labels)
+				var newDataset = {
+					label: "My Second dataset",
+					fillColor: "rgba(92,155,204,1)",
+					highlightFill: "rgba(92,155,204,1)",
+					data: result,
+				}
+				// WORK IN PROGRESS HERE DANGER :D
+				  var bars = []
+    			newDataset.data.forEach(function (value, i) {
+        			bars.push(new myNewChart.BarClass({
+            		value: value,
+            		label: myNewChart.datasets[0].bars[i].label,
+            		x: myNewChart.scale.calculateBarX(myNewChart.datasets.length + 1, myNewChart.datasets.length, i),
+            		y: myNewChart.scale.endPoint,
+            		width: myNewChart.scale.calculateBarWidth(myNewChart.datasets.length + 1),
+            		base: myNewChart.scale.endPoint,
+            		strokeColor: newDataset.strokeColor,
+            		fillColor: newDataset.fillColor
+        }))	
+        
+    })
+    console.log(bars)
+				
+				console.log(myNewChart.datasets)
+				console.log(data.datasets)
+				myNewChart.datasets.push({
+					bars: bars
+				})
+				myNewChart.update();
+				}
+			})
+			
 	Chart.defaults.global.scaleFontFamily = "'Roboto'";
 		Chart.defaults.global.scaleFontColor = "#333";
 			Chart.defaults.global.scaleFontSize = 16;

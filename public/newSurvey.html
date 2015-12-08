@@ -14,22 +14,22 @@
 				</div>
 				<div id='container2'>
 					<div class='check-container'>
-						<input class='filter-checkbox' id='name' type='checkbox'></input>
+						<input class='filter-checkbox' ng-model='survey.filters.name' id='name' type='checkbox'></input>
 						<label for='name'></label>
 						<span class='tag'>Name</span>
 					</div>
 					<div class='check-container'>
-						<input class='filter-checkbox' id='gender' type='checkbox'></input>
+						<input class='filter-checkbox' ng-model='survey.filters.gender' id='gender' type='checkbox'></input>
 						<label for='gender'></label>
 						<span class='tag'>Gender</span>
 					</div>
 					<div class='check-container'>
-						<input class='filter-checkbox' id='age' type='checkbox'></input>
+						<input class='filter-checkbox'  ng-model='survey.filters.age' id='age' type='checkbox'></input>
 						<label for='age'></label>
 						<span class='tag'>Age</span>
 					</div>
 					<div class='check-container'>
-						<input class='filter-checkbox' id='income' type='checkbox'></input>
+						<input class='filter-checkbox' ng-model='survey.filters.income' id='income' type='checkbox'></input>
 						<label for='income'></label>
 						<span class='tag'>Income</span>
 					</div>
@@ -103,7 +103,7 @@
 					</div><br/></div>
 
 				<button class='create-btn btn-addfield' ng-click='open("lg")' ng-if='currentStep ===3' type='button'>
-					<i class="fa fa-plus fa-fw"></i>
+					<i class="fa fa-plus fa-fw fa-lg"></i>
 					Add Question</button>
 			</div>
 
