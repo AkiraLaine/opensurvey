@@ -22,6 +22,14 @@ Object.defineProperty(Array.prototype, "max", {
 		return result;
     }
 });
+
+function getNiceColor(){
+  var colors=['#27ae60','#2980b9','#16a085','#8e44ad','#2c3e50','#e74c3c','#7f8c8d','#e67e22'];
+  var nextColor = colors[(Math.floor(Math.random() * colors.length))]
+  console.log(nextColor)
+  return nextColor;
+}
+
 function fadeOut(id,speed){
   var element = document.getElementById(id)
   element.style.opacity = 1;
@@ -185,13 +193,27 @@ app.directive('topMenu',function(){
 	restrict:'E',
 	templateUrl:'/public/tile-menu.html',
 	replace:true,
+  scope:{
+    obj: '=',
+    filter: '=',
+  },
 	link:function(scope,elm){
 		scope.overlay = function(){
 			scope.gender = true;
-		} 
+		}
 		scope.dismiss = function(){
 			scope.gender = false;
 		}
+    scope.testMale = function(){
+      console.log(scope.obj)
+      scope.filter(scope.obj,'male')
+      scope.dismiss();
+    }
+    scope.testFemale = function(){
+      console.log(scope.obj)
+      scope.filter(scope.obj,'female')
+            scope.dismiss();
+    }
 	}
 	}
 })
@@ -208,6 +230,7 @@ app.directive('barGraph',function(){
 									scope.filterGender = function(x){
 		scope.gender=true;
 		}
+
 		scope.disable = function(){
 			scope.gender = false;
 		}
@@ -217,7 +240,7 @@ app.directive('barGraph',function(){
 				console.log(scope.content.options)
 				labels.push(scope.content.options[key].value)
 			}
-			
+
 			console.log('scope obj '+JSON.stringify(scope.obj))
 			var results = countArrayStrings(scope.obj,labels)
 			scope.highestResult = labels[results.indexOf(results.max())];
@@ -229,7 +252,7 @@ app.directive('barGraph',function(){
 				var result = countArrayStrings(newThing,labels)
 				var newDataset = {
 					label: "Women",
-					fillColor: "rgba(92,155,150,1)",
+					fillColor: getNiceColor(),
 					highlightFill: "rgba(92,155,204,0.5)",
 					data: result,
 				}

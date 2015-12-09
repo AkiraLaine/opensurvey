@@ -1,10 +1,10 @@
 	<div class='full-width'>
 				        <div ng-if='gender' class='textbox-overlay-content'>
         <div><h3>Filter results for:</h3>
-        <span class='blue'><h3>Men</h3></span><br>
-        <span class='purple'><h3>Women<h3></span></div></div>
+        <span class='blue clickable' ng-click='testMale()'><h3>Men</h3></span><br>
+        <span class='purple clickable' ng-click='testFemale()'><h3>Women<h3></span></div></div>
       <div ng-if='gender' class='textbox-overlay'>
-      <i class='fa fa-times fa-lg alignright' ng-click='dismiss()'></i>
+      <i class='clickable fa fa-times fa-lg alignright' ng-click='dismiss()'></i>
       </div>
 	<div class='textbox-top-menu'>
 		<span ng-repeat='name in activeFilters' class='btn btn-default alignleft'>{{name}}</span>
@@ -16,6 +16,6 @@
 					<li role='menuitem'><a>Age</a></li>
 				</ul>
 			</div>
-
+<div style='clear:both;'></div>
 	</div>
 	</div>
