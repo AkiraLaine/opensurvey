@@ -191,12 +191,12 @@ angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$http
 	$http.get('/api/survey',{headers:{survey:$routeParams.survey.match(/[^:].*/g)[0]}}).then(function(data){
 		var survey = data.data;
 		console.log(data.data)
-			$scope.filterGender = function(x){
+			$scope.filterGender = function(x,str){
 				console.log(x);
 				results = [];
 			for (var key in survey.answers){
 				for (var i=0; i<survey.answers[key].length;i++){
-					if (survey.answers[key][i].gender === 'female'){
+					if (survey.answers[key][i].gender === str){
 					results.push(survey.answers[key][i][survey.questions[x].name]);
 					}
 

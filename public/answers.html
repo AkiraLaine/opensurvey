@@ -5,12 +5,12 @@
 <h3>{{surveyResultsAmount}} responses</h3>
 </div>
 <div ng-repeat='question in questions' class='question-wrapper'>
-	
+
     <div class='textbox'>
 	<div style="clear: both;"></div>
-		<top-menu></top-menu>
+		<top-menu obj='$index' filter='filterGender'></top-menu>
 	<div class='full-width' ng-if='question.type === "open question"'>
-	
+
     <answer-container obj='results[$index]' content='question'></answer-container>
     </div>
     <div class='full-width' ng-if='question.type === "multiple choice"'>
