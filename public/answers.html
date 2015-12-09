@@ -5,29 +5,12 @@
 <h3>{{surveyResultsAmount}} responses</h3>
 </div>
 <div ng-repeat='question in questions' class='question-wrapper'>
-
+	
     <div class='textbox'>
-      <div ng-show='gender' class='textbox-overlay-content'>
-        <div><h3>Filter results for:</h3>
-        <span class='blue'><h3>Men</h3></span><br>
-        <span class='purple'><h3>Women<h3></span></div></div>
-      <div ng-show='gender' class='textbox-overlay'>
-      <i class='fa fa-times fa-lg alignright'></i>
-      </div>
-	<div class='textbox-top-menu'>
-		<span ng-repeat='name in activeFilters' class='btn btn-default alignleft'>{{name}}</span>
-			 <div class="btn-group alignright" uib-dropdown is-open="status.isopen">
-			<button id="filter-button" type="button" class="btn btn-default" uib-dropdown-toggle ng-disabled="disabled"><i class='fa fa-filter'></i> Add Filter <span class="caret"></span></button>
-				<ul class="uib-dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="filter-button">
-					<li role='menuitem' ng-click='filterGender($index)'><a>Gender</a></li>
-					<li role='menuitem'><a>Income</a></li>
-					<li role='menuitem'><a>Age</a></li>
-				</ul>
-			</div>
-
-	</div>
 	<div style="clear: both;"></div>
+		<top-menu></top-menu>
 	<div class='full-width' ng-if='question.type === "open question"'>
+	
     <answer-container obj='results[$index]' content='question'></answer-container>
     </div>
     <div class='full-width' ng-if='question.type === "multiple choice"'>

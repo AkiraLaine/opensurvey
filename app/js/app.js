@@ -166,6 +166,9 @@ app.directive('answerContainer',function(){
 		replace:true,
 		templateUrl:'/public/textscroll.html',
 		link:function(scope,elm){
+						scope.filterGender = function(x){
+		scope.gender=true;
+		}
 			scope.increase = function(){
 				if (scope.counter < scope.obj.length-1) scope.counter += 1;
 
@@ -177,7 +180,21 @@ app.directive('answerContainer',function(){
 		}
 }
 });
-
+app.directive('topMenu',function(){
+	return{
+	restrict:'E',
+	templateUrl:'/public/tile-menu.html',
+	replace:true,
+	link:function(scope,elm){
+		scope.overlay = function(){
+			scope.gender = true;
+		} 
+		scope.dismiss = function(){
+			scope.gender = false;
+		}
+	}
+	}
+})
 app.directive('barGraph',function(){
 	return{
 		restrict:'E',
@@ -188,12 +205,19 @@ app.directive('barGraph',function(){
 		templateUrl:'/public/resultgraph.html',
 		replace:true,
 		link:function(scope,elm){
+									scope.filterGender = function(x){
+		scope.gender=true;
+		}
+		scope.disable = function(){
+			scope.gender = false;
+		}
 			console.log('rethinking the graph for filters' +JSON.stringify(scope.obj))
 			var labels = [];
 			for (var key in scope.content.options){
 				console.log(scope.content.options)
 				labels.push(scope.content.options[key].value)
 			}
+			
 			console.log('scope obj '+JSON.stringify(scope.obj))
 			var results = countArrayStrings(scope.obj,labels)
 			scope.highestResult = labels[results.indexOf(results.max())];
