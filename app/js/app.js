@@ -233,13 +233,6 @@ app.directive('barGraph',function(){
 		replace:true,
 		link:function(scope,elm){
 
-									scope.filterGender = function(x){
-		scope.gender=true;
-		}
-
-		scope.disable = function(){
-			scope.gender = false;
-		}
 			console.log(myNewChart)
 			var labels = [];
 			for (var key in scope.content.options){
@@ -277,10 +270,6 @@ app.directive('barGraph',function(){
         }))
 
     })
-    console.log(bars)
-
-				console.log(myNewChart.datasets)
-				console.log(data.datasets)
 				myNewChart.datasets.push({
 					bars: bars
 				})
@@ -301,10 +290,12 @@ var data = {
 labels:labels,
 datasets: [
 	{
+
 			label: "My Second dataset",
 			fillColor: gradient,
 			highlightFill: "rgba(92,155,204,1)",
 			data: results,
+
 	}
 ]
 }
@@ -343,7 +334,6 @@ app.directive('numericalGraph',function(){
       console.log(myNewChart)
       var result = countArrayStrings(newThing,labels)
       var newDataset = {
-        label: "Women",
         fillColor: getNiceColor(),
         highlightFill: "rgba(92,155,204,0.5)",
         strokeColor: getNiceColor(),
@@ -366,13 +356,15 @@ app.directive('numericalGraph',function(){
 
 
       console.log(myNewChart.datasets)
-      console.log(data.datasets)
       myNewChart.datasets.push({
+        label:'ABCDEFG',
         points: points,
         strokeColor: newDataset.strokeColor,
       })
       console.log('updating the line chart!!!')
+
       myNewChart.update();
+
       }
 });
 	 			for(i=0;i<10;i++){
@@ -401,18 +393,23 @@ app.directive('numericalGraph',function(){
 						pointColor: gradient,
             highlightFill: "rgba(151,187,205,0.75)",
             highlightStroke: "rgba(151,187,205,1)",
-            data: countArrayStrings(scope.obj,['1','2','3','4','5','6','7','8','9','10'])
+            data: countArrayStrings(scope.obj,['1','2','3','4','5','6','7','8','9','10']),
+            multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>"
         }
     ]
 				}
 
 
 				var myNewChart = new Chart(ctx).Line(data,{
+           bezierCurveTension : 0.05,
 					pointDot:false,
 					    datasetStrokeWidth : 8,
+
+
 				});
 			}
 	}
+  $scope.legend = myNewChart.generateLegend()
 
 });
 app.directive('myChart', function(){

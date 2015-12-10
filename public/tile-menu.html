@@ -7,7 +7,7 @@
       <i class='clickable fa fa-times fa-lg alignright' ng-click='dismiss()'></i>
       </div>
 	<div class='textbox-top-menu'>
-		<span ng-repeat='name in activeFilters' class='btn btn-default alignleft'>{{name}}</span>
+		<span ng-repeat='name in activeFilters' class='btn btn-default alignleft' >{{name}}</span>
 			 <div class="btn-group alignright" uib-dropdown is-open="status.isopen">
 			<button id="filter-button" type="button" class="btn btn-default" uib-dropdown-toggle ng-disabled="disabled"><i class='fa fa-filter'></i> Add Filter <span class="caret"></span></button>
 				<ul class="uib-dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="filter-button">
