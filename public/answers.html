@@ -14,10 +14,10 @@
     <answer-container obj='results[$index]' content='question'></answer-container>
     </div>
     <div class='full-width' ng-if='question.type === "multiple choice"'>
-    <bar-graph obj='results[$index]' content='question' filter='filter'></bar-graph>
+    <bar-graph obj='results[$index]' content='question' filter='filter' num='$index'></bar-graph>
     </div>
     <div class='full-width' ng-if='question.type === "numerical scale"'>
-    <numerical-graph obj='results[$index]' content='question'></numerical-graph>
+    <numerical-graph obj='results[$index]' filter='filter' num='$index' content='question'></numerical-graph>
     </div>
     </div>
 

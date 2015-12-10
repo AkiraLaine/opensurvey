@@ -182,10 +182,9 @@ var fieldAction = function() {
 })
 
 angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$http,$routeParams){
-
+		$scope.filter = [];
 		$scope.viewContent = '/public/answers.html'
 		var temp = [];
-		$scope.activeFilters = [];
 		var results = [];
 		var counter = 0;
 	$http.get('/api/survey',{headers:{survey:$routeParams.survey.match(/[^:].*/g)[0]}}).then(function(data){
@@ -201,9 +200,9 @@ angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$http
 					}
 
 		}
-		$scope.filter = results;
+		$scope.filter[x] = results;
+		console.log('let us check '+$scope.filter)
 			}
-	$scope.activeFilters.push('Gender')
 	$scope.gender = true;
 	console.log(results)
 		}

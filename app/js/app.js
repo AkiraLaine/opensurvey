@@ -198,6 +198,8 @@ app.directive('topMenu',function(){
     filter: '=',
   },
 	link:function(scope,elm){
+    console.log(scope.filter+scope.obj)
+    scope.activeFilters = [];
 		scope.overlay = function(){
 			scope.gender = true;
 		}
@@ -208,10 +210,12 @@ app.directive('topMenu',function(){
       console.log(scope.obj)
       scope.filter(scope.obj,'male')
       scope.dismiss();
+      scope.activeFilters.push('Men')
     }
     scope.testFemale = function(){
       console.log(scope.obj)
       scope.filter(scope.obj,'female')
+            scope.activeFilters.push('Women')
             scope.dismiss();
     }
 	}
@@ -222,11 +226,13 @@ app.directive('barGraph',function(){
 		restrict:'E',
 		scope: { obj: '=',
 						content: '=',
-			filter:'='
+			filter:'=',
+      num:'=',
 		},
 		templateUrl:'/public/resultgraph.html',
 		replace:true,
 		link:function(scope,elm){
+
 									scope.filterGender = function(x){
 		scope.gender=true;
 		}
@@ -234,7 +240,7 @@ app.directive('barGraph',function(){
 		scope.disable = function(){
 			scope.gender = false;
 		}
-			console.log('rethinking the graph for filters' +JSON.stringify(scope.obj))
+			console.log(myNewChart)
 			var labels = [];
 			for (var key in scope.content.options){
 				console.log(scope.content.options)
@@ -247,7 +253,7 @@ app.directive('barGraph',function(){
 			scope.highestResultPercent = (results.max()/scope.obj.length*100).toFixed(2);
 			scope.lowestResult = labels[results.indexOf(results.min())];
 			scope.lowestResultPercent = (results.min()/scope.obj.length*100).toFixed(2);
-			scope.$watch('filter',function(newThing,oldThing){
+			scope.$watch('filter[num]',function(newThing,oldThing){
 				if (newThing !== undefined){
 				var result = countArrayStrings(newThing,labels)
 				var newDataset = {
@@ -256,7 +262,7 @@ app.directive('barGraph',function(){
 					highlightFill: "rgba(92,155,204,0.5)",
 					data: result,
 				}
-
+          myNewChart.options.barValueSpacing += 5;
 				  var bars = []
     			newDataset.data.forEach(function (value, i) {
         			bars.push(new myNewChart.BarClass({
@@ -316,7 +322,9 @@ app.directive('numericalGraph',function(){
 			replace:true,
 			scope:{
 				obj:'=',
-				content:'='
+				content:'=',
+        filter: '=',
+        num: '='
 			},
 			link: function(scope,elm){
 				Chart.defaults.global.responsive = true;
@@ -329,6 +337,44 @@ app.directive('numericalGraph',function(){
 	var results = countArrayStrings(scope.obj,['1','2','3','4','5','6','7','8','9','10']);
 	var labels = ['1','2','3','4','5','6','7','8','9','10']
 	var values = []
+  scope.$watch('filter[num]',function(newThing,oldThing){
+    if (newThing !== undefined){
+      console.log('this is new: '+newThing)
+      console.log(myNewChart)
+      var result = countArrayStrings(newThing,labels)
+      var newDataset = {
+        label: "Women",
+        fillColor: getNiceColor(),
+        highlightFill: "rgba(92,155,204,0.5)",
+        strokeColor: getNiceColor(),
+        data: result,
+      }
+        var points = []
+        newDataset.data.forEach(function (value, i) {
+            points.push(new myNewChart.PointClass({
+              value: value,
+              label: myNewChart.datasets[0].points[i].label,
+              x: myNewChart.scale.calculateX(myNewChart.datasets.length + 1, myNewChart.datasets.length, i),
+              y: myNewChart.scale.endPoint,
+              strokeColor: newDataset.strokeColor,
+              fillColor: newDataset.fillColor
+      }))
+
+  })
+
+
+
+
+      console.log(myNewChart.datasets)
+      console.log(data.datasets)
+      myNewChart.datasets.push({
+        points: points,
+        strokeColor: newDataset.strokeColor,
+      })
+      console.log('updating the line chart!!!')
+      myNewChart.update();
+      }
+});
 	 			for(i=0;i<10;i++){
 					values.push(results[i] * labels[i])
 				}
