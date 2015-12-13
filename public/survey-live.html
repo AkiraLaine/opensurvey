@@ -22,7 +22,13 @@
 		<h1 ng-bind='activeSurvey.name'></h1>
 		<div ng-if='activeSurvey.filters.gender'>
 		  Plx enter gender:<input type='text' ng-model='answers.gender'></input>
-		</div>  		
+		</div>
+    <div ng-if='activeSurvey.filters.income'>
+            Plx enter Income:<input type='number' ng-model='answers.income'></input>
+          </div>
+          <div ng-if='activeSurvey.filters.age'>
+                  Plx enter age:<input type='number' ng-model='answers.age'></input>
+                </div>
 		<div ng-repeat='question in activeSurvey.questions' >
 
 			<h4 ng-bind='question.name'></h4>

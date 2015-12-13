@@ -1,21 +1,32 @@
 	<div class='full-width'>
-				        <div ng-if='gender' class='textbox-overlay-content'>
+				        <div ng-if='overlayContent === "gender"' class='textbox-overlay-content'>
         <div><h3>Filter results for:</h3>
-        <span class='blue clickable' ng-click='testMale()'><h3>Men</h3></span><br>
-        <span class='purple clickable' ng-click='testFemale()'><h3>Women<h3></span></div></div>
+        <span class='blue clickable' ng-click='applyFilter("male")'><h3>Men</h3></span><br>
+        <span class='purple clickable' ng-click='applyFilter("female")'><h3>Women<h3></span></div></div>
       <div ng-if='gender' class='textbox-overlay'>
       <i class='clickable fa fa-times fa-lg alignright' ng-click='dismiss()'></i>
       </div>
+<div ng-if='overlayContent === "income" || overlayContent === "age"' class='textbox-overlay-content'><h3>Filter results for Income:</h3>
+<span class='blue'><h3>Above: </h3><input type='number' ng-model='input.min'></input></span><br>
+<span class='purple'><h3>Below:</h3><input type='number' ng-model='input.max'></input></span>
+<button class='btn btn-default' ng-click='applyFilter(overlayContent)'>Ok</button>
+</div>
+<div ng-if='overlayActive' class='textbox-overlay'>
+<i class='clickable fa fa-times fa-lg alignright' ng-click='dismiss()'></i>
+</div>
 	<div class='textbox-top-menu'>
-		<span ng-repeat='name in activeFilters' class='btn btn-default alignleft' >{{name}}</span>
+				<button class='btn btn-default alignright' ng-click='expandTile()'><i class='fa fa-external-link fa-fw'></i> Expand View</button>
+						<button class='btn btn-default alignleft'><i class='fa fa-clipboard fa-fw'></i> Export data</button>
+		<button class='btn btn-default alignright' ng-click='showData()'><i class='fa fa-table fa-fw'></i> Show data table</button>
 			 <div class="btn-group alignright" uib-dropdown is-open="status.isopen">
 			<button id="filter-button" type="button" class="btn btn-default" uib-dropdown-toggle ng-disabled="disabled"><i class='fa fa-filter'></i> Add Filter <span class="caret"></span></button>
 				<ul class="uib-dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="filter-button">
-					<li role='menuitem' ng-click='overlay()'><a>Gender</a></li>
-					<li role='menuitem'><a>Income</a></li>
-					<li role='menuitem'><a>Age</a></li>
+					<li role='menuitem' ng-click='overlay("gender")'><a>Gender</a></li>
+					<li role='menuitem' ng-click='overlay("income")'><a>Income</a></li>
+					<li role='menuitem' ng-click='overlay("age")'><a>Age</a></li>
 				</ul>
 			</div>
+
 <div style='clear:both;'></div>
 	</div>
 	</div>

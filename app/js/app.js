@@ -200,23 +200,43 @@ app.directive('topMenu',function(){
 	link:function(scope,elm){
     console.log(scope.filter+scope.obj)
     scope.activeFilters = [];
-		scope.overlay = function(){
-			scope.gender = true;
-		}
-		scope.dismiss = function(){
-			scope.gender = false;
-		}
-    scope.testMale = function(){
-      console.log(scope.obj)
-      scope.filter(scope.obj,'male')
-      scope.dismiss();
-      scope.activeFilters.push('Men')
+    scope.input = {};
+
+    scope.expandTile = function(){
+      console.log('test')
+      console.log(elm)
     }
-    scope.testFemale = function(){
-      console.log(scope.obj)
-      scope.filter(scope.obj,'female')
-            scope.activeFilters.push('Women')
-            scope.dismiss();
+		scope.overlay = function(str){
+			scope.overlayActive = true;
+      scope.overlayContent = str;
+      console.log('the content variable is: '+scope.overlayContent)
+		}
+    scope.applyFilter = function(str){
+
+      console.log('last try..'+scope.input.min+' with '+str)
+      if (scope.input.min !== undefined && scope.input.max !== undefined){
+
+      scope.filter(scope.obj,str,[scope.input.min,scope.input.max])
+      }
+      else if (scope.input.min !== undefined){
+      scope.filter(scope.obj,str,[scope.input.min,0])
+      }
+      else if (scope.input.max !== undefined){
+      scope.filter(scope.obj,str,[0,scope.input.max])
+      }
+      else {
+      scope.filter(scope.obj,str)
+      }
+      scope.dismiss();
+    }
+		scope.dismiss = function(){
+			scope.overlayActive = false;
+      scope.overlayContent = '';
+      scope.input.min = undefined;
+      scope.input.max = undefined;
+		}
+    scope.showData = function() {
+      scope.displayData = true;
     }
 	}
 	}
@@ -248,7 +268,7 @@ app.directive('barGraph',function(){
 			scope.lowestResultPercent = (results.min()/scope.obj.length*100).toFixed(2);
 			scope.$watch('filter[num]',function(newThing,oldThing){
 				if (newThing !== undefined){
-				var result = countArrayStrings(newThing,labels)
+				var result = countArrayStrings(newThing[0],labels)
 				var newDataset = {
 					label: "Women",
 					fillColor: getNiceColor(),
@@ -320,23 +340,39 @@ app.directive('numericalGraph',function(){
 			link: function(scope,elm){
 				Chart.defaults.global.responsive = true;
 				Chart.defaults.global.maintainAspectRatio = false;
-				console.log('test '+countArrayStrings(scope.obj,['1','2','3','4','5','6','7','8','9','10']));
 								var ctx = elm[0].getElementsByTagName('canvas')[0].getContext("2d");
 				var gradient = ctx.createLinearGradient(0, 0, 0, 300);
 	gradient.addColorStop(0, 'rgba(92,155,204,1)');
 	gradient.addColorStop(1, 'rgba(81,17,109,0.6)');
 	var results = countArrayStrings(scope.obj,['1','2','3','4','5','6','7','8','9','10']);
 	var labels = ['1','2','3','4','5','6','7','8','9','10']
+  scope.colors = {};
+ scope.colors.male = '#27ae60';
+ scope.colors.female = '#e67e22';
+  scope.colors.income = ['#16a085','#8e44ad','#2c3e50','#e74c3c','#7f8c8d'].reverse()
+  scope.colors.age = '#2c3e50';
+  scope.legend = {}
+  scope.labels = labels;
+  scope.legend['total'] = results;
+  scope.activeFilters = [];
+  console.log(scope.firstValues)
+
+  console.log('my labels: '+scope.labels)
 	var values = []
+  scope.removeDataset = function(index){
+    myNewChart.datasets.splice(index+1,1);
+    scope.activeFilters.splice(index,1);
+    myNewChart.update();
+  }
+  //Add new dataset
   scope.$watch('filter[num]',function(newThing,oldThing){
     if (newThing !== undefined){
-      console.log('this is new: '+newThing)
-      console.log(myNewChart)
-      var result = countArrayStrings(newThing,labels)
+
+      var result = countArrayStrings(newThing[0],labels)
       var newDataset = {
-        fillColor: getNiceColor(),
+        fillColor: scope.colors[newThing[1]],
         highlightFill: "rgba(92,155,204,0.5)",
-        strokeColor: getNiceColor(),
+        strokeColor: scope.colors[newThing[1]],
         data: result,
       }
         var points = []
@@ -351,26 +387,23 @@ app.directive('numericalGraph',function(){
       }))
 
   })
-
-
-
-
-      console.log(myNewChart.datasets)
       myNewChart.datasets.push({
         label:'ABCDEFG',
         points: points,
         strokeColor: newDataset.strokeColor,
       })
-      console.log('updating the line chart!!!')
+      console.log(myNewChart.datasets)
 
       myNewChart.update();
-
+      scope.legend[newThing[1]] = result;
+      scope.activeFilters.push(newThing[1])
+      console.log('active Filters are: '+scope.activeFilters)
       }
 });
 	 			for(i=0;i<10;i++){
 					values.push(results[i] * labels[i])
 				}
-				console.log('test123' +values)
+
 
 				var sorted = scope.obj.sort();
 	scope.lowPercentile = scope.obj[Math.ceil(scope.obj.length*0.75)-1];
