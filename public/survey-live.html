@@ -19,7 +19,7 @@
 
 		<div class='question-container-live'>
 
-		<h1 ng-bind='activeSurvey.name'></h1>
+		<h1 class='center-heading' ng-bind='activeSurvey.name'></h1>
 		<div ng-if='activeSurvey.filters.gender'>
 		  Plx enter gender:<input type='text' ng-model='answers.gender'></input>
 		</div>
@@ -29,41 +29,39 @@
           <div ng-if='activeSurvey.filters.age'>
                   Plx enter age:<input type='number' ng-model='answers.age'></input>
                 </div>
-		<div ng-repeat='question in activeSurvey.questions' >
-
+		<div ng-repeat='question in activeSurvey.questions' class='live-question'>
 			<h4 ng-bind='question.name'></h4>
 			<textarea class='form-control' rows='6' ng-if='question.type==="open question"' ng-model='answers[question.name]'></textarea>
-			<div ng-if='question.type==="multiple choice"' ng-repeat='option in question.options'>
-			<input type='radio' name='{{question.name}}' ng-model='answers[question.name]' value='{{option.value}}' id='{{option.value}}'></input>
-			<label for='{{option.value}}'><span ng-bind='option.value'></span></label><br>
-		</div>
-		<div ng-if='question.type==="numerical scale"'>
-			<div class="row">
+			<div ng-if='question.type==="multiple choice"'> 
+	    <span class='live-selection' ng-repeat='option in question.options'><input class='square' type='radio' name='{{question.name}}' ng-model='answers[question.name]' value='{{option.value}}' id='{{option.value}}'></input>
+			<label class='square' for='{{option.value}}'></label>{{option.value}}</span>
 
-			<div class='col-xs-12'>
+</div>
+		<div ng-if='question.type==="numerical scale"'>
+
+			<div class='demo-test'>
         	<span ng-bind='question.rangeOptions.scaleNegative'></span>
-        <input type='radio' name='{{question.name}}' value='1' ng-model='answers[question.name]' id='r1'></input>
-        <label for="r1"><span>1</span></label>
-        <input type='radio' name='{{question.name}}' value='2' ng-model='answers[question.name]' id='r2'></input>
-          <label for="r2"><span>2</span></label>
-        <input type='radio' name='{{question.name}}' value='3' ng-model='answers[question.name]' id='r3'></input>
-          <label for="r3"><span>3</span></label>
-        <input type='radio' name='{{question.name}}' value='4' ng-model='answers[question.name]' id='r4'></input>
-          <label for="r4"><span>4</span></label>
-        <input type='radio' name='{{question.name}}' value='5' ng-model='answers[question.name]' id='r5'></input>
-          <label for="r5"><span>5</span></label>
-        <input type='radio' name='{{question.name}}' value='6' ng-model='answers[question.name]' id='r6'></input>
-          <label for="r6"><span>6</span></label>
-        <input type='radio' name='{{question.name}}' value='7' ng-model='answers[question.name]' id='r7'></input>
-          <label for="r7"><span>7</span></label>
-        <input type='radio' name='{{question.name}}' value='8' ng-model='answers[question.name]' id='r8'></input>
-          <label for="r8"><span>8</span></label>
-        <input type='radio' name='{{question.name}}' value='9' ng-model='answers[question.name]' id='r9'></input>
-          <label for="r9"><span>9</span></label>
-        <input type='radio' name='{{question.name}}' value='10' ng-model='answers[question.name]' id='r10'></input>
-          <label for="r10"><span>10</span></label>
+        <span><input class='scale' type='radio' name='{{question.name}}' value='1' ng-model='answers[question.name]' id='r1'></input>
+        <label class='scale' for="r1"></label></span>
+        <span><input class='scale' type='radio' name='{{question.name}}' value='2' ng-model='answers[question.name]' id='r2'></input>
+          <label class='scale' for="r2"></label></span>
+        <span><input class='scale'type='radio' name='{{question.name}}' value='3' ng-model='answers[question.name]' id='r3'></input>
+          <label class='scale' for="r3"></label></span>
+        <span><input class='scale' type='radio' name='{{question.name}}' value='4' ng-model='answers[question.name]' id='r4'></input>
+          <label class='scale' for="r4"></label></span>
+        <span><input class='scale' type='radio' name='{{question.name}}' value='5' ng-model='answers[question.name]' id='r5'></input>
+          <label class='scale' for="r5"></label></span>
+        <span><input class='scale' type='radio' name='{{question.name}}' value='6' ng-model='answers[question.name]' id='r6'></input>
+          <label class='scale' for="r6"></label></span>
+        <span><input class='scale' type='radio' name='{{question.name}}' value='7' ng-model='answers[question.name]' id='r7'></input>
+          <label class='scale' for="r7"></label></span>
+        <span><input class='scale' type='radio' name='{{question.name}}' value='8' ng-model='answers[question.name]' id='r8'></input>
+          <label class='scale' for="r8"></label></span>
+        <span><input class='scale' type='radio' name='{{question.name}}' value='9' ng-model='answers[question.name]' id='r9'></input>
+          <label class='scale' for="r9"></label></span>
+        <span><input class='scale' type='radio' name='{{question.name}}' value='10' ng-model='answers[question.name]' id='r10'></input>
+          <label class='scale' for="r10"></label></span>
       </input><span ng-bind='question.rangeOptions.scalePositive'></span></div>
-			</div>
 		</div>
 		<div ng-if='question.type==="demographic information"'>
 			<span ng-show='question.fullName'>Full Name:<input class='form-horizontal'></input></span>
