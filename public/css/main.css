@@ -121,8 +121,9 @@ margin-left:150px;
 .live-question {
 	margin-bottom:50px;
 }
-
-
+.live-subheading {
+	margin-bottom:20px;
+}
 .center-heading {
 	margin-bottom:50px;
 	text-align:center;
@@ -728,7 +729,7 @@ input.title-form:disabled {
 	height:100%;
 	background:#111;
 	float:right;
-	
+
 }
 .survey-overview-container {
 	display:block;
@@ -737,16 +738,18 @@ input.title-form:disabled {
 	margin-bottom:15px;
 	line-height:40px;
 }
+
 .btn-overview {
 	border:none;
 	width:45px;
 	height:45px;
 	margin-right:10px;
-	border:2px solid rgba(92,155,204,.8);
+	border:2px solid #a6a6a6;
 	border-radius:50%;
-	color:rgba(92,155,204,.8);
+	color:#a6a6a6;
 	background:transparent;
 }
+
 .btn-overview:hover {
 
 	border:2px solid rgba(92,155,204,1);
@@ -757,6 +760,7 @@ input.title-form:disabled {
 	margin:15px 10px 0 0;
 }
 .overview-button-container {
+	position:relative;
 margin:15px 10px 0 0;
 float:right;
  margin:15px 10px 0 0;

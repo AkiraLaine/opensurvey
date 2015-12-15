@@ -30,9 +30,9 @@
                   Plx enter age:<input type='number' ng-model='answers.age'></input>
                 </div>
 		<div ng-repeat='question in activeSurvey.questions' class='live-question'>
-			<h4 ng-bind='question.name'></h4>
+			<h4 class='live-subheading' ng-bind='question.name'></h4>
 			<textarea class='form-control' rows='6' ng-if='question.type==="open question"' ng-model='answers[question.name]'></textarea>
-			<div ng-if='question.type==="multiple choice"'> 
+			<div ng-if='question.type==="multiple choice"'>
 	    <span class='live-selection' ng-repeat='option in question.options'><input class='square' type='radio' name='{{question.name}}' ng-model='answers[question.name]' value='{{option.value}}' id='{{option.value}}'></input>
 			<label class='square' for='{{option.value}}'></label>{{option.value}}</span>
 
