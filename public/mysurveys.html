@@ -1,13 +1,32 @@
 <div class='full-container'>
   <div class='content' ng-init='getDrafts()'>
-      <uib-accordion >
-        <uib-accordion-group heading="{{element.name}}" ng-repeat="element in drafts" panel-class='panel-primary'><a ng-href='/edit:{{element.link}}'><button class='btn btn-default' ng-click="editDraft(element)">Edit</button></a></br></br>
+    <div ng-repeat="element in drafts" class='survey-overview-container'>
+    <div class='survey-overview-tile'><h3>{{element.name}} </h3>last edited: <span ng-bind='element.edited'></span> </div>
+    <div class='survey-overview-info'>
+   
+      <div class='overview-button-container'>
+      <button class='btn-overview alignright'><i class='fa-fw fa fa-lg fa-times'></i></button>
+      <a ng-href='/results:{{element.link}}'><button class='btn-overview alignright'><i class='fa-fw fa fa-lg fa-inbox'></i></button></a>
+      <a ng-href='/edit:{{element.link}}'><button class='btn-overview alignright'><i class='fa-fw fa fa-lg fa-pencil'></i></button></a>
+
+
+    </div>
+            <div class='alignleft overview-info-content'>
+  <span>Status: <span style='color:LimeGreen; line-height:10px'>Active</span></span><br>
+    <span>Link: <a href='/survey/{{element.link}}' class='blue' target='_blank'><span ng-bind='element.link'></span></a></span>
+       </div>
+   
+      </div>
+    </div>
+
+        
+        <!-- <uib-accordion-group heading="{{element.name}}" ng-repeat="element in drafts" panel-class='panel-primary'><a ng-href='/edit:{{element.link}}'><button class='btn btn-default' ng-click="editDraft(element)">Edit</button></a></br></br>
         <div>
-        <p class='alignleft'>last edited: <span ng-bind='element.edited'></span></p>
+        <p class='alignleft'></p>
         <p class='alignright' ng-show='element.published'><i class='fa fa-link'></i> Link: <a href='/survey/{{element.link}}'><span ng-bind='element.link' target='_blank'></a></p>
         </div>
-        </uib-accordion-group>
-      </uib-accordion>
+        </uib-accordion-group> --!>
+
     </div>
   </div>
   </div>

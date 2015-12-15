@@ -24,10 +24,6 @@ angular.module('votingapp').controller('surveyOverviewCtrl',function($scope,$htt
 	}
 })
 angular.module('votingapp').controller('surveyCreationCtrl',function($scope,$http,$uibModal,$routeParams){
-
-
-
-
 	$scope.currentStep = 1;
 	$scope.items = ['item1', 'item2', 'item3'];
 	$scope.viewContent = '/public/newSurvey.html'

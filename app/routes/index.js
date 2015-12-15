@@ -137,7 +137,9 @@ app.route('/api/results')
   var update = {}
   update[currentDate] = answer;
   drafts.update(query,{$push: update})
+
   drafts.update({"link":answer.origin}, {$push: update});
+    console.log('saving an answer')
   res.end();
 })
 .get(function(req,res){

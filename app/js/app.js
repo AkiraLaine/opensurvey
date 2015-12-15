@@ -591,14 +591,16 @@ $scope.logout = function() {
 
 app.controller('liveCtrl',function($scope,$window,$http){
 		var path = {surveyLink:window.location.pathname}
+		console.log(path)
 		$http.post('/api/surveydata/',path).then(function(data){
+			console.log(data)
 		$scope.answers = {};
 			$scope.activeSurvey = data.data;
 			$scope.answers = {
 				title: $scope.activeSurvey.name,
 				origin: $scope.activeSurvey.link,
-				gender: '',
-				income: '',
+				//gender: '',
+				//income: '',
 			};
 				console.log($scope.activeSurvey)
 				$scope.activeSurvey.questions.forEach(function(question){
