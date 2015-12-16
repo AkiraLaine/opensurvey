@@ -16,11 +16,20 @@ angular.module('votingapp').controller('dashboardCtrl',function($scope,$http){
 })
 angular.module('votingapp').controller('surveyOverviewCtrl',function($scope,$http){
 			$scope.viewContent = '/public/mysurveys.html'
-	$scope.getDrafts = function(){
+
 			$http.get('/drafts').then(function(data){
-				console.log('tried to get drafs: '+JSON.stringify(data.data))
 				$scope.drafts = data.data;
 			});
+
+	$scope.deleteSurvey = function(survey,index){
+		console.log('deleting '+survey);
+		console.log('at index '+index);
+		$scope.drafts.splice(index,1);
+		$http.post('/api/delete',survey);
+		
+	}
+	$scope.deleteOverlay = function(){
+		$scope.overlay = true;
 	}
 })
 angular.module('votingapp').controller('surveyCreationCtrl',function($scope,$http,$uibModal,$routeParams){

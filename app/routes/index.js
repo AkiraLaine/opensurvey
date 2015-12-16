@@ -197,6 +197,12 @@ app.route('/api/results')
     users.insert({email: email, password:hash})
 
   })
+  app.route('/api/delete')
+  .post(function(req,res){
+    console.log('deleting '+req.body.link)
+    drafts.remove({link: req.body.link});
+    res.end();
+  })
   app.route('/backend')
 
   .get(function(req,res){

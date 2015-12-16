@@ -165,6 +165,22 @@ app.directive('pageNumbers',function(){
 	}
 });
 
+app.directive('overviewElement',function(){
+	return {
+		restrict:'E',
+		replace:true,
+		templateUrl: '/public/overview-element.html',
+		link:function(scope,elm){
+			console.log(scope.element)
+				scope.deleteOverlay = function(){
+		scope.overlay = true;
+		}
+		scope.overlayDismiss = function() {
+			scope.overlay = false;
+		}
+		}
+	}	
+})
 
 app.directive('answerContainer',function(){
 	return{

@@ -74,8 +74,33 @@ margin-left:150px;
 .blue {
 	color:rgba(92,155,204,1);
 }
+.btn-blue {
+	color:#5C9BCC;
+	border-color: #5C9BCC;
+}
+.btn-blue:hover {
+	background:#192B38;
+	border-color:#6BB4ED;
+}
+.btn-blue:hover .blue{
+
+	color:#6BB4ED;
+}
+.btn-purple {
+	color:#7E4EFF;
+	border-color:#7E4EFF;
+}
 .purple {
-	color:#934BFF;
+	color:#7E4EFF;
+}
+
+.btn-purple:hover {
+	background:#211940;
+	border-color:#8475FF;
+}
+.btn-purple:hover .purple{
+
+color:#8475FF;
 }
 .modal-header {
 	background:#222;
@@ -246,6 +271,55 @@ canvas{
 	z-index:5;
 	transition: all .3s ease;
 }
+.overlay-content {
+	position:absolute;
+	top:0;
+	left:0;
+	right:25px;
+	bottom:0;
+	margin:auto;
+	height:50px;
+	text-align:center;
+	color:#f6f6f6;
+	z-index:50000;
+	font-size:18px;
+}
+.btn-red {
+	color:#e74c3c;
+		border-color:#e74c3c;
+}
+.btn-green {
+	color:limegreen;
+	border-color:limegreen;
+}
+.spacing-right {
+	padding-right:15px;
+}
+.survey-overview-container {
+	position:relative;
+	transition:all .5s ease;
+	opacity:1;
+}
+  
+.survey-overview-container.ng-move,
+.survey-overview-container.ng-enter,
+.survey-overview-container.ng-leave {
+  -webkit-transition:all linear 0.5s;
+  transition:all linear 0.5s;
+}
+
+.survey-overview-container.ng-leave.ng-leave-active,
+.survey-overview-container.ng-move,
+.survey-overview-container.ng-enter {
+  opacity:0;
+}
+
+.survey-overview-container.ng-leave,
+.survey-overview-container.ng-move.ng-move-active,
+.survey-overview-container.ng-enter.ng-enter-active {
+  opacity:1;
+}
+
 .textbox-overlay-content.ng-enter, .textbox-overlay-content.ng-leave {
   transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
 }
@@ -739,18 +813,21 @@ input.title-form:disabled {
 	line-height:40px;
 }
 
-.btn-overview {
-	border:none;
+.btn-round {
 	width:45px;
 	height:45px;
 	margin-right:10px;
-	border:2px solid #a6a6a6;
+	border-width:2px;
+	border-style:solid;
 	border-radius:50%;
-	color:#a6a6a6;
+
 	background:transparent;
 }
+.btn-white {
+	color:#f6f6f6;	
+}
 
-.btn-overview:hover {
+.btn-white:hover {
 
 	border:2px solid rgba(92,155,204,1);
 	color:rgba(92,155,204,1);
