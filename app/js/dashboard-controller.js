@@ -34,8 +34,6 @@ angular.module('votingapp').controller('surveyOverviewCtrl',function($scope,$htt
 })
 angular.module('votingapp').controller('surveyCreationCtrl',function($scope,$http,$uibModal,$routeParams){
 	$scope.currentStep = 1;
-	$scope.items = ['item1', 'item2', 'item3'];
-	$scope.viewContent = '/public/newSurvey.html'
 	$scope.animationsEnabled = true;
 	$scope.survey = {};
 	$scope.newFormQuestions = [];
@@ -56,7 +54,11 @@ angular.module('votingapp').controller('surveyCreationCtrl',function($scope,$htt
 			$scope.survey.name = data.data.name;
 			$scope.currentId = data.data._id;
 		})
+		$scope.viewContent = '/public/editSurvey.html'	
 	}
+	else {
+		$scope.viewContent = '/public/newSurvey.html'		
+	} 
 
 	var progressView = true;
 	$scope.nextStep = function() {

@@ -1,0 +1,103 @@
+<div class='content'>
+	<div class='new-survey-tile'>
+		<form class="questions" novalidate>
+<div>
+					<div class='check-container'>
+						<input class='filter-checkbox' ng-model='survey.filters.name' id='name' type='checkbox'></input>
+						<label for='name'></label>
+						<span class='tag'>Name</span>
+					</div>
+					<div class='check-container'>
+						<input class='filter-checkbox' ng-model='survey.filters.gender' id='gender' type='checkbox'></input>
+						<label for='gender'></label>
+						<span class='tag'>Gender</span>
+					</div>
+					<div class='check-container'>
+						<input class='filter-checkbox'  ng-model='survey.filters.age' id='age' type='checkbox'></input>
+						<label for='age'></label>
+						<span class='tag'>Age</span>
+					</div>
+					<div class='check-container'>
+						<input class='filter-checkbox' ng-model='survey.filters.income' id='income' type='checkbox'></input>
+						<label for='income'></label>
+						<span class='tag'>Income</span>
+					</div>
+					<div class='check-container'>
+						<input class='filter-checkbox' id='profession' type='checkbox'></input>
+						<label for='profession'></label>
+						<span class='tag'>Profession</span>
+					</div>
+					</div>
+					<div>
+
+						<div ng-if='newFormQuestions' ng-repeat='question in newFormQuestions'>
+							<div class='question-container' ng-class-even='"question-even"' ng-class-odd='"question-odd"'>
+								<h4 ng-bind='question.name'></h4>
+								<textarea class='form-control' ng-if='question.type==="open question"' readonly rows='6'></textarea>
+								<div ng-if='question.type==="multiple choice"' ng-repeat='option in question.options'>
+									<input name='optRadio' readonly type='radio'>
+									<span ng-bind='option.value'></span>
+								</input><br>
+							</div>
+							<div ng-if='question.type==="numerical scale"'>
+								<div class="row">
+									<div class='col-xs-3'>
+										<span ng-bind='question.rangeOptions.scaleNegative'></span>
+									</div>
+									<div class='col-xs-6'>
+										<input max='question.rangeOptions.scaleMax' min='0' type='range'></input>
+									</div>
+									<div class='col-xs-3'>
+										<span ng-bind='question.rangeOptions.scalePositive'></span>
+									</div>
+								</div>
+							</div>
+							<div ng-if='question.type==="demographic information"'>
+								<span ng-show='question.fullName'>Full Name:
+									<input class='form-horizontal'></input>
+								</span>
+								<span ng-show='question.age'>Age:
+									<input class='form-horizontal' type='number'></input>
+								</span>
+								<span ng-init='addIncome()' ng-show='question.income'>Income:
+									<input class='form-horizontal' type='number'></input>
+								</span>
+								<span ng-init='addGender()' ng-show='question.gender'>Gender:
+									<input class='form-horizontal' type='text'></input>
+								</span>
+							</div>
+							<div ng-if='question.type==="text paragraph"'>
+								<p>
+									<span ng-bind='question.text'></span>
+								</p>
+							</div>
+						</div>
+						<div class='question-button-container' ng-click='removeQuestion(question)'>
+							<span class='fa-stack fa-fw fa-button'>
+								<i class='fa fa-square fa-stack-2x fa-fw danger '></i>
+								<i class='fa fa-times fa-inverse fa-stack-1x fa-fw fa-lg'></i>
+							</span><br>
+							<span class='fa-stack fa-fw fa-button'>
+								<i class='fa fa-square fa-stack-2x fa-fw'></i>
+								<i class='fa fa-pencil fa-inverse fa-stack-1x fa-fw'></i>
+							</span><br>
+							<span class='fa-stack fa-fw fa-button'>
+								<i class='fa fa-square fa-stack-2x fa-fw'></i>
+								<i class='fa fa-arrows fa-inverse fa-stack-1x fa-fw'></i>
+							</span><br>
+						</div>
+					</div><br/></div>
+
+				<button class='create-btn btn-addfield' ng-click='open("lg")' ng-if='currentStep ===3' type='button'>
+					<i class="fa fa-plus fa-fw fa-lg"></i>
+					Add Question</button>
+			</div>
+
+		</div>
+
+	</form>
+
+</div>
+
+</div>
+
