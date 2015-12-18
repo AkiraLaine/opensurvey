@@ -6,7 +6,7 @@
 
       <my-chart></my-chart>
     </div>
-    <div class='dashboard-info'><i class='fa fa-check-circle blue fa-fw fa-lg'></i> Status: <span class='blue'> Active</span></br><i class='fa fa-file-text-o fa-fw fa-lg blue'></i> Replies: <span class='blue'>21</span></br> <i class='fa fa-link fa-lg fa-fw blue'></i> Link: <a class='blue' href='/survey/{{survey.link}}' target='_blank'> <span ng-bind='survey.link'></span></a>
+    <div class='dashboard-info'><i class='fa fa-check-circle blue fa-fw fa-lg'></i> Status: <span class='blue'> Active</span></br><i class='fa fa-file-text-o fa-fw fa-lg blue'></i> Replies: <span class='blue' ng-bind='getAnswerAmount(survey.answers)'></span></br> <i class='fa fa-link fa-lg fa-fw blue'></i> Link: <a class='blue' href='/survey/{{survey.link}}' target='_blank'> <span ng-bind='survey.link'></span></a>
     </br>
     <a ng-href='/results:{{survey.link}}'><button class='btn btn-block btn-secondary'>Show Responses</button></a></div>
   </div>

@@ -1,14 +1,14 @@
 <div>
-     <div class='survey-overview-tile'>
-        
+     <div class='survey-overview-tile' ng-class='{"overview-active" : element.published, "overview-draft" : !element.published}'>
+
         <div class='textbox-overlay' ng-if='overlay'>
         <div class='overlay-content' ng-if='overlay'>This will delete your survey and all associated responses.</span>
-            <span class='alignright'><button class='btn-round btn-purple' ng-click='overlayDismiss()'><i class='fa-fw fa fa-lg fa-times purple'></i></button>Wait, I changed my mind.</span>  
+            <span class='alignright'><button class='btn-round btn-purple' ng-click='overlayDismiss()'><i class='fa-fw fa fa-lg fa-times purple'></i></button>Wait, I changed my mind.</span>
             <span class='alignright spacing-right'><button class='btn-round btn-blue' ng-click='deleteSurvey(element,$index)'><i class='fa-fw blue fa fa-lg fa-check'></i></button>Ok, delete my survey. </span>
         </div>
-      
+
       </div>
-        <a ng-href='/results:{{element.link}}'><h3>{{element.name}} </h3></a>last edited: <span ng-bind='element.edited'></span> 
+        <a ng-href='/results:{{element.link}}'><h3>{{element.name}} </h3></a>last edited: <span ng-bind='element.edited'></span>
       </div>
       <div class='survey-overview-info'>
 
@@ -17,7 +17,8 @@
           <a ng-href='/edit:{{element.link}}'><button class='btn-round btn-white alignright'><i class='fa-fw fa fa-lg fa-pencil'></i></button></a>
         </div>
         <div class='alignleft overview-info-content'>
-          <span style='font-size:22px; line-height:50px'>  <a href='/survey/{{element.link}}' class='blue' target='_blank'>surv.io/<span ng-bind='element.link'></span></a></span>
+          <span style='font-size:22px; line-height:50px' ng-if='element.published'>  <a href='/survey/{{element.link}}' class='blue' target='_blank'>surv.io/<span ng-bind='element.link'></span></a></span>
+          <span class='dark-grey' style='font-size:22px; line-height:50px' ng-if='!element.published'>Not published</span></span>
         </div>
       </div>
     </div>

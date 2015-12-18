@@ -2,6 +2,10 @@
 	<div class='new-survey-tile'>
 		<form class="questions" novalidate>
 <div>
+	<div>
+	<input class='form-control title-form' ng-model='survey.project' placeholder='Project Name' required type='text'/>
+	<input class='form-control title-form' ng-model='survey.name' placeholder='Survey Title' required type='text'/>
+</div>
 					<div class='check-container'>
 						<input class='filter-checkbox' ng-model='survey.filters.name' id='name' type='checkbox'></input>
 						<label for='name'></label>
@@ -28,17 +32,34 @@
 						<span class='tag'>Profession</span>
 					</div>
 					</div>
-					<div>
+
 
 						<div ng-if='newFormQuestions' ng-repeat='question in newFormQuestions'>
-							<div class='question-container' ng-class-even='"question-even"' ng-class-odd='"question-odd"'>
+						<div>
+							<div class='question-container-top'>
+								<span class='white'>Question <span ng-bind='$index+1'></span></span>
+								<div class='question-button-container alignright'>
+									<span class='fa-stack fa-fw fa-button'>
+										<i class='fa fa-square fa-stack-2x fa-fw'></i>
+										<i class='fa fa-pencil fa-inverse fa-stack-1x fa-fw'></i>
+									</span>
+									<span class='fa-stack fa-fw fa-button'>
+										<i class='fa fa-square fa-stack-2x fa-fw'></i>
+										<i class='fa fa-arrows fa-inverse fa-stack-1x fa-fw'></i>
+									</span>
+									<span class='fa-stack fa-fw fa-button'  ng-click='removeQuestion(question)'>
+										<i class='fa fa-square fa-stack-2x fa-fw danger '></i>
+										<i class='fa fa-times fa-inverse fa-stack-1x fa-fw fa-lg'></i>
+									</span>
+								</div>
+							</div>
+							<div class='question-container question-even'>
 								<h4 ng-bind='question.name'></h4>
 								<textarea class='form-control' ng-if='question.type==="open question"' readonly rows='6'></textarea>
-								<div ng-if='question.type==="multiple choice"' ng-repeat='option in question.options'>
-									<input name='optRadio' readonly type='radio'>
-									<span ng-bind='option.value'></span>
-								</input><br>
-							</div>
+								<span class='live-selection' ng-if='question.type==="multiple choice"' ng-repeat='option in question.options'>
+									<input name='optRadio' class='square' type='radio' id='{{option.value}}'>
+								</input>	<label for='{{option.value}}' class=square></label>		<span ng-bind='option.value'></span>
+							</span>
 							<div ng-if='question.type==="numerical scale"'>
 								<div class="row">
 									<div class='col-xs-3'>
@@ -71,33 +92,25 @@
 									<span ng-bind='question.text'></span>
 								</p>
 							</div>
-						</div>
-						<div class='question-button-container' ng-click='removeQuestion(question)'>
-							<span class='fa-stack fa-fw fa-button'>
-								<i class='fa fa-square fa-stack-2x fa-fw danger '></i>
-								<i class='fa fa-times fa-inverse fa-stack-1x fa-fw fa-lg'></i>
-							</span><br>
-							<span class='fa-stack fa-fw fa-button'>
-								<i class='fa fa-square fa-stack-2x fa-fw'></i>
-								<i class='fa fa-pencil fa-inverse fa-stack-1x fa-fw'></i>
-							</span><br>
-							<span class='fa-stack fa-fw fa-button'>
-								<i class='fa fa-square fa-stack-2x fa-fw'></i>
-								<i class='fa fa-arrows fa-inverse fa-stack-1x fa-fw'></i>
-							</span><br>
-						</div>
-					</div><br/></div>
+</div>
+					</div><br>
+</div>
 
-				<button class='create-btn btn-addfield' ng-click='open("lg")' ng-if='currentStep ===3' type='button'>
+<div>
+				<button class='create-btn btn-addfield' ng-click='open("lg")'  type='button'>
 					<i class="fa fa-plus fa-fw fa-lg"></i>
 					Add Question</button>
 			</div>
+			<div class='btn-center-nav'>
+			<button class='create-btn btn-default' ng-click='saveDraft()' type='button'>Save Draft</button>
+			<button class='create-btn btn-default' ng-click='survey.published = true; saveDraft()' ng-if='!survey.published' type='button'>
+				<i class='fa fa-paper-plane'></i>
+				Publish</button>
+			<button class='create-btn btn-danger' ng-click='survey.published = false; saveDraft()' ng-if='survey.published' type='button'>Unpublish</button>
 
-		</div>
+			</div>
 
 	</form>
 
-</div>
 
 </div>
-

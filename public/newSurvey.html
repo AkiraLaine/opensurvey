@@ -85,21 +85,22 @@
 									<span ng-bind='question.text'></span>
 								</p>
 							</div>
+							<div class='question-button-container' ng-click='removeQuestion(question)'>
+								<span class='fa-stack fa-fw fa-button'>
+									<i class='fa fa-square fa-stack-2x fa-fw danger '></i>
+									<i class='fa fa-times fa-inverse fa-stack-1x fa-fw fa-lg'></i>
+								</span><br>
+								<span class='fa-stack fa-fw fa-button'>
+									<i class='fa fa-square fa-stack-2x fa-fw'></i>
+									<i class='fa fa-pencil fa-inverse fa-stack-1x fa-fw'></i>
+								</span><br>
+								<span class='fa-stack fa-fw fa-button'>
+									<i class='fa fa-square fa-stack-2x fa-fw'></i>
+									<i class='fa fa-arrows fa-inverse fa-stack-1x fa-fw'></i>
+								</span><br>
+							</div>
 						</div>
-						<div class='question-button-container' ng-click='removeQuestion(question)'>
-							<span class='fa-stack fa-fw fa-button'>
-								<i class='fa fa-square fa-stack-2x fa-fw danger '></i>
-								<i class='fa fa-times fa-inverse fa-stack-1x fa-fw fa-lg'></i>
-							</span><br>
-							<span class='fa-stack fa-fw fa-button'>
-								<i class='fa fa-square fa-stack-2x fa-fw'></i>
-								<i class='fa fa-pencil fa-inverse fa-stack-1x fa-fw'></i>
-							</span><br>
-							<span class='fa-stack fa-fw fa-button'>
-								<i class='fa fa-square fa-stack-2x fa-fw'></i>
-								<i class='fa fa-arrows fa-inverse fa-stack-1x fa-fw'></i>
-							</span><br>
-						</div>
+
 					</div><br/></div>
 
 				<button class='create-btn btn-addfield' ng-click='open("lg")' ng-if='currentStep ===3' type='button'>

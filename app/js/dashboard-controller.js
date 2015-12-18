@@ -1,19 +1,18 @@
 angular.module('votingapp').controller('dashboardCtrl',function($scope,$http){
 
 	$scope.viewContent = '/public/dashboard.html'
-	$scope.getDashboard = function() {
-	console.log('getting dashboard.')
-		$http.get('api/active').then(function(data){
-			console.log('request1 done.')
+	$http.get('api/active').then(function(data){
 			$scope.activeSurveys = data.data;
-			$http.get('api/results').then(function(data){
-				$scope.activeAnswers = data.data;
-					console.log('request2 done.');
-			})
 		})
+	$scope.getAnswerAmount = function(object){
+		var counter = 0;
+		for (keys in object){
+			counter += object[keys].length;
+		}
+		return counter;
 	}
-	$scope.getDashboard();
 })
+
 angular.module('votingapp').controller('surveyOverviewCtrl',function($scope,$http){
 			$scope.viewContent = '/public/mysurveys.html'
 
@@ -26,14 +25,15 @@ angular.module('votingapp').controller('surveyOverviewCtrl',function($scope,$htt
 		console.log('at index '+index);
 		$scope.drafts.splice(index,1);
 		$http.post('/api/delete',survey);
-		
+
 	}
 	$scope.deleteOverlay = function(){
 		$scope.overlay = true;
 	}
-})
+});
 angular.module('votingapp').controller('surveyCreationCtrl',function($scope,$http,$uibModal,$routeParams){
 	$scope.currentStep = 1;
+
 	$scope.animationsEnabled = true;
 	$scope.survey = {};
 	$scope.newFormQuestions = [];
@@ -54,11 +54,11 @@ angular.module('votingapp').controller('surveyCreationCtrl',function($scope,$htt
 			$scope.survey.name = data.data.name;
 			$scope.currentId = data.data._id;
 		})
-		$scope.viewContent = '/public/editSurvey.html'	
+			$scope.viewContent = '/public/editSurvey.html'
 	}
 	else {
-		$scope.viewContent = '/public/newSurvey.html'		
-	} 
+			$scope.viewContent = '/public/newSurvey.html'
+	}
 
 	var progressView = true;
 	$scope.nextStep = function() {

@@ -121,12 +121,28 @@ color:#8475FF;
 	padding-right:15px;
 	border-top:1px solid #e5e5e5;
 }
-
-.question-container {
-
+.question-container-top {
+	background:#333;
+	height:40px;
 	display:inline-block;
 	float:left;
-	width:95%;
+	width:100%;
+	position:relative;
+	line-height:40px;
+	padding: 0 15px 0 15px;
+}
+.white {
+	color:#fff;
+}
+.question-button-container {
+display:inline-block;
+}
+.question-container {
+	position:relative;
+	display:inline-block;
+	float:left;
+	width:100%;
+	margin-bottom:15px;
 	padding-top:20px;
 	padding-left:30px;
 	padding-right:50px;
@@ -165,17 +181,12 @@ color:#8475FF;
 }
 
 
-.question-button-container {
 
-	display:inline-block;
-	float:left;
-	min-height:inherit;
-}
 .question-odd {
 	background:#e5e5e5;
 }
 .question-even {
-	background:#ebebeb;
+	background:#efefef;
 }
 .fa-button {
 	cursor:pointer;
@@ -300,7 +311,7 @@ canvas{
 	transition:all .5s ease;
 	opacity:1;
 }
-  
+
 .survey-overview-container.ng-move,
 .survey-overview-container.ng-enter,
 .survey-overview-container.ng-leave {
@@ -785,12 +796,17 @@ input.title-form:disabled {
 .move-up{
    transform: translateY(-100px);
 }
+.overview-active {
+	border-left:6px solid green;
 
+}
+.overview-draft {
+	border-left:6px solid orange;
+}
 .survey-overview-tile {
 	display:block;
 	width:70%;
 	padding:0px 0px 0px 15px;
-	border-left:6px solid green;
 	height:100%;
 	float:left;
 	background:#f6f6f6;
@@ -824,7 +840,7 @@ input.title-form:disabled {
 	background:transparent;
 }
 .btn-white {
-	color:#f6f6f6;	
+	color:#f6f6f6;
 }
 
 .btn-white:hover {
@@ -856,6 +872,9 @@ float:right;
 #container2 {
 	transition: all .5s ease;
 	visibility: hidden;
+}
+.dark-grey {
+	color: #666;
 }
 .btn-center-nav {
 

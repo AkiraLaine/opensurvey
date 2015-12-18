@@ -147,7 +147,6 @@ app.route('/api/results')
   else jwt.verify(req.headers.authorization, 'cookiesandcream', function(err, decoded) {
   if (err) res.sendStatus(401);
   else {answers.find({'email':decoded.email}).toArray(function(err,data){
-
     if (err) throw err;
     res.send(data)
 });}
