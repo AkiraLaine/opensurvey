@@ -311,6 +311,24 @@ canvas{
 	transition:all .5s ease;
 	opacity:1;
 }
+.question-container-wrapper.ng-move,
+.question-container-wrapper.ng-enter,
+.question-container-wrapper.ng-leave {
+  -webkit-transition:all linear 0.5s;
+  transition:all linear 0.5s;
+}
+
+.question-container-wrapper.ng-leave.ng-leave-active,
+.question-container-wrapper.ng-move,
+.question-container-wrapper.ng-enter {
+  opacity:0;
+}
+
+.question-container-wrapper.ng-leave,
+.question-container-wrapper.ng-move.ng-move-active,
+.question-container-wrapper.ng-enter.ng-enter-active {
+  opacity:1;
+}
 
 .survey-overview-container.ng-move,
 .survey-overview-container.ng-enter,
@@ -735,7 +753,7 @@ input[type="radio"].scale + label:hover {
 	padding-right:150px;
 	display:inline-block;
 }
-.demo-test {
+.scale-container {
 	display: table;
     min-width:200px;
     margin:auto;

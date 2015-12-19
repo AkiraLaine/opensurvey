@@ -200,8 +200,6 @@ angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$http
 			$scope.filterGender = function(x,str,arr){
 				results = [];
 				if (arguments.length > 2){
-					console.log('entering the special area')
-					console.log(arr)
 					for (var key in survey.answers){
 						for (var i=0; i<survey.answers[key].length;i++){
 							console.log(survey.answers[key][i][str])
@@ -210,7 +208,7 @@ angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$http
 							}
 						}
 					}
-					str = str.concat(' '+arr[0]+'-'+arr[1])
+					var range = str.concat(' '+arr[0]+'-'+arr[1])
 				}
 				else {
 			for (var key in survey.answers){
@@ -222,9 +220,14 @@ angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$http
 			}
 
 }
-console.log('the outcome: '+results)
-$scope.filter[x] = [results,str];
-console.log(results)
+	if (range !== undefined){
+		$scope.filter[x] = [results,str,range];
+	}
+	else {
+			$scope.filter[x] = [results,str];
+	}
+
+console.log($scope.filter)
 		}
 
 
@@ -247,8 +250,6 @@ console.log(results)
 		temp = [];
 
 		}
-
-
 		$scope.questions = survey.questions;
 		$scope.results = results;
 		$scope.name = survey.name
