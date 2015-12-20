@@ -35,7 +35,6 @@ function getNiceColor(){
 }
 
 function assignColor(arr){
-  console.log('changing color brruuuuu!!')
   if (arr[1] === 'male') return  randomArrayValue(['#27ae60','#2980b9','#16a085','#8e44ad','#2c3e50','#e74c3c','#7f8c8d','#e67e22']);
   if (arr[1] === 'female') return randomArrayValue(['#27ae60','#2980b9','#16a085','#8e44ad','#2c3e50','#e74c3c','#7f8c8d','#e67e22']);
   if (arr[1] === 'income') return randomArrayValue(['#27ae60','#2980b9','#16a085','#8e44ad','#2c3e50','#e74c3c','#7f8c8d','#e67e22']);
@@ -103,7 +102,8 @@ app.config(function($routeProvider,$locationProvider){
 	controller:'surveyCreationCtrl'}).
 	when('/edit:survey',{templateUrl:'/public/backend.html',
 	controller:'surveyCreationCtrl'}).
-	when('/',{templateUrl:'/public/frontpage.html'}).
+	when('/',{templateUrl:'/public/frontpage.html',
+  controller:'frontpageCtrl'}).
 	when('/surveys',{templateUrl: '/public/backend.html',
 	controller:'surveyOverviewCtrl'}).
 	when('/results:survey',{templateUrl:'/public/backend.html',
@@ -224,16 +224,23 @@ app.directive('topMenu',function(){
   scope:{
     obj: '=',
     filter: '=',
+    scale:'=',
+    num:'=',
+    questions:'='
   },
 	link:function(scope,elm){
     console.log(scope.filter+scope.obj)
     scope.activeFilters = [];
     scope.input = {};
-
-    scope.expandTile = function(){
-      console.log('test')
+    scope.$watch('elm',function(){
       console.log(elm)
-    }
+    })
+    scope.expandTile = function(test){
+      if (!scope.scale.active)
+      scope.scale.active = true;
+      else
+      scope.scale.active = false;
+  	}
 		scope.overlay = function(str){
 			scope.overlayActive = true;
       scope.overlayContent = str;
@@ -276,6 +283,7 @@ app.directive('barGraph',function(){
 						content: '=',
 			filter:'=',
       num:'=',
+      scale:'='
 		},
 		templateUrl:'/public/resultgraph.html',
 		replace:true,
@@ -288,6 +296,42 @@ app.directive('barGraph',function(){
 				labels.push(scope.content.options[key].value)
 			}
 
+      scope.$watch('scale.active',function(newThing,oldThing){
+        if (!counter) var counter = elm[0].clientWidth;
+        if (newThing === true){
+        console.log(elm)
+        console.log('IT WORKS')
+        var chartInterval = setInterval(function(){
+          console.log('test')
+          counter += 20;
+
+
+          myNewChart.scale.width = counter;
+          myNewChart.update();
+
+                myNewChart.resize();
+                if (counter > 1140){
+                  clearInterval(chartInterval)
+                }
+        },15)
+
+    }
+    else if (newThing === false) {
+
+      console.log(elm)
+      console.log('IT WORKS')
+      var chartInterval = setInterval(function(){
+        counter -= 150;
+        myNewChart.scale.width = counter;
+        myNewChart.update();
+              myNewChart.resize();
+              if (counter <= 600) {
+                clearInterval(chartInterval);
+                }
+
+      },10)
+    }
+  });
 			console.log('scope obj '+JSON.stringify(scope.obj))
 			var results = countArrayStrings(scope.obj,labels)
 			scope.highestResult = labels[results.indexOf(results.max())];
@@ -363,9 +407,14 @@ app.directive('numericalGraph',function(){
 				obj:'=',
 				content:'=',
         filter: '=',
-        num: '='
+        num: '=',
+        scale: '='
 			},
 			link: function(scope,elm){
+        scope.legend = {}
+        scope.labels = labels;
+        scope.legend['total'] = results;
+        scope.activeFilters = [];
 				Chart.defaults.global.responsive = true;
 				Chart.defaults.global.maintainAspectRatio = false;
 								var ctx = elm[0].getElementsByTagName('canvas')[0].getContext("2d");
@@ -374,13 +423,49 @@ app.directive('numericalGraph',function(){
 	gradient.addColorStop(1, 'rgba(81,17,109,0.6)');
 	var results = countArrayStrings(scope.obj,['1','2','3','4','5','6','7','8','9','10']);
 	var labels = ['1','2','3','4','5','6','7','8','9','10']
+  console.log(elm)
+  console.log('scaled? '+scope.scale)
+
+  // watching size changes of tiles, still works with absolute numbers, need to find a way to find the real width of parent
+  scope.$watch('scale.active',function(newThing,oldThing){
+    if (!counter) var counter = elm[0].clientWidth;
+    if (newThing === true){
+    console.log(elm)
+    console.log('IT WORKS')
+    var chartInterval = setInterval(function(){
+      console.log('test')
+      counter += 12;
 
 
-  scope.legend = {}
-  scope.labels = labels;
-  scope.legend['total'] = results;
-  scope.activeFilters = [];
-  console.log(scope.firstValues)
+      myNewChart.scale.width = counter;
+      myNewChart.update();
+
+            myNewChart.resize();
+            if (counter > 1140){
+              clearInterval(chartInterval)
+            }
+    },15)
+
+}
+else if (newThing === false) {
+
+  console.log(elm)
+  console.log('IT WORKS')
+  var chartInterval = setInterval(function(){
+    counter -= 150;
+    myNewChart.scale.width = counter;
+    myNewChart.update();
+          myNewChart.resize();
+          if (counter <=600) {
+            clearInterval(chartInterval);
+            }
+
+  },10)
+}
+
+
+  })
+
 
   console.log('my labels: '+scope.labels)
 	var values = []
@@ -389,6 +474,7 @@ app.directive('numericalGraph',function(){
     scope.activeFilters.splice(index,1);
     myNewChart.update();
   }
+
   //Add new dataset
   scope.$watch('filter[num]',function(newThing,oldThing){
     var nextColor = assignColor(newThing)

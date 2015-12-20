@@ -1,5 +1,6 @@
 /****** Main Styling ******/
 @import url(https://fonts.googleapis.com/css?family=Roboto);
+@import url(https://fonts.googleapis.com/css?family=Oxygen:400,300);
 body {
 	font-family: 'Roboto', sans-serif;
 	font-size: 16px;
@@ -19,6 +20,144 @@ body,html,.container-fluid{
 	padding:0px;
 	width:100%;
 	height:100%;
+}
+.stick {
+	position:fixed;
+	 top: 0;
+	 z-index:100;
+	 background:#111;
+	 box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.5);
+	 transition:all .2s linear;
+	 width:100%;
+	 display:inline-block;
+	 color:#fff;
+	 padding:20px 50px 20px 50px;
+	 font-size:20px;
+}
+.top-navbar {
+	width:100%;
+	background:transparent;
+	display:inline-block;
+	position:absolute;
+	top:0;
+	left:0;
+	color:#fff;
+		 transition:all .2s linear;
+	padding:60px 150px 20px 150px;
+	font-size:20px;
+}
+.top-navbar-right span{
+	margin-right:30px;
+}
+.top-navbar-right span:first-child{
+	margin-right:0px;
+}
+
+.hero {
+	font-family:Oxygen;
+	background-image: linear-gradient(rgba(102,51,153,1),rgba(45,0,80,1));
+	background-size:cover;
+	height:800px;
+	width:100%;
+	display:table;
+	padding:0px 150px 0px 150px;
+}
+.hero-line {
+
+	position:absolute;
+	z-index:0;
+	top:100px;
+	pointer-events:none;
+	width:120%;
+	left:-300px;
+	height:700px !important;
+}
+
+.login-btn {
+	width:49%;
+	height:45px;
+	color:#fff;
+	margin-bottom:15px;
+	text-align:left;
+	border:none;
+	background:#333;
+	line-height:45px;
+	padding:0px 20px 0px 0px;
+}
+.login-btn-icon {
+	width:50px;
+	margin-right:20px;
+	vertical-align:baseline;
+	line-height:45px;
+}
+.hero-content {
+	position:relative;
+	z-index:5;
+	vertical-align:middle;
+	display:table-cell;
+	text-align:left;
+	width:50%;
+	font-size:20px;
+	color:#fff;
+}
+.hero-content h1{
+	letter-spacing:3px;
+	font-size:40px;
+}
+.hero-box {
+	position:relative;
+	z-index:5;
+	box-shadow: 0px 0px 30px 2px rgba(0,0,0,0.3);
+	margin-top:50px;
+	background:#efefef;
+	display:block;
+	width:400px;
+	height:515px;
+	float:right;
+	color:#111;
+	text-align:center;
+}
+.hero-box-top {
+	text-align:center;
+	line-height:45px;
+	font-weight:600;
+	color:#111;
+	background:#333;
+	height:45px;
+}
+.hero-box-content input{
+	width:100%;
+	background:none;
+	border: none;
+	border-bottom:1px solid #666;
+	margin-top:30px;
+	height:50px;
+	outline:none;
+
+}
+.hero-box-content {
+	margin:auto;
+	width:80%;
+ height:75%;
+}
+.hero-box-btn {
+	background:#333;
+	margin-top:45px;
+	margin-bottom:15px;
+	border:none;
+	width:100%;
+	height:45px;
+	color:white;
+}
+.line {
+	height:1px;
+	margin:40px 0 40px 0;
+	border-bottom:2px solid white;
+	width:150px;
+	display:block;
+}
+.info-section {
+	height:500px;
 }
 .container-flex {
 	display:flex;
@@ -108,6 +247,12 @@ color:#8475FF;
 }
 .alignleft {
 	float:left;
+}
+.github-grey {
+	background:#666;
+}
+.facebook-blue {
+	background:#3b5998;
 }
 .alignright {
 	float:right;
@@ -390,11 +535,14 @@ canvas{
   box-sizing:border-box;
   align-items:center;
   display:flex;
-	transition: all 1s ease;
+	transition: all .7s ease;
   background:#f4f4f4;
   width:calc(50% - 7.5px);
 
 
+}
+.red-demo {
+	color:red;
 }
 .textbox:hover{
 	  box-shadow: 2px 3px 10px rgba(0,0,0,0.3);

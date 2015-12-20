@@ -190,6 +190,7 @@ var fieldAction = function() {
 
 angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$http,$routeParams){
 		$scope.filter = [];
+		$scope.scale = {};
 		$scope.viewContent = '/public/answers.html'
 		var temp = [];
 		var results = [];
@@ -264,7 +265,79 @@ $scope.createChart = function(chartName) {
 					})
 	        }
 })
+angular.module('votingapp').controller('frontpageCtrl',function($scope){
+	var myLineChart;
+	var ctx;
+	var chartAnim;
+	var animated = false;
+	function activateHeroAnimation() {
+		if (!animated){
+			animated = true;
+			myLineChart.addData([randomArrayValue(possibleNumbers), randomArrayValue(possibleNumbers)], "July");
+			myLineChart.removeData();
+			chartAnim = setInterval(function(){
+				myLineChart.addData([randomArrayValue(possibleNumbers), randomArrayValue(possibleNumbers)], "July");
+				myLineChart.removeData();
+			},1500)
+		}
+	}
+	function deactivateHeroAnimation() {
+		if (animated){
+			animated = false;
+			clearInterval(chartAnim)
+		}
+	}
+	window.onscroll = function() {
+		if (document.body.scrollTop > 0) {
+						document.getElementById('navbar').classList.remove('top-navbar');
+			document.getElementById('navbar').classList.add('stick');
+		}
+		if (document.body.scrollTop < 5) {
 
+						document.getElementById('navbar').classList.add('top-navbar');
+			document.getElementById('navbar').classList.remove('stick');
+	activateHeroAnimation();
+		}
+		if (document.body.scrollTop > 300){
+			deactivateHeroAnimation();
+		}
+	}
+	 Chart.defaults.global.showScale = false;
+	 window.setTimeout(function(){
+			 ctx = document.getElementById("myChart").getContext("2d");
+			 myLineChart = new Chart(ctx).Line(data,{datasetStrokeWidth : 6, pointDotRadius : 5, bezierCurveTension : 0.1});
+			 	activateHeroAnimation();
+	 },50)
+	var data = {
+    labels: ["A", "B", "C", "D", "E", "F", "G","H","I","J","K","L","M","N"],
+    datasets: [
+        {
+            label: "My First dataset",
+            fillColor: "rgba(220,220,220,0)",
+            strokeColor: "rgba(220,220,220,0.15)",
+            pointColor: "rgba(220,220,220,0.4)",
+            pointStrokeColor: "none",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: [65, 30, 60, 80, 56, 55, 40, 70, 30, 42, 56, 70, 40, 33]
+        },
+        {
+            label: "My Second dataset",
+            fillColor: "rgba(151,187,205,0)",
+            strokeColor: "rgba(92,155,204,0.15)",
+            pointColor: "rgba(151,187,205,0.3)",
+            pointStrokeColor: "none",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,187,205,1)",
+            data: [28, 48, 40, 19, 92, 27, 50, 28, 48, 40, 80, 45, 20, 66]
+        }
+    ]
+	}
+
+
+	var possibleNumbers = [15,20,25,30,35,40,45,50,55,60,65,70,75]
+
+})
 angular.module('votingapp').controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, questions) {
 	$scope.newFormQuestions = questions;
 
