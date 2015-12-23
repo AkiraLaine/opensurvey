@@ -268,17 +268,26 @@ $scope.createChart = function(chartName) {
 angular.module('votingapp').controller('frontpageCtrl',function($scope){
 	var myLineChart;
 	var ctx;
+	var tick = true;;
 	var chartAnim;
 	var animated = false;
+	var section2 = false;
+	var section3 = false;
 	function activateHeroAnimation() {
 		if (!animated){
 			animated = true;
 			myLineChart.addData([randomArrayValue(possibleNumbers), randomArrayValue(possibleNumbers)], "July");
 			myLineChart.removeData();
 			chartAnim = setInterval(function(){
+				if (!tick){
 				myLineChart.addData([randomArrayValue(possibleNumbers), randomArrayValue(possibleNumbers)], "July");
+				tick = true;
+			}
+			else{
 				myLineChart.removeData();
-			},1500)
+				tick = false;
+			}
+		},1500)
 		}
 	}
 	function deactivateHeroAnimation() {
@@ -301,11 +310,31 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope){
 		if (document.body.scrollTop > 300){
 			deactivateHeroAnimation();
 		}
+		if (document.body.scrollTop >= document.getElementById('lineCharts').offsetTop-300 && !section3){
+			document.getElementById('chartBlue').classList.add('chart-expanded');
+			window.setTimeout(function(){
+					document.getElementById('chartOrange').classList.add('chart-expanded');
+			},1000)
+			section3 = true;
+		}
+		if (document.body.scrollTop >= document.getElementById('questionChoice').offsetTop-450 && !section2) {
+
+					fadeIn(document.getElementById('question-image-wrapper').children[0],40);
+					window.setTimeout(function(){
+						fadeIn(document.getElementById('question-image-wrapper').children[1],40);
+						window.setTimeout(function(){
+							fadeIn(document.getElementById('question-image-wrapper').children[2],40);
+						},400);
+					},400);
+					section2 = true;
 	}
+}
 	 Chart.defaults.global.showScale = false;
+	 Chart.defaults.global.animationSteps = Math.round(1000 / 17);
 	 window.setTimeout(function(){
 			 ctx = document.getElementById("myChart").getContext("2d");
-			 myLineChart = new Chart(ctx).Line(data,{datasetStrokeWidth : 6, pointDotRadius : 5, bezierCurveTension : 0.1});
+			 myLineChart = new Chart(ctx).Line(data,{datasetStrokeWidth : 6, pointDotRadius : 5, bezierCurveTension : 0.1
+});
 			 	activateHeroAnimation();
 	 },50)
 	var data = {

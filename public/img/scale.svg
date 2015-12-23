@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 12.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 51448)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" [
+	<!ENTITY ns_svg "http://www.w3.org/2000/svg">
+	<!ENTITY ns_xlink "http://www.w3.org/1999/xlink">
+]>
+<svg  version="1.1" xmlns="&ns_svg;" xmlns:xlink="&ns_xlink;" width="510.493" height="260.41" viewBox="0 0 510.493 260.41"
+	 overflow="visible" enable-background="new 0 0 510.493 260.41" xml:space="preserve">
+<g id="Layer_1" display="none">
+	<g display="inline">
+		<linearGradient id="XMLID_4_" gradientUnits="userSpaceOnUse" x1="0" y1="144.5093" x2="503.6567" y2="144.5093">
+			<stop  offset="0" style="stop-color:#FFFFFF"/>
+			<stop  offset="0.0056" style="stop-color:#0070BB"/>
+			<stop  offset="0.1348" style="stop-color:#0071BC"/>
+			<stop  offset="0.6742" style="stop-color:#5B57A6"/>
+			<stop  offset="1" style="stop-color:#662D91"/>
+			<stop  offset="1" style="stop-color:#662D91"/>
+		</linearGradient>
+		<path fill="url(#XMLID_4_)" d="M0,103.758l7.071,7.071c0,0,57.001-57.001,65.426-65.426
+			c5.731,11.224,71.531,140.081,71.531,140.081s69.755,0,73.612,0c2.801,2.745,76.445,74.925,76.445,74.925
+			s64.149-132.208,69.755-143.763c8.595,8.595,67.512,67.511,67.512,67.511l72.063,1.751l0.242-9.996c0,0-64.288-1.563-68.063-1.655
+			c-2.717-2.717-74.617-74.616-74.617-74.616s-64.268,132.453-69.819,143.895c-8.623-8.451-69.434-68.052-69.434-68.052
+			s-65.957,0-71.573,0c-2.679-5.247-75.001-146.876-75.001-146.876L0,103.758z"/>
+	</g>
+</g>
+<g id="Layer_5" display="none">
+	<polyline display="inline" fill="none" stroke="#008FD4" stroke-width="5" points="3.657,107.415 3.657,107.415 74.158,36.914 
+		148.157,179.668 219.657,179.668 291.657,251.668 363.657,108.179 435.657,180.179 505.422,180.179 	"/>
+</g>
+<g id="Layer_2" display="none">
+	<g display="inline">
+		<g>
+			<g display="none" enable-background="new    ">
+				<linearGradient id="XMLID_5_" gradientUnits="userSpaceOnUse" x1="3.4971" y1="181.4058" x2="509.1909" y2="181.4058">
+					<stop  offset="0.4101" style="stop-color:#FFC20E"/>
+					<stop  offset="0.5618" style="stop-color:#FEBB12"/>
+					<stop  offset="0.8989" style="stop-color:#F26522"/>
+				</linearGradient>
+				<path display="inline" fill="url(#XMLID_5_)" d="M146.406,106.165c0,0-69.936,67.385-72.212,69.579c-3.176,0-70.697,0-70.697,0
+					v7.742h74.024c0,0,69.936-67.387,72.213-69.581c3.099,0,65.356,0,68.457,0c2.276,2.194,72.636,69.991,72.636,69.991
+					s69.036,0,72.214,0c2.275,2.194,75.501,72.75,75.501,72.75l70.649-144.55l-7.266-3.297c0,0-61.257,125.328-65.782,134.59
+					c-7.205-6.942-69.777-67.233-69.777-67.233s-69.036,0-72.209,0c-2.28-2.191-72.64-69.99-72.64-69.99H146.406z"/>
+			</g>
+			<g display="none">
+				<linearGradient id="XMLID_6_" gradientUnits="userSpaceOnUse" x1="2.4932" y1="181.7642" x2="510.4927" y2="181.7642">
+					<stop  offset="0.4101" style="stop-color:#FFC20E"/>
+					<stop  offset="0.5618" style="stop-color:#FEBB12"/>
+					<stop  offset="0.8989" style="stop-color:#F26522"/>
+				</linearGradient>
+				<path display="inline" fill="url(#XMLID_6_)" d="M145.969,105.264c0,0-71.62,69.01-72.211,69.579c-0.863,0-71.264,0-71.264,0
+					v9.544h75.465c0,0,71.622-69.012,72.212-69.581c0.858,0,66.725,0,67.583,0c0.59,0.569,72.636,69.991,72.636,69.991
+					s71.35,0,72.213,0c0.591,0.569,76.247,73.467,76.247,73.467l71.644-146.587l-9.062-4.111c0,0-64.39,131.743-65.591,134.208
+					c-2.025-1.946-69.037-66.52-69.037-66.52s-71.345,0-72.209,0c-0.59-0.566-72.64-69.989-72.64-69.989H145.969z M221.08,107.066
+					c0.592,0.569,72.64,69.99,72.64,69.99s71.349,0,72.213,0c0.59,0.569,70.518,67.949,70.518,67.949s65.127-133.252,65.969-134.973
+					c1.238,0.562,4.342,1.971,5.474,2.483c-0.752,1.532-68.456,140.061-69.658,142.515c-2.024-1.951-74.756-72.035-74.756-72.035
+					s-71.35,0-72.213,0c-0.591-0.569-72.639-69.99-72.639-69.99h-69.329c0,0-71.622,69.011-72.212,69.578
+					c-0.853,0-70.642,0-72.584,0c0-1.221,0-4.717,0-5.938c1.952,0,70.131,0,70.131,0s71.622-69.01,72.212-69.579
+					C147.702,107.066,220.222,107.066,221.08,107.066z"/>
+			</g>
+		</g>
+	</g>
+</g>
+<g id="Layer_3">
+	<line fill="none" x1="3.657" y1="0" x2="3.657" y2="247.66"/>
+	<line fill="none" stroke="#333332" stroke-width="2" x1="1.657" y1="259.191" x2="442.157" y2="259.191"/>
+	<line fill="none" stroke="#333332" stroke-width="2" x1="1.667" y1="260.191" x2="1.667" y2="91.41"/>
+	<line fill="none" stroke="#D1D3D4" x1="75.157" y1="258.191" x2="75.157" y2="93.243"/>
+	<line fill="none" stroke="#D1D3D4" x1="148.157" y1="258.191" x2="148.157" y2="93.076"/>
+	<line fill="none" stroke="#D1D3D4" x1="219.657" y1="92.076" x2="219.657" y2="257.191"/>
+	<line fill="none" stroke="#D1D3D4" x1="291.657" y1="92.576" x2="291.657" y2="257.191"/>
+	<line fill="none" stroke="#D1D3D4" x1="363.657" y1="258.191" x2="363.657" y2="93.743"/>
+	<line fill="none" stroke="#D1D3D4" x1="435.657" y1="257.243" x2="435.657" y2="92.41"/>
+	<line fill="none" stroke="#D1D3D4" x1="2.667" y1="135.91" x2="434.657" y2="135.91"/>
+	<line fill="none" stroke="#D1D3D4" x1="434.657" y1="207.41" x2="2.667" y2="207.41"/>
+	<line fill="none" stroke="#D1D3D4" x1="39.465" y1="257.921" x2="39.465" y2="92.974"/>
+	<line fill="none" stroke="#D1D3D4" x1="111.806" y1="257.582" x2="111.806" y2="92.634"/>
+	<line fill="none" stroke="#D1D3D4" x1="183.295" y1="257.73" x2="183.295" y2="92.783"/>
+	<line fill="none" stroke="#D1D3D4" x1="255.859" y1="257.528" x2="255.859" y2="92.581"/>
+	<line fill="none" stroke="#D1D3D4" x1="327.55" y1="258.431" x2="327.55" y2="93.484"/>
+	<line fill="none" stroke="#D1D3D4" x1="400.316" y1="257.582" x2="400.316" y2="92.634"/>
+	<line fill="none" stroke="#D1D3D4" x1="435.104" y1="231.988" x2="3.114" y2="231.988"/>
+	<line fill="none" stroke="#D1D3D4" x1="434.508" y1="180.775" x2="2.518" y2="180.775"/>
+	<line fill="none" stroke="#D1D3D4" x1="434.976" y1="159.668" x2="2.986" y2="159.668"/>
+	<line fill="none" stroke="#D1D3D4" x1="435.379" y1="110.307" x2="3.39" y2="110.307"/>
+</g>
+<g id="Layer_4" display="none">
+	<polyline display="inline" fill="none" stroke="#662D91" stroke-width="5" points="505.521,113.43 435.657,251.179 
+		363.657,182.243 291.657,181.817 219.657,112.881 76.657,251.41 	"/>
+</g>
+</svg>

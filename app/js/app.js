@@ -54,17 +54,23 @@ function fadeOut(id,speed){
 }
 
 function fadeIn(id,speed){
-  var element = document.getElementById(id)
+  if (typeof id === 'string')
+  var element = document.getElementById(id);
+  else
+  var element = id;
+  if (element.style.visibility !== 'visible'){
+  var fade;
   var counter = 0;
   element.style.opacity = 0;
   element.style.visibility = 'visible';
-  var fade = window.setInterval(function(){
+  fade = window.setInterval(function(){
     counter+=0.1;
     element.style.opacity = counter;
-      if (document.getElementById(id).style.opacity >= 1) {
+      if (element.style.opacity >= 1) {
         window.clearInterval(fade);
     }
   },speed)
+}
 }
 function weeklyView(data) {
 	if (data.length < 7){
