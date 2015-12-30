@@ -1,8 +1,22 @@
 <div class='content'>
 <div class='margin'>
-<div class='survey-header full-width'>
-<h1>{{ name | uppercase}}</h1>
-<h3>{{surveyResultsAmount}} responses</h3>
+<div class='survey-overview-container full-width'>
+
+  <div class='survey-overview-tile full-width' style='padding:0 39px 15px 30px'>
+<h2>{{ name | uppercase}}</h2>
+<span class='alignleft'>Created: {{survey.publishedDate}}</span>
+<span class='alignright'>
+Total Responses: 45,  Average Age: 34,  Female Respondents: 45%,  Male Respondents 55%
+</span>
+
+
+</div>
+</div>
+<div class='divider'></div>
+<div class='survey-menu'>
+    <div class='survey-menu-button'><i class='fa fa-download fa-fw' style='vertical-align:text-bottom'></i> Export All Data</div>
+    <div class='survey-menu-button' style='vertical-align:text-bottom'><i class='fa fa-th-large fa-fw'></i> Change View</div>
+    <div class='survey-menu-code'><i class='fa fa-share-alt' style='position:absolute; left:-30px; top:8px; font-size:16px'></i>http://www.placeholder.com/aAbeE</div>
 </div>
 <div ng-repeat='question in questions' class='question-wrapper' >
 

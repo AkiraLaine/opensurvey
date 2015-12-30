@@ -156,6 +156,32 @@ app.route('/api/results')
   .get(function(req,res){
     res.sendFile(process.cwd()+'/public/survey-live.html');
   })
+  app.route('/login/facebook')
+  .post(function(req,res){
+    console.log('a facebook login is happening')
+    console.log(req.body)
+    var email = req.body.email;
+    var fbid = req.body.id;
+    var name = req.body.name
+    users.find({email:email}).limit(1).toArray(function(err,data){
+    if (data[0] === undefined){
+    console.log('no existing user found, creating new user');
+    users.insert({fbid:fbid, name:name, email:email})
+    }
+    else {
+    console.log('user found!')
+    if (data[0].password) delete data[0].password;
+    var token = jwt.sign(data[0],'cookiesandcream',{expiresIn:14400});
+    console.log('here is your token:')
+    console.log(token)
+    res.send({
+      success:true,
+      message:'your token is ready',
+      token: token
+    });
+    }
+    })
+  })
   app.route('/login')
   .post(function(req,res){
     console.log('trying login...')

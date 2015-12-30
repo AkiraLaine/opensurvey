@@ -1,10 +1,21 @@
 
-<div class='absolute-center'>
- <h1>Login</h1>
-  Email: <input type='email' class="form-horizontal" ng-model='login.email'></input> Password: <input class="form-horizontal" ng-model='login.password' type='password'></input>
+<div class='login-container'>
+  <div class='login-box' id='login-box'>
+<h1>PlaceHolder </h1>
+  <span class='grey'>Email or Username</span><br>
+  <input type='email' class="full-width" ng-model='login.email'></input><br><br>
+  <span class='grey'>Password</span><br>
+  <input class="full-width" ng-model='login.password' type='password'></input><br><br>
+  <span><a href='#' style='line-height:45px' class='alignleft'>Forgot password?</a>
+ <button class='btn btn-ok alignright' ng-click='authorizeLogin(login)'>Sign in</button></span><br><br><br><br>
+ <div style='text-align:center; line-height:32px'>
+     <a href='#'>Create new account</a><br>
+  <a href='#'>Sign in with Facebook</a><br>
+    <a href='#'>Sign in with GitHub</a>
+  </div>
 
- <button class='btn btn-primary' ng-click='authorizeLogin(login)'>Login</button><button class='btn btn-danger' ng-click='logout()'>Logout</button>
-<h1>Create Account</h1>
+<!--<h1>Create Account</h1>
  Email: <input type ='email' class="form-horizontal" ng-model='new.email'></input> Password: <input class="form-horizontal" ng-model='new.password' type='password'></input>
-<button class='btn btn-primary' ng-click='createUser(new)'>Create</button>
+<button class='btn btn-primary' ng-click='createUser(new)'>Create</button> --!>
+</div>
  </div>

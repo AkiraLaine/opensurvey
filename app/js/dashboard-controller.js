@@ -254,6 +254,8 @@ console.log($scope.filter)
 		$scope.questions = survey.questions;
 		$scope.results = results;
 		$scope.name = survey.name
+		$scope.survey = survey;
+		console.log($scope.survey)
 		counter = 0;
 	});
 
@@ -265,35 +267,91 @@ $scope.createChart = function(chartName) {
 					})
 	        }
 })
-angular.module('votingapp').controller('frontpageCtrl',function($scope){
+angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$window,$location){
+	window.fbAsyncInit = function() {
+		FB.init({
+			appId      : '165180297173897',
+			xfbml      : true,
+			version    : 'v2.5'
+		});
+	};
+
+	(function(d, s, id){
+		 var js, fjs = d.getElementsByTagName(s)[0];
+		 if (d.getElementById(id)) {return;}
+		 js = d.createElement(s); js.id = id;
+		 js.src = "//connect.facebook.net/en_US/sdk.js";
+		 fjs.parentNode.insertBefore(js, fjs);
+	 }(document, 'script', 'facebook-jssdk'));
+
+	 $scope.FBlogin = function(){
+		 FB.login(function(response){
+			 if (response.status === 'connected'){
+				 FB.api('/me', {fields:'email,name'},function(response) {
+					 console.log(response)
+				 $http.post('/login/facebook',response).then(function(data){
+					 console.log(data.data.token)
+					 $window.localStorage.token = data.data.token;
+					 $location.path('/dashboard')
+				 })
+		 })
+			 }
+
+		 },{scope:'email'});
+	;
+	 }
 	var myLineChart;
 	var ctx;
-	var tick = true;;
 	var chartAnim;
+	var heroAnimation;
+	var w = 1600;
+	var c = 0;
 	var animated = false;
 	var section2 = false;
 	var section3 = false;
+	$scope.scrollPage = function(id){
+		var elm = document.getElementById(id);
+		var init = document.body.scrollTop;
+		var counter = init;
+		if (elm.offsetTop > document.body.scrollTop) {
+			var scrollAmount = elm.offsetTop - document.body.scrollTop;
+			var scrollInterval = setInterval(function(){
+				window.scroll(0,counter)
+				counter += Math.max(20,scrollAmount/50);
+				if (counter >= init+scrollAmount) clearInterval(scrollInterval);
+				},15)
+			}
+		else if (elm.offsetTop < document.body.scrollTop) {
+			console.log('its smaller')
+			var scrollAmount = document.body.scrollTop-elm.offsetTop;
+			console.log(scrollAmount)
+			var scrollInterval = setInterval(function(){
+				window.scroll(0,counter)
+				counter -=Math.max(20,scrollAmount/50);
+				if (counter <= init-scrollAmount) clearInterval(scrollInterval);
+			},15)
+		}
+	}
 	function activateHeroAnimation() {
 		if (!animated){
 			animated = true;
-			myLineChart.addData([randomArrayValue(possibleNumbers), randomArrayValue(possibleNumbers)], "July");
-			myLineChart.removeData();
-			chartAnim = setInterval(function(){
-				if (!tick){
-				myLineChart.addData([randomArrayValue(possibleNumbers), randomArrayValue(possibleNumbers)], "July");
-				tick = true;
+			console.log('doing stuff')
+			heroAnimation = setInterval(function(){
+			document.getElementById('hero-linechart1').style.left = c +'px';
+			document.getElementById('hero-linechart1').style.width = w+'px';
+			w+=1;
+			c -=1;
+			if (w >= 3840){
+				w=1600;
+				c = 0;
 			}
-			else{
-				myLineChart.removeData();
-				tick = false;
-			}
-		},1500)
+		},60)
 		}
 	}
 	function deactivateHeroAnimation() {
 		if (animated){
 			animated = false;
-			clearInterval(chartAnim)
+			clearInterval(heroAnimation)
 		}
 	}
 	window.onscroll = function() {
@@ -317,7 +375,7 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope){
 			},1000)
 			section3 = true;
 		}
-		if (document.body.scrollTop >= document.getElementById('questionChoice').offsetTop-450 && !section2) {
+		if (document.body.scrollTop >= document.getElementById('questionChoice').offsetTop-400 && !section2) {
 
 					fadeIn(document.getElementById('question-image-wrapper').children[0],40);
 					window.setTimeout(function(){
@@ -328,43 +386,15 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope){
 					},400);
 					section2 = true;
 	}
-}
-	 Chart.defaults.global.showScale = false;
-	 Chart.defaults.global.animationSteps = Math.round(1000 / 17);
-	 window.setTimeout(function(){
-			 ctx = document.getElementById("myChart").getContext("2d");
-			 myLineChart = new Chart(ctx).Line(data,{datasetStrokeWidth : 6, pointDotRadius : 5, bezierCurveTension : 0.1
-});
-			 	activateHeroAnimation();
-	 },50)
-	var data = {
-    labels: ["A", "B", "C", "D", "E", "F", "G","H","I","J","K","L","M","N"],
-    datasets: [
-        {
-            label: "My First dataset",
-            fillColor: "rgba(220,220,220,0)",
-            strokeColor: "rgba(220,220,220,0.15)",
-            pointColor: "rgba(220,220,220,0.4)",
-            pointStrokeColor: "none",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(220,220,220,1)",
-            data: [65, 30, 60, 80, 56, 55, 40, 70, 30, 42, 56, 70, 40, 33]
-        },
-        {
-            label: "My Second dataset",
-            fillColor: "rgba(151,187,205,0)",
-            strokeColor: "rgba(92,155,204,0.15)",
-            pointColor: "rgba(151,187,205,0.3)",
-            pointStrokeColor: "none",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(151,187,205,1)",
-            data: [28, 48, 40, 19, 92, 27, 50, 28, 48, 40, 80, 45, 20, 66]
-        }
-    ]
+	if (document.body.scrollTop >= document.getElementById('dashboardInfo').offsetTop-420){
+		fadeIn('dashboard-window',30)
+		document.getElementById('dashboard-window').classList.add('dashboard-window-expanded');
 	}
+}
+
+			 	activateHeroAnimation();
 
 
-	var possibleNumbers = [15,20,25,30,35,40,45,50,55,60,65,70,75]
 
 })
 angular.module('votingapp').controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, questions) {

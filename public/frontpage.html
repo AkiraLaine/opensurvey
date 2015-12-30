@@ -1,20 +1,18 @@
 
 <div class='container-custom'>
 <div class='top-navbar' id='navbar'>
-
 <span class='alignleft'>PlaceHolder</span>
 
 <span class='top-navbar-right'>
-<span class='alignright'><a href='/dashboard'>Sign In</a></span>
-<span class='alignright'>About</span>
-<span class='alignright'>Contribute</span>
-<span class='alignright'>Examples</span>
-<span class='alignright'>Features</span>
+<a href='/login'  class='alignright'>Sign In</a>
+<a ng-click='scrollPage("dashboardInfo")' class='alignright'>About</a>
+<a ng-click='scrollPage("open-source")' class='alignright'>Contribute</a>
+<a ng-click='scrollPage("dashboardInfo")' class='alignright'>Examples</a>
+<a ng-click='scrollPage("dashboardInfo")' class='alignright'>Features</a>
 </span>
 </div>
 
-<canvas id="myChart" class='hero-line'></canvas>
-
+<div class='hero-linechart1' id='hero-linechart1'></div>
 <div class='hero'>
 
   <div class='hero-content'>
@@ -35,7 +33,7 @@
 <input type='password' placeholder = 'Password'></input>
 <button class='hero-box-btn'>Register now</button>
 <p> - or - </p>
-<button class='login-btn '><i class='fa fa-fw fa-lg fa-facebook login-btn-icon facebook-blue'></i> <span>Login</span></button>
+<button class='login-btn ' ng-click='FBlogin()'><i class='fa fa-fw fa-lg fa-facebook login-btn-icon facebook-blue'></i> <span>Login</span></button>
 <button class='login-btn'><i class='fa fa-fw fa-lg fa-github login-btn-icon github-grey'></i> <span >Login</span></button>
 
 </div>
@@ -43,10 +41,10 @@
 </div>
 </div>
 
-<div class='info-section'>
+<div class='info-section' id='dashboardInfo'>
   <h1>MEET YOUR NEW DASHBOARD.</h1>
   <p>Microdosing post-ironic paleo, tilde mixtape pinterest yuccie tacos. Crucifix banh mi small batch messenger bag vice kale chips. Craft beer wayfarers waistcoat meggings, kitsch bushwick iPhone DIY kombucha fap cred tilde hoodie viral ramps. Franzen iPhone fap shabby chic mlkshk, hella vinyl you probably haven't heard of them ennui typewriter salvia tousled chillwave. </p>
-<div class='ui-window'>
+<div class='ui-window' id='dashboard-window'>
 <div class='ui-buttons'>
 </div>
 </div>
@@ -79,7 +77,7 @@
 <div class='animated-chart chart-orange'id='chartOrange'></div>
 <div class='animated-scale'></div>
 </div>
-<div class='info-section-4'>
+<div class='info-section-4' id='open-source'>
   <div class='hero-content' style='color:#333'>
     <div>
   <h1>100% Open Source</h1>
@@ -92,7 +90,7 @@
   <h2>GitHub Repository:</h2>
   <span class='code-line'>https://github.com/tbgse/votingApp</span><br>
   <h2>Technology Stack:</h2>
-  <span class='code-line'>Angular 1.4.7, NodeJS with Express 4, MongoDB 3.2</span><br>
+  <span class='code-line'>Angular 1.4.7, NodeJS with Express 4.13.3, MongoDB 3.0.2</span><br>
   <h2>Licence:</h2>
   <span class='code-line'>GPLv3</span><br>
 </span>

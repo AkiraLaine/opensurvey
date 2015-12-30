@@ -23,6 +23,7 @@ Object.defineProperty(Array.prototype, "max", {
     }
 });
 
+
 function randomArrayValue(arr) {
   return (arr[Math.floor(Math.random()*arr.length)])
 }
@@ -655,7 +656,7 @@ app.controller('loginCtrl',function($scope,$http,$window){
 
 })
 app.controller('userCtrl',function($scope,$http,$location,$window){
-	console.log('userCtrlm initiated')
+  fadeIn('login-box',50)
 	$scope.authorizeLogin = function(login){
 		$http.post('/login',$scope.login).then(function(data){
 			if (data.data.token !== undefined)
