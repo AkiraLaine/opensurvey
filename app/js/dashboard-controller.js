@@ -300,6 +300,19 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$wi
 		 },{scope:'email'});
 	;
 	 }
+	function crossTest() {
+		console.log("BIG BAD CROSS TEST")
+	}
+	//redirect function for github popup window
+	window.crossTest = function() {
+		$location.path('/dashboard')
+		if(!$scope.$$phase) $scope.$apply()
+	}
+
+	$scope.githubLogin = function(){
+		win =  window.open('https://github.com/login/oauth/authorize?client_id=f0ccba6a396af395540f&scope=user',"test","height=600,width=900",'modal=yes')
+
+	}
 	var myLineChart;
 	var ctx;
 	var chartAnim;

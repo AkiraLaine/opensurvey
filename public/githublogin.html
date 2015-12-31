@@ -1,0 +1,22 @@
+
+<script>
+var code = location.search;
+callAjax('http://localhost:3000/login/github'+location.search,function(data){
+  data = JSON.parse(data)
+  window.opener.localStorage.token = data.token;
+  window.opener.crossTest();
+  window.close()
+})
+function callAjax(url, callback){
+    var xmlhttp;
+    // compatible with IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+            callback(xmlhttp.responseText);
+        }
+    }
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+}
+</script>

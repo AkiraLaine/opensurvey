@@ -544,7 +544,7 @@ font-size:18px;
 .login-container {
 	height:100%;
 	width:100%;
-	background-color:#fff;
+	background-color:#f6f6f6;
 	background-image:url('/public/img/login-bga.svg');
 	background-size:110% auto;
 	background-position:bottom;

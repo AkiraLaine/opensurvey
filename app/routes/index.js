@@ -1,14 +1,13 @@
 'use strict';
 
 var ClickHandler = require(process.cwd() + '/app/controllers/clickHandler.server.js');
-module.exports = function (app, db, bcrypt,jwt) {
+   var keys = require(process.cwd()+'/keys.js');
+module.exports = function (app, db, bcrypt,jwt,request) {
 
-
-   var clickHandler = new ClickHandler(db);
    var questions = db.collection('questions');
    var drafts = db.collection('drafts');
    var users = db.collection('users');
-   var answers = db.collection('answers')
+   var answers = db.collection('answers');
    var serveForm;
 
    app.route('/api/profile')
@@ -156,6 +155,61 @@ app.route('/api/results')
   .get(function(req,res){
     res.sendFile(process.cwd()+'/public/survey-live.html');
   })
+  app.route('/login/github/test')
+  .get(function(req,res){
+    res.sendFile(process.cwd()+'/public/githublogin.html')
+  })
+  app.route('/login/github')
+  .get(function(req,res){
+  console.log('received a github login')
+  request.post('https://github.com/login/oauth/access_token?client_id=f0ccba6a396af395540f&client_secret='+githubSecret+'&code='+req.query.code) ///use main function with body instead.
+  .on('data', function(data) {
+    console.log(data)
+    console.log('decoded chunk: ' + data)
+    console.log(data.toString('utf8'))
+    var regexp = /(?:=)(.*)(?:&scope)/g;
+        var token = regexp.exec(data.toString('utf8'))
+        var options = {
+  url: 'https://api.github.com/user?access_token='+token[1],
+  headers: {
+    'User-Agent': 'tbgse'
+  }
+};
+    console.log(token)
+      request.get(options,function(err,response,body){
+        console.log('entering main function')
+        var obj = JSON.parse(body);
+        var email = obj.email;
+        var githubId = obj.id;
+        var name = obj.name;
+        console.log(email)
+        console.log(name)
+        users.find({email:email}).limit(1).toArray(function(err,data){
+        if (data[0] === undefined){
+        console.log('no existing user found, creating new user');
+        users.insert({githubId:githubId, name:name, email:email})
+        }
+        else {
+        console.log('user found!')
+        if (data[0].password) delete data[0].password;
+        var token = jwt.sign(data[0],'cookiesandcream',{expiresIn:14400});
+        console.log('here is your token:')
+        console.log(token)
+        res.send({
+          success:true,
+          message:'your token is ready',
+          token: token
+        });
+        }
+        })
+      })
+  })
+  .on('error', function(response) {
+
+    console.log(response.statusCode) // 200
+    console.log(response.headers['content-type']) // 'image/png'
+})
+});
   app.route('/login/facebook')
   .post(function(req,res){
     console.log('a facebook login is happening')
