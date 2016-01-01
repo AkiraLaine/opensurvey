@@ -28,10 +28,10 @@
 <div class='hero-box-top'>
 </div>
 <div class='hero-box-content'>
-<input type='text' placeholder='Name'></input>
-<input type='email' placeholder='Email'></input>
-<input type='password' placeholder = 'Password'></input>
-<button class='hero-box-btn'>Register now</button>
+<input type='text' placeholder='Name' ng-model='registration.name'></input>
+<input type='email' placeholder='Email' ng-model='registration.email' ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }"></input>
+<input type='password' placeholder = 'Password' ng-model='registration.password'></input>
+<button class='hero-box-btn' ng-click='createNewUser()'>Register now</button>
 <p> - or - </p>
 <button class='login-btn ' ng-click='FBlogin()'><i class='fa fa-fw fa-lg fa-facebook login-btn-icon facebook-blue'></i> <span>Login</span></button>
 <button class='login-btn' ng-click='githubLogin()'><i class='fa fa-fw fa-lg fa-github login-btn-icon github-grey'></i> <span >Login</span></button>

@@ -261,6 +261,17 @@ app.route('/api/results')
 
 
   })
+  app.route('/user')
+  .get(function(req,res){
+    if (req.headers.authorization === undefined) {res.sendStatus(401); console.log('user access denied')}
+    else jwt.verify(req.headers.authorization, 'cookiesandcream', function(err, decoded) {
+    if (err) res.sendStatus(401);
+    else {users.find({'email':decoded.email}).toArray(function(err,data){
+      if (err) throw err;
+      res.send(data)
+  });}
+  })
+  });
   app.route('/questions')
       .get(function(req,res){
         res.setHeader('Content-Type','application/json');
@@ -272,8 +283,9 @@ app.route('/api/results')
   app.route('/signup')
   .post(function(req,res){
     var email = req.body.email;
+    var name = req.body.name;
     var hash = bcrypt.hashSync(req.body.password,bcrypt.genSaltSync(10));
-    users.insert({email: email, password:hash})
+    users.insert({email: email, name:name, password:hash})
 
   })
   app.route('/api/delete')

@@ -541,6 +541,15 @@ font-size:18px;
 	flex-flow:column;
 	width:100%;
 }
+input[type='email'].ng-touched.ng-invalid{
+	border-bottom:1px solid red;
+}
+input[type='email'].ng-touched.ng-valid{
+	border-bottom:1px solid green;
+}
+.ng-pristine {
+	border-color:inherit;
+}
 .login-container {
 	height:100%;
 	width:100%;

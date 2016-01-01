@@ -118,7 +118,19 @@ app.config(function($routeProvider,$locationProvider){
 	when('/login',{templateUrl:'/public/login.html',
 	controller:'userCtrl'})
 });
-
+app.directive('sideBar',function($http){
+  return {
+    restrict:'E',
+    replace:true,
+    templateUrl:'/public/sidebar.html',
+    link:function(scope,elm){
+    scope.userName = 'Tobias'
+    $http.get('/user').then(function(data){
+      scope.user = data.data[0]
+    });
+    }
+  }
+})
 app.directive('pageNumbers',function(){
 	return {
 		restrict:'E',
@@ -657,6 +669,51 @@ app.controller('loginCtrl',function($scope,$http,$window){
 })
 app.controller('userCtrl',function($scope,$http,$location,$window){
   fadeIn('login-box',50)
+  window.fbAsyncInit = function() {
+		FB.init({
+			appId      : '165180297173897',
+			xfbml      : true,
+			version    : 'v2.5'
+		});
+	};
+
+	(function(d, s, id){
+		 var js, fjs = d.getElementsByTagName(s)[0];
+		 if (d.getElementById(id)) {return;}
+		 js = d.createElement(s); js.id = id;
+		 js.src = "//connect.facebook.net/en_US/sdk.js";
+		 fjs.parentNode.insertBefore(js, fjs);
+	 }(document, 'script', 'facebook-jssdk'));
+
+	 $scope.FBlogin = function(){
+		 FB.login(function(response){
+			 if (response.status === 'connected'){
+				 FB.api('/me', {fields:'email,name'},function(response) {
+					 console.log(response)
+				 $http.post('/login/facebook',response).then(function(data){
+					 console.log(data.data.token)
+					 $window.localStorage.token = data.data.token;
+					 $location.path('/dashboard')
+				 })
+		 })
+			 }
+
+		 },{scope:'email'});
+	;
+	 }
+	function crossTest() {
+		console.log("BIG BAD CROSS TEST")
+	}
+	//redirect function for github popup window
+	window.crossTest = function() {
+		$location.path('/dashboard')
+		if(!$scope.$$phase) $scope.$apply()
+	}
+
+	$scope.githubLogin = function(){
+		win =  window.open('https://github.com/login/oauth/authorize?client_id=f0ccba6a396af395540f&scope=user',"test","height=600,width=900",'modal=yes')
+
+	}
 	$scope.authorizeLogin = function(login){
 		$http.post('/login',$scope.login).then(function(data){
 			if (data.data.token !== undefined)

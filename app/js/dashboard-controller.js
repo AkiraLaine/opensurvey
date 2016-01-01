@@ -313,6 +313,11 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$wi
 		win =  window.open('https://github.com/login/oauth/authorize?client_id=f0ccba6a396af395540f&scope=user',"test","height=600,width=900",'modal=yes')
 
 	}
+	$scope.registration = {};
+	$scope.createNewUser = function(){
+		console.log($scope.registration)
+		$http.post('/signup',$scope.registration);
+	}
 	var myLineChart;
 	var ctx;
 	var chartAnim;
