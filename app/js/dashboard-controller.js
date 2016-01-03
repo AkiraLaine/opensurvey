@@ -191,6 +191,7 @@ var fieldAction = function() {
 angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$http,$routeParams){
 		$scope.filter = [];
 		$scope.scale = {};
+
 		$scope.viewContent = '/public/answers.html'
 		var temp = [];
 		var results = [];
@@ -267,6 +268,18 @@ $scope.createChart = function(chartName) {
 					})
 	        }
 })
+angular.module('votingapp').controller('restoreCtrl',function($scope,$http,$location){
+  $scope.viewContent = '/public/recover-box.html';
+	$scope.restore  = {}
+	$scope.changePw = function(){
+	$scope.restore.code = $location.search().code;
+	if ($scope.restore.password === $scope.restore.passwordConfirmation){
+	$http.post('/restore/success',$scope.restore).then(function(data){
+		console.log(data)
+	})
+	}
+	}
+});
 angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$window,$location){
 	window.fbAsyncInit = function() {
 		FB.init({
@@ -300,9 +313,7 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$wi
 		 },{scope:'email'});
 	;
 	 }
-	function crossTest() {
-		console.log("BIG BAD CROSS TEST")
-	}
+
 	//redirect function for github popup window
 	window.crossTest = function() {
 		$location.path('/dashboard')
@@ -314,9 +325,27 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$wi
 
 	}
 	$scope.registration = {};
-	$scope.createNewUser = function(){
+	$scope.createNewUser = function(form){
 		console.log($scope.registration)
-		$http.post('/signup',$scope.registration);
+		console.log(form)
+		$http.post('/signup',$scope.registration).then(function(data){
+	  if (data.data === 'user created') {
+			$scope.errorMessage = '';
+			if (!form.$invalid){
+					document.getElementById('hero-box-overlay').classList.add('overlay-expanded');
+					window.setTimeout(function(){
+						document.getElementById('hero-box-overlay').innerHTML='<h2>Welcome!</h2><span class="hero-box-overlay-text" id="hero-box-overlay-text">We have sent you a confirmation email to make sure you will be able to receive notifications survey responses and to enable you to reset your password in the future. <br><br>After you have clicked on the confirmation link in the email, you will be able to login to your dashboard and create your first survey.<br><br>Not received your email? <a href="#">Click here</a> and we will send it again.</span>'
+					},200)
+					window.setTimeout(function(){
+						document.getElementById('hero-box-overlay-text').classList.add('fadein')
+					},600)
+				}
+	}
+		else {
+			$scope.errorMessage = 'Looks like this email address is already in use. Try a different address or sign in instead.';
+
+		}
+	})
 	}
 	var myLineChart;
 	var ctx;

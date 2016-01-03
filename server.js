@@ -8,6 +8,7 @@ var request = require('request');
 var routes = require('./app/routes/index.js');
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('jsonwebtoken');
+
 mongo.connect('mongodb://localhost:27017/clementinejs', function (err, db) {
 
    if (err) {
@@ -20,7 +21,6 @@ mongo.connect('mongodb://localhost:27017/clementinejs', function (err, db) {
    app.use(bodyParser.json());
    app.use('/public', express.static(process.cwd() + '/public'));
    app.use('/js', express.static(process.cwd() + '/app/js'));
-
    routes(app, db, bcrypt, jwt,request);
    app.all('/*',function(req,res){
      console.log('redirecting something')

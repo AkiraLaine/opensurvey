@@ -1,0 +1,14 @@
+  <div class='login-box' id='login-box'>
+<h1>PlaceHolder </h1>
+  <span class='grey'>Email</span><br>
+  <input type='email' class="full-width" ng-model='login.email' ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }"></input><br><br>
+  <span class='grey'>Password</span><br>
+  <input class="full-width" ng-model='login.password' type='password'></input><br><br>
+  <span><a style='line-height:45px' class='alignleft' ng-click='updateView("pwreset-box")'>Forgot password?</a>
+ <button class='btn btn-ok alignright' ng-click='authorizeLogin(login)'>Sign in</button></span><br><br><br><br>
+ <div style='text-align:center; line-height:32px'>
+     <a href='#' ng-click='updateView("registration-box")'>Create new account</a><br>
+  <a ng-click='FBlogin()'>Sign in with Facebook</a><br>
+    <a ng-click='githubLogin()'>Sign in with GitHub</a>
+  </div>
+</div>

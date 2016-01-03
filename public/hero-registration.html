@@ -1,0 +1,19 @@
+<div class='hero-box'>
+  <div class='hero-box-error' id='hero-box-error' ng-if='errorMessage'><span ng-bind='errorMessage'></span></div>
+<div class='hero-box-overlay' id='hero-box-overlay'>
+</div>
+<div class='hero-box-content'>
+<form name='loginForm'>
+<input type='text' placeholder='Name' ng-model='registration.name' ng-minlength="3" required autocomplete="off" ><span></span></input>
+<input type='email' ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" placeholder='Email' ng-model='registration.email' ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }" required autocomplete="off"><span>
+</span></input>
+
+<input type='password' placeholder = 'Password' ng-model='registration.password' required ng-minlength="4"><span></span></input>
+<button class='hero-box-btn' ng-click='createNewUser(loginForm)'>Register now</button>
+</form>
+<p> - or - </p>
+<button class='login-btn ' ng-click='FBlogin()'><i class='fa fa-fw fa-lg fa-facebook login-btn-icon facebook-blue'></i> <span>Login</span></button>
+<button class='login-btn' ng-click='githubLogin()'><i class='fa fa-fw fa-lg fa-github login-btn-icon github-grey'></i> <span >Login</span></button>
+
+</div>
+  </div>

@@ -1,0 +1,34 @@
+<form id="myForm" >
+<label>Enter new password</label>
+<input name='password' type='password'></input>
+<label>Repeat new password</label>
+<input name='passwordRepeat' type='password'></input>
+</form>
+<button id='submitButton'>Submit</button>
+<script>
+console.log(window.location.href)
+document.getElementById('submitButton').addEventListener('click',function(){
+  var x = document.getElementById("myForm").password.value;
+  var y = document.getElementById("myForm").passwordRepeat.value;
+  if (x.length >= 4 && x === y){
+    console.log('success')
+    callAjax('/restore/success',x,function(data){
+      console.log(data)
+    })
+
+  }
+})
+function callAjax(url,str, callback){
+    var xmlhttp;
+    // compatible with IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+            callback(xmlhttp.responseText);
+        }
+    }
+    xmlhttp.open("POST", url, true);
+    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlhttp.send('code='+str);
+}
+</script>

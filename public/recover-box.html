@@ -1,0 +1,13 @@
+  <div class='login-box' id='recover-box'>
+<h1>PlaceHolder </h1>
+<p>Please enter your new password below and confirm the change.</p><br>
+  <span class='grey'>New Password</span><br>
+  <input type='password' class="full-width" ng-model='restore.password' ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }"></input><br><br>
+    <span class='grey'>Repeat New Password</span><br>
+    <input type='password' class="full-width" ng-model='restore.passwordConfirmation' ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }"></input><br><br>
+ <button class='btn btn-ok full-width' ng-click='changePw()'>Change Password</button></span><br><br><br><br>
+ <div style='text-align:center; line-height:32px'>
+      <a href='#' ng-click='updateView("login-box.html")'>Back to login</a><br>
+     <a href='#' ng-click='updateView("registration-box")'>Create new account</a><br>
+  </div>
+</div>

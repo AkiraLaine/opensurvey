@@ -116,7 +116,9 @@ app.config(function($routeProvider,$locationProvider){
 	when('/results:survey',{templateUrl:'/public/backend.html',
 	controller:'surveyAnswersCtrl'}).
 	when('/login',{templateUrl:'/public/login.html',
-	controller:'userCtrl'})
+	controller:'userCtrl'}).
+  when('/restore',{templateUrl:'/public/login.html',
+  controller:'restoreCtrl'})
 });
 app.directive('sideBar',function($http){
   return {
@@ -195,6 +197,14 @@ app.directive('pageNumbers',function(){
 		}
 	}
 });
+
+app.directive('heroRegistration',function(){
+  return {
+  restrict:'E',
+  replace:true,
+  templateUrl:'/public/hero-registration.html'
+}
+})
 
 app.directive('overviewElement',function(){
 	return {
@@ -668,7 +678,16 @@ app.controller('loginCtrl',function($scope,$http,$window){
 
 })
 app.controller('userCtrl',function($scope,$http,$location,$window){
-  fadeIn('login-box',50)
+  $scope.viewContent = '/public/login-box.html';
+  $scope.login = {};
+  $scope.updateView = function(page) {
+    console.log('test')
+    $scope.viewContent = '/public/'+page+'.html';
+    console.log($scope.viewContent)
+  }
+  $scope.recoverPw = function(){
+    $http.post('/restore',$scope.login)
+  }
   window.fbAsyncInit = function() {
 		FB.init({
 			appId      : '165180297173897',
@@ -716,9 +735,11 @@ app.controller('userCtrl',function($scope,$http,$location,$window){
 	}
 	$scope.authorizeLogin = function(login){
 		$http.post('/login',$scope.login).then(function(data){
-			if (data.data.token !== undefined)
+      console.log(data)
+			if (data.data.token !== undefined){
 			$window.localStorage.token = data.data.token;
 			$location.path('/dashboard')
+    }
 		});
 	}
 })
@@ -740,9 +761,13 @@ app.controller('mainCtrl',function($http,$scope,$window,$uibModal,$log,$timeout,
 
 
 
-$scope.createUser = function(user){
-
-	$http.post('/signup',user)
+$scope.createUser = function(user){ //not used anymore?
+	$http.post('/signup',user).then(function(data,status,headers){
+  console.log('posted to server')
+  console.log(data);
+  console.log(status);
+  console.log(headers);
+  })
 }
 
 

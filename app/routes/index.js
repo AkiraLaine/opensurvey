@@ -2,6 +2,8 @@
 
 var ClickHandler = require(process.cwd() + '/app/controllers/clickHandler.server.js');
    var keys = require(process.cwd()+'/keys.js');
+   var Mailgun = require('mailgun').Mailgun;
+   var mg = new Mailgun(mailgunKey);
 module.exports = function (app, db, bcrypt,jwt,request) {
 
    var questions = db.collection('questions');
@@ -243,24 +245,29 @@ app.route('/api/results')
     var password = req.body.password;
     users.find({email:email}).limit(1).toArray(function(err,data){
     if (err) throw err;
-    if (data[0] === undefined)
+    if (data[0] === undefined){
     console.log('user not found.')
-    else {
-    if (bcrypt.compareSync(password,data[0].password))
-    {console.log('Successful Login.');
+      res.status(401).end('user not found');
+    }
+    else if (!data[0].activated) {
+      console.log('user not activated')
+      res.status(401).end('user not activated');
+    }
+    else if (bcrypt.compareSync(password,data[0].password)){
+    console.log('Successful Login.');
     delete data[0].password;
     var token = jwt.sign(data[0],'cookiesandcream',{expiresIn:14400});
     res.send({
       success:true,
       message:'your token is ready',
       token: token
-    });}
-    else {console.log('Bad Login')
-    res.end();}}
+    });
+    }
+    else {
+    console.log('Bad Login')
+    res.status(401).end('wrong password');
+  }});
     })
-
-
-  })
   app.route('/user')
   .get(function(req,res){
     if (req.headers.authorization === undefined) {res.sendStatus(401); console.log('user access denied')}
@@ -280,14 +287,75 @@ app.route('/api/results')
           res.send(data)
         })
       })
+  app.route('/validate')
+    .get(function(req,res){
+    console.log(req.query.code)
+    users.find({confirmationLink:req.query.code}).toArray(function(err,data){
+    if (data.length > 0){
+      res.end(data[0].name)
+      users.update({confirmationLink:req.query.code}, {$set: {activated:true}});
+      users.update({confirmationLink:req.query.code},{$unset: {confirmationLink:""}});
+    }
+    else res.end();
+    })
+  });
+  app.route('/restore/success')
+  .post(function(req,res){
+    console.log(req)
+    var hash = bcrypt.hashSync(req.body.password,bcrypt.genSaltSync(10));
+    users.find({restoreLink:req.body.code}).toArray(function(err,data){
+    if (data.length > 0){
+    users.update({restoreLink:req.body.code}, {$set: {password:hash}});
+    users.update({restoreLink:req.body.code},{$unset: {restoreLink:""}});
+  }
+  else res.end('error');
+  })
+});
+app.route('/restore')
+.post (function(req,res){
+  users.find({email:req.body.email}).toArray(function(err,data){
+  if (data.length === 0) res.end('user not found');
+  else {
+    console.log(req.body)
+  var restoreLink = bcrypt.hashSync(req.body.email,bcrypt.genSaltSync(10));
+  users.update({email:req.body.email},{$set:{restoreLink:restoreLink}});
+  console.log('sent restore link')
+  mg.sendText('tobe.guse@gmail.com',
+     ['tobe.guse@gmail.com'],
+     'Reset your OpenSurvey.com Password!','Click here to update your password: http://localhost:3000/restore?code='+restoreLink ,
+     {'X-Campaign-Id': 'something'},
+     function(err) { err && console.log(err) });
+  res.end()
+  }
+});
+})
+
   app.route('/signup')
   .post(function(req,res){
     var email = req.body.email;
     var name = req.body.name;
-    var hash = bcrypt.hashSync(req.body.password,bcrypt.genSaltSync(10));
-    users.insert({email: email, name:name, password:hash})
+    users.find({email:email}).toArray(function(err,data){
+      if(data.length === 0) {
+      console.log('creating new user')
+      var hash = bcrypt.hashSync(req.body.password,bcrypt.genSaltSync(10));
+      var confirmationLink = bcrypt.hashSync(req.body.password,bcrypt.genSaltSync(10));
+      confirmationLink.replace(/\B\./g,'K');
+      users.insert({email: email, name:name, password:hash,confirmationLink:confirmationLink, activated:false});
+      mg.sendText('tobe.guse@gmail.com',
+         ['tobe.guse@gmail.com'],
+         'Welcome to OpenSurveys.com!','Your confirmation Link is: http://localhost:3000/validate/?code='+confirmationLink ,
+         {'X-Campaign-Id': 'something'},
+         function(err) { err && console.log(err) });
+             res.end('user created')
+      }
+      else {
+      console.log('cannot create new user, user already exists.')
+      res.end('user exists already')
+      }
+    })
 
   })
+
   app.route('/api/delete')
   .post(function(req,res){
     console.log('deleting '+req.body.link)
