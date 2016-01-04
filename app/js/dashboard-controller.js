@@ -347,11 +347,8 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$wi
 		}
 	})
 	}
-	var myLineChart;
-	var ctx;
-	var chartAnim;
 	var heroAnimation;
-	var w = 1600;
+	var w = 1920;
 	var c = 0;
 	var animated = false;
 	var section2 = false;
@@ -389,7 +386,7 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$wi
 			w+=1;
 			c -=1;
 			if (w >= 3840){
-				w=1600;
+				w=1920;
 				c = 0;
 			}
 		},60)

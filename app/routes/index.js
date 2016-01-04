@@ -304,7 +304,9 @@ app.route('/api/results')
     console.log(req)
     var hash = bcrypt.hashSync(req.body.password,bcrypt.genSaltSync(10));
     users.find({restoreLink:req.body.code}).toArray(function(err,data){
+            console.log(data)
     if (data.length > 0){
+
     users.update({restoreLink:req.body.code}, {$set: {password:hash}});
     users.update({restoreLink:req.body.code},{$unset: {restoreLink:""}});
   }

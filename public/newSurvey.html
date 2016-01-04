@@ -1,13 +1,19 @@
 <div class='content'>
 	<div class='new-survey-tile'>
+			<div class='progress-bar'><ul>
+				<li>1</li>
+				<li>2</li>
+				<li>3</li>
+			</ul></div>
 		<form class="questions" novalidate>
+					
 			<div id='copy1'>
+	
 				<h2>Step 1: Let's get started</h2>
 				<p>One project might contain several surveys. Naming your projects will make it easier for you to quickly find your different surveys in the overview. The project title won't be visible to participants. The survey title is the official name of your survey and will be visible to all participants.</p>
 			</div>
 			<div id='container'>
-				<input class='form-control title-form' ng-model='survey.project' placeholder='Project Name' required type='text'/>
-				<input class='form-control title-form' ng-model='survey.name' placeholder='Survey Title' required type='text'/><br>
+				<input class='title-form' ng-model='survey.name' placeholder='Survey Title' required type='text'/><br>
 				<div id='copy2'>
 					<h2>Step 2: Demographic Data</h2>
 					<p>Collecting demographic data will help you to filter your survey results based on the age, gender income and other factors. Please select those demographic factors that will be relevant for your survey. Don't worry - you will be able to adapt the wording of your selected demographic questions in the next step.</p>

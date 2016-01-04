@@ -189,11 +189,63 @@ z-index:5;
 	left:0px;
 	margin:auto;
 	height:800px;
-	width:1600px;
+	width:1920px;
 	 background-size: auto 800px;
 	opacity:0.2;
 }
+.progress-bar {
+		counter-reset: step;
+	height:100%;
+	background:transparent;
+	width:50px;
+	margin-right:35px;
+	margin-top:20px;
+}
+.progress-bar ul {
 
+	width:50px;
+	height:500px;
+	margin:0;
+    padding: 0;
+}
+.progress-bar li:before{
+	font-size:18px;
+    content: counter(step);
+    counter-increment: step;
+	border:2px solid black;
+ 	margin-bottom:100%;
+ 	background:#f6f6f6;
+ 	display:block;
+ 	width:60px;
+ 	float:left;
+ 	border-radius:50%;
+ 	height:60px;
+ 	position:absolute;
+}
+.progress-bar li {
+	color:black;
+	position:relative;
+ list-style-type: none;
+ text-align:center;
+ line-height:58px;
+ display:block;
+ width:50px;
+ float:left;
+ height:33.33%;
+}
+.progress-bar li:after {
+	top:60px;
+	position:absolute;
+	content:'';
+	height:90%;
+	width:2px;
+	background:black;
+
+}
+.progress-bar li:last-child:after {
+	width:0px;
+	height:0px;
+}
 .login-btn {
 	width:49%;
 	height:45px;
@@ -1261,6 +1313,7 @@ div.demo-test span {
 	border-radius:0px;
 	transition:all .5s ease;
 	height:60px;
+	width:100%;
 	background:rgba(0,0,0,0.1);
 	border:2px solid rgba(0,0,0,0.1);
 	font-family:'Roboto';
@@ -1388,6 +1441,7 @@ float:right;
 
 #container {
 	transition: all .5s ease;
+	overflow:hidden;
 }
 #copy2 {
 	visibility:hidden;
