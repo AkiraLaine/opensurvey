@@ -147,6 +147,10 @@ position:absolute;
 right:45px;
 z-index:5;
 }
+.hide {
+	visibility:hidden;
+	opacity:0;
+}
 .chart-blue {
 	background:url('/public/img/blue-line.svg');
 	background-repeat:no-repeat;
@@ -194,7 +198,6 @@ z-index:5;
 	opacity:0.2;
 }
 .progress-bar-steps {
-		counter-reset: step;
 	height:100%;
 background:none;
 	width:50px;
@@ -209,12 +212,11 @@ background:none;
     padding: 0;
 }
 .progress-bar-steps li:before{
-	font-size:18px;
-    content: counter(step);
-    counter-increment: step;
-	border:2px solid black;
+font-family: FontAwesome;
+	border:2px solid #ccc;
+	font-size:28px;
  	margin-bottom:100%;
- 	background:#f6f6f6;
+ 	background:#fff;
  	display:block;
  	width:60px;
  	float:left;
@@ -222,8 +224,29 @@ background:none;
  	height:60px;
  	position:absolute;
 }
+.progress-bar-steps li:first-child:before{
+	content: "\f02c";
+		font-size:24px;
+}
+.progress-bar-steps li:nth-child(2):before{
+	content: "\f0c0";
+		font-size:24px;
+}
+.progress-bar-steps li:last-child:before{
+	content: "\f086";
+}
+.progress-bar-steps li.active:before{
+	color:green;
+	border:2px solid green;
+	transition:all .5s;
+}
+.progress-bar-steps li.active:after {
+	background:green;
+	transition:background .5s;
+}
+
 .progress-bar-steps li {
-	color:black;
+	color:#ccc;
 	position:relative;
  list-style-type: none;
  text-align:center;
@@ -231,17 +254,25 @@ background:none;
  display:block;
  width:50px;
  float:left;
-height:33.33%; 
-min-height:300px;
+height:33.33%;
+min-height:250px;
 }
 .progress-bar-steps li:after {
 	top:60px;
 	position:absolute;
 	content:'';
 	height:90%;
+	left:29px;
 	width:2px;
-	background:black;
+	background:#ccc;
+}
+h2.active {
+	transition:color .5s;
+	color:#111;
+}
 
+h2 {
+	font-size:22px;
 }
 .progress-bar-steps li:last-child:after {
 	width:0px;
@@ -277,6 +308,23 @@ min-height:300px;
 .hero-content h1{
 	letter-spacing:3px;
 	font-size:36px;
+}
+.visible {
+	visibility:visible;
+	opacity:1;
+}
+.fadedgrey {
+	color:#ccc;
+	border-color:#ccc;
+}
+.survey-creation-box.ng-enter {
+	transition:all .5s;
+}
+.survey-creation-box.ng-enter {
+	opacity:0;
+}
+.survey-creation-box.ng-enter-active {
+	opacity:1;
 }
 .hero-box {
 	position:relative;
@@ -479,7 +527,7 @@ h2 {
 width:calc(100% - 150px) ;
 margin-left:150px;
 height:100%;
-background:#f6f6f6;
+
 
 }
 
@@ -954,7 +1002,6 @@ canvas{
 	background:#fafafa;
   width:98%;
 	padding: 25px 50px 25px 50px;
-	margin:15px;
 	height:100%;
 	width:calc(100% - 150px) ;
 	margin-left:150px;

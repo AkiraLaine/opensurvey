@@ -71,6 +71,7 @@ angular.module('votingapp').controller('surveyCreationCtrl',function($scope,$htt
 		fieldAction($scope.currentStep)
 			if ($scope.currentStep > 1) $scope.currentStep -= 1;
 	}
+
 var fieldAction = function() {
 		console.log(window.getComputedStyle(document.getElementById('copy2')).height);
 	if ($scope.currentStep === 2){
