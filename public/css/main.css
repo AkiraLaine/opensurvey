@@ -193,22 +193,22 @@ z-index:5;
 	 background-size: auto 800px;
 	opacity:0.2;
 }
-.progress-bar {
+.progress-bar-steps {
 		counter-reset: step;
 	height:100%;
-	background:transparent;
+background:none;
 	width:50px;
 	margin-right:35px;
-	margin-top:20px;
+	margin-top:5px;
 }
-.progress-bar ul {
+.progress-bar-steps ul {
 
 	width:50px;
-	height:500px;
+	height:100%;
 	margin:0;
     padding: 0;
 }
-.progress-bar li:before{
+.progress-bar-steps li:before{
 	font-size:18px;
     content: counter(step);
     counter-increment: step;
@@ -222,7 +222,7 @@ z-index:5;
  	height:60px;
  	position:absolute;
 }
-.progress-bar li {
+.progress-bar-steps li {
 	color:black;
 	position:relative;
  list-style-type: none;
@@ -231,9 +231,10 @@ z-index:5;
  display:block;
  width:50px;
  float:left;
- height:33.33%;
+height:33.33%; 
+min-height:300px;
 }
-.progress-bar li:after {
+.progress-bar-steps li:after {
 	top:60px;
 	position:absolute;
 	content:'';
@@ -242,9 +243,9 @@ z-index:5;
 	background:black;
 
 }
-.progress-bar li:last-child:after {
+.progress-bar-steps li:last-child:after {
 	width:0px;
-	height:0px;
+	height:1px;
 }
 .login-btn {
 	width:49%;
@@ -435,6 +436,9 @@ z-index:5;
 	margin-bottom:15px;
 	letter-spacing:3px;
 }
+h2 {
+	display:inline-block;
+}
 .info-box {
 	position:relative;
 	background:#efefef;
@@ -474,7 +478,8 @@ z-index:5;
 .content{
 width:calc(100% - 150px) ;
 margin-left:150px;
-
+height:100%;
+background:#f6f6f6;
 
 }
 
@@ -950,6 +955,9 @@ canvas{
   width:98%;
 	padding: 25px 50px 25px 50px;
 	margin:15px;
+	height:100%;
+	width:calc(100% - 150px) ;
+	margin-left:150px;
 }
 .dashboard-content {
 	padding: 25px 50px 25px 50px;
@@ -1313,7 +1321,8 @@ div.demo-test span {
 	border-radius:0px;
 	transition:all .5s ease;
 	height:60px;
-	width:100%;
+	width:60%;
+	padding:0 10px 0 10px;
 	background:rgba(0,0,0,0.1);
 	border:2px solid rgba(0,0,0,0.1);
 	font-family:'Roboto';
