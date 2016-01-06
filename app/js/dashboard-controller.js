@@ -282,6 +282,7 @@ angular.module('votingapp').controller('restoreCtrl',function($scope,$http,$loca
 	}
 });
 angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$window,$location){
+		animate();
 	window.fbAsyncInit = function() {
 		FB.init({
 			appId      : '165180297173897',
@@ -348,9 +349,27 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$wi
 		}
 	})
 	}
-	var heroAnimation;
+	var elm = document.getElementById('hero-linechart1');
 	var w = 1920;
 	var c = 0;
+	function animate(){
+
+		    setTimeout(function() {
+		    	if (document.body.scrollTop < 200) heroAnimation = requestAnimationFrame(animate);
+        c -= 1;
+		w +=1;
+		elm.style.WebkitTransform = 'translateX('+c+'px)';
+		elm.style.width = w+'px';
+			if (w >= 3800){
+				w=1920;
+				c = 0;
+			}
+    }, 1000 / 25);
+
+	}
+
+	var heroAnimation;
+
 	var animated = false;
 	var section2 = false;
 	var section3 = false;
@@ -377,6 +396,7 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$wi
 			},15)
 		}
 	}
+	/*
 	function activateHeroAnimation() {
 		if (!animated){
 			animated = true;
@@ -398,21 +418,20 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$wi
 			animated = false;
 			clearInterval(heroAnimation)
 		}
-	}
+	}*/
+	
 	window.onscroll = function() {
-		if (document.body.scrollTop > 0) {
+		if (document.body.scrollTop > 0 && !document.getElementById('navbar').classList.contains('stick')) {
 						document.getElementById('navbar').classList.remove('top-navbar');
 			document.getElementById('navbar').classList.add('stick');
+		
 		}
-		if (document.body.scrollTop < 5) {
-
+		if (document.body.scrollTop < 5 && !document.getElementById('navbar').classList.contains('top-navbar')) {
 						document.getElementById('navbar').classList.add('top-navbar');
 			document.getElementById('navbar').classList.remove('stick');
-	activateHeroAnimation();
+			animate();
 		}
-		if (document.body.scrollTop > 300){
-			deactivateHeroAnimation();
-		}
+
 		if (document.body.scrollTop >= document.getElementById('lineCharts').offsetTop-300 && !section3){
 			document.getElementById('chartBlue').classList.add('chart-expanded');
 			window.setTimeout(function(){
@@ -421,7 +440,6 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$wi
 			section3 = true;
 		}
 		if (document.body.scrollTop >= document.getElementById('questionChoice').offsetTop-400 && !section2) {
-
 					fadeIn(document.getElementById('question-image-wrapper').children[0],40);
 					window.setTimeout(function(){
 						fadeIn(document.getElementById('question-image-wrapper').children[1],40);
@@ -431,13 +449,13 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$wi
 					},400);
 					section2 = true;
 	}
-	if (document.body.scrollTop >= document.getElementById('dashboardInfo').offsetTop-420){
+	if (document.body.scrollTop >= document.getElementById('dashboardInfo').offsetTop-420 && !document.getElementById('dashboard-window').classList.contains('dashboard-window-expanded')){
 		fadeIn('dashboard-window',30)
 		document.getElementById('dashboard-window').classList.add('dashboard-window-expanded');
 	}
 }
 
-			 	activateHeroAnimation();
+			 /*	activateHeroAnimation();*/
 
 
 

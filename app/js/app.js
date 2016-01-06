@@ -56,21 +56,26 @@ function fadeOut(id,speed){
 
 function fadeIn(id,speed){
   if (typeof id === 'string')
+  
   var element = document.getElementById(id);
   else
   var element = id;
+    	console.log('fading stuff1')
   if (element.style.visibility !== 'visible'){
-  var fade;
+  		console.log('fading stuff2')
   var counter = 0;
   element.style.opacity = 0;
   element.style.visibility = 'visible';
-  fade = window.setInterval(function(){
-    counter+=0.1;
-    element.style.opacity = counter;
-      if (element.style.opacity >= 1) {
-        window.clearInterval(fade);
-    }
-  },speed)
+  draw();
+  function draw(){
+  	console.log('fading stuff3')
+  	counter += 0.1;
+  element.style.opacity = counter;
+  if (element.style.opacity <1){
+  requestAnimationFrame(draw)
+  }
+  }
+  
 }
 }
 function weeklyView(data) {
