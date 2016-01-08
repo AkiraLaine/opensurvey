@@ -632,6 +632,7 @@ color:#aaa;
 	padding-top:20px;
 	padding-right:50px;
 	width:100%;
+	min-height:200px;
 	position:relative;
 
 }
@@ -1206,6 +1207,7 @@ input[type='checkbox']{
   display:inline;
   position:relative;
   width:200px;
+  margin-right:30px;
   height:50px;
 }
 input[type='checkbox']:disabled ~ .tag {
@@ -1228,12 +1230,12 @@ input[type='checkbox'] + label{
   width:20px;
   border: 2px solid #444;
   height:20px;
+  background:#fff;
 
 }
 .btn-main {
 	border:none;
 	height:50px;
-	margin-left:-20px;
 	font-weight:500;
 	background:#8475FF;
 	color:#fff;
@@ -1246,7 +1248,7 @@ input[type='checkbox'] + label{
 }
 .tag {
 	font-size:1.1em;
-	font-weight:600;
+	font-weight:500;
   margin-left:40px;
 }
 input[type='checkbox']:checked + label{
@@ -1255,6 +1257,7 @@ input[type='checkbox']:checked + label{
   transition: all .2s ease-in;
   width:23px;
   height:20px;
+  background:none;
   border-top-color:transparent;
   border-right-color:transparent;
   border-bottom-color:#8475FF;
@@ -1376,7 +1379,7 @@ input[type="radio"].scale + label:hover {
 }
 
 .live-selection {
-	padding-right:150px;
+	padding-right:100px;
 	display:inline-block;
 }
 .scale-container {
@@ -1393,13 +1396,22 @@ div.demo-test span {
 .title-form:focus {
 	outline:none;
 }
+.checkbox-creation-container {
+	border:1px solid #ccc;
+	width:70%;
+	min-height:50px;
+	float:left;
+	line-height:42px;
+	background:#eee;
+	padding:5px 10px 0px 10px;
+}
 .title-form {
 	margin-bottom:15px;
 	border-radius:0px;
 	transition:all .5s ease;
 	height:50px;
 	width:70%;
-	margin-right:15px;
+	float:left;
 	padding:5px 10px 5px 10px;
 	background:#fff;
 	border:none;
@@ -1553,15 +1565,89 @@ margin-right:auto;
 	min-width:200px;
 }
 .btn-addfield {
-	background:#e6e6e6;
-	height:60px;
-	width:60%;
+	background:#8475FF;
+	height:50px;
+	width:200px;
+	font-weight:500;
+	color:#fff;
 	display:block;
 	margin:auto;
 }
-.btn-addfield:hover {
-	background:#e0e0e0;
+/* dropdown menus */
+
+.dropdown ul li {
+  cursor:pointer;
+  text-align:center;
+  line-height:2.5em;
+  border-bottom:1px solid #ccc;
 }
+.dropdown ul li:hover {
+  background:#eef;
+}
+.dropdown ul li:last-child {
+  line-height:2.5em;
+  border-bottom:none;;
+}
+.dropdown ul {
+  border:1px solid #ccc;
+  border-radius:5px;
+  margin:0;
+   padding:5px;
+  list-style:none;
+  display:none;
+  width:85%;
+  margin-left:1px;
+  margin-top:2px;
+  background:#fff;   
+}
+.dropdown button:focus ~ ul{
+  display:block;
+  position:absolute;
+}
+.dropdown button:focus {
+  outline:none;
+}
+.dropdown {
+  width:200px;
+  height:40px;
+  position:relative;
+  display:inline-block;
+}
+.dropdown button {
+
+  background:white;
+  cursor:pointer;
+  border:1px solid #ccc;
+  width:100%;
+  border-radius:5px;
+  height:100%;
+}
+.dropdown button:before {
+    content:'';
+    width: 0;
+    height: 0;
+    vertical-align: middle;
+    border-top: 4px dashed;
+    border-top: 4px solid;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+    position:absolute;;
+    display:inline-block;
+    right:15px;
+  top:50%;
+}
+
+.dropdown button:focus + span:after {
+  content:'';
+  display:block;
+  height:100%;
+  background:none;
+  width:100%;
+  position:absolute;
+  top:0;
+  left:0;
+}
+
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
     display: none !important;

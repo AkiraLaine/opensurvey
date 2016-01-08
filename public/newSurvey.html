@@ -14,7 +14,7 @@
 	<h2>Step 2: Demographic Filters</h2>
 			<div class='survey-creation-box' ng-if='currentStep > 1' id='survey-creation-container-2'>
 			<p>Collecting demographic data will help you to filter your survey results based on the age, gender income and other factors. Please select those demographic factors that will be relevant for your survey. Don't worry - you will be able to adapt the wording of your selected demographic questions in the next step.</p>
-		<div style='border: 1px solid #999'>
+		<div class='checkbox-creation-container'>
 		<div class='check-container'>
 			<input class='filter-checkbox' ng-model='survey.filters.name' id='name' type='checkbox' ng-disabled='currentStep >2'></input>
 			<label for='name'></label>
@@ -62,27 +62,38 @@
 					<div class='question-container'  ng-repeat='question in newFormQuestions' style='display:table'>
 									<div class='progress-icon' ng-class='{"qendicon" : newFormQuestions.length < $index+2, "active" : newFormQuestions.length > $index+1}'></div>
 				<div style='display:table-cell'>
-						<h2> Question {{$index+1}}: <span ng-bind='question.name'></span></h2>
+						<h2> Question {{$index+1}}: <span ng-bind='question.name'></span></h2><br>
 						
 						<textarea style='width:100%' ng-if='question.type==="open question"' readonly rows='6'></textarea>
 						
-						<div ng-if='question.type==="multiple choice"' ng-repeat='option in question.options'>
-							<input name='optRadio' readonly type='radio'>
-							<span ng-bind='option.value'></span>
-							</input><br>
-						</div>
+						<span class='live-selection' ng-if='question.type==="multiple choice"'style='float:left;margin-top:5%' ng-repeat='option in question.options'>
+									<input name='optRadio' class='square' type='radio' id='{{option.value}}'>
+								</input>	<label for='{{option.value}}' class=square></label>		<span ng-bind='option.value'></span>
+							</span>
 						<div ng-if='question.type==="numerical scale"'>
-							<div class="row">
-								<div class='col-xs-3'>
-									<span ng-bind='question.rangeOptions.scaleNegative'></span>
-						</div>
-						<div class='col-xs-6'>
-							<input max='question.rangeOptions.scaleMax' min='0' type='range'></input>
-						</div>
-						<div class='col-xs-3'>
-							<span ng-bind='question.rangeOptions.scalePositive'></span>
-						</div>
-					</div>
+										<div class='scale-container' style='float:left;margin-top:5%'>
+					        	<span ng-bind='question.rangeOptions.scaleNegative'></span>
+					        <span><input class='scale' type='radio' name='{{question.name}}' value='1' ng-model='answers[question.name]' id='r1'></input>
+					        <label class='scale' for="r1"></label></span>
+					        <span><input class='scale' type='radio' name='{{question.name}}' value='2' ng-model='answers[question.name]' id='r2'></input>
+					          <label class='scale' for="r2"></label></span>
+					        <span><input class='scale'type='radio' name='{{question.name}}' value='3' ng-model='answers[question.name]' id='r3'></input>
+					          <label class='scale' for="r3"></label></span>
+					        <span><input class='scale' type='radio' name='{{question.name}}' value='4' ng-model='answers[question.name]' id='r4'></input>
+					          <label class='scale' for="r4"></label></span>
+					        <span><input class='scale' type='radio' name='{{question.name}}' value='5' ng-model='answers[question.name]' id='r5'></input>
+					          <label class='scale' for="r5"></label></span>
+					        <span><input class='scale' type='radio' name='{{question.name}}' value='6' ng-model='answers[question.name]' id='r6'></input>
+					          <label class='scale' for="r6"></label></span>
+					        <span><input class='scale' type='radio' name='{{question.name}}' value='7' ng-model='answers[question.name]' id='r7'></input>
+					          <label class='scale' for="r7"></label></span>
+					        <span><input class='scale' type='radio' name='{{question.name}}' value='8' ng-model='answers[question.name]' id='r8'></input>
+					          <label class='scale' for="r8"></label></span>
+					        <span><input class='scale' type='radio' name='{{question.name}}' value='9' ng-model='answers[question.name]' id='r9'></input>
+					          <label class='scale' for="r9"></label></span>
+					        <span><input class='scale' type='radio' name='{{question.name}}' value='10' ng-model='answers[question.name]' id='r10'></input>
+					          <label class='scale' for="r10"></label></span>
+					      </input><span ng-bind='question.rangeOptions.scalePositive'></span></div>
 				</div>
 				<div ng-if='question.type==="demographic information"'>
 					<span ng-show='question.fullName'>Full Name:
