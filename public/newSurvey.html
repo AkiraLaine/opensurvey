@@ -1,4 +1,5 @@
 <div class='content'>
+<<<<<<< HEAD
 
 		<div class='progress-bar-steps alignleft'>
 			<ul class='icons'>
@@ -11,16 +12,24 @@
 		</div>
 	<div style='height:25%; min-height:200px' ng-class='{fadedgrey : currentStep > 1}'>
 
+=======
+	<div class='survey-creation-container' ng-class='{fadedgrey : currentStep > 1}'>
+		<div class='progress-icon tag-icon' ng-class='{active: currentStep > 1}'></div>
+		<div style='display:table-cell'>
+>>>>>>> origin/master
 		<h2 >Step 1: Let's get started</h2>
 		<p>One project might contain several surveys. Naming your projects will make it easier for you to quickly find your different surveys in the overview. The project title won't be visible to participants. The survey title is the official name of your survey and will be visible to all participants.</p>
 		<input class='title-form' ng-model='survey.name' ng-disabled='currentStep > 1' placeholder='Survey Title' required type='text'/></input>
-		<button id='classAdder' ng-click='nextStep()'>Advance</button>
+		<button id='classAdder' class='btn-main' ng-click='nextStep()' ng-disabled='currentStep > 1'>Done!</button>
+		</div>
 	</div>
-	<div style='height:25%; min-height:200px' ng-class='{fadedgrey : currentStep !== 2}'>
+	<div class='survey-creation-container' ng-class='{fadedgrey : currentStep !== 2}'>
+				<div class='progress-icon user-icon' ng-class='{active: currentStep > 2}'></div>
+				<div style='display:table-cell'>
 	<h2>Step 2: Demographic Filters</h2>
 			<div class='survey-creation-box' ng-if='currentStep > 1' id='survey-creation-container-2'>
 			<p>Collecting demographic data will help you to filter your survey results based on the age, gender income and other factors. Please select those demographic factors that will be relevant for your survey. Don't worry - you will be able to adapt the wording of your selected demographic questions in the next step.</p>
-
+		<div class='checkbox-creation-container'>
 		<div class='check-container'>
 			<input class='filter-checkbox' ng-model='survey.filters.name' id='name' type='checkbox' ng-disabled='currentStep >2'></input>
 			<label for='name'></label>
@@ -46,13 +55,21 @@
 			<label for='profession'></label>
 			<span class='tag'>Profession</span>
 		</div>
+	
+		</div>
+		<button id='classAdder' class='btn-main' ng-click='nextStep()' ng-disabled='currentStep > 2'>Done!</button>	
+		</div>
+	
 	</div>
 	</div>
 
-	<div style='height:25%; min-height:200px' ng-class='{fadedgrey : currentStep < 3}'>
+	<div class='survey-creation-container' ng-class='{fadedgrey : currentStep < 3}'>
+						<div class='progress-icon question-icon' ng-class='{"endicon" : newFormQuestions.length < 1, "active" : newFormQuestions.length > 0}'></div>
+				<div style='display:table-cell'>
 		<h2>Step 3: Add Questions</h2>
 		<div class='survey-creation-box' ng-if='currentStep > 2'>
 			<p>This is where the real fun begins. You are now able to add as many questions to your survey as you like. If you want to take a break editing, you can always save your survey as a draft and come back at a later time.</p>
+<<<<<<< HEAD
 		</div>
 	</div>
 			<div>
@@ -67,18 +84,48 @@
 							<span ng-bind='option.value'></span>
 							</input><br>
 						</div>
+=======
+		</div>	
+		</div>
+	</div>	
+			<div>
+			
+					<div class='question-container'  ng-repeat='question in newFormQuestions' style='display:table'>
+									<div class='progress-icon' ng-class='{"qendicon" : newFormQuestions.length < $index+2, "active" : newFormQuestions.length > $index+1}'></div>
+				<div style='display:table-cell'>
+						<h2> Question {{$index+1}}: <span ng-bind='question.name'></span></h2><br>
+						
+						<textarea style='width:100%' ng-if='question.type==="open question"' readonly rows='6'></textarea>
+						
+						<span class='live-selection' ng-if='question.type==="multiple choice"'style='float:left;margin-top:5%' ng-repeat='option in question.options'>
+									<input name='optRadio' class='square' type='radio' id='{{option.value}}'>
+								</input>	<label for='{{option.value}}' class=square></label>		<span ng-bind='option.value'></span>
+							</span>
+>>>>>>> origin/master
 						<div ng-if='question.type==="numerical scale"'>
-							<div class="row">
-								<div class='col-xs-3'>
-									<span ng-bind='question.rangeOptions.scaleNegative'></span>
-						</div>
-						<div class='col-xs-6'>
-							<input max='question.rangeOptions.scaleMax' min='0' type='range'></input>
-						</div>
-						<div class='col-xs-3'>
-							<span ng-bind='question.rangeOptions.scalePositive'></span>
-						</div>
-					</div>
+										<div class='scale-container' style='float:left;margin-top:5%'>
+					        	<span ng-bind='question.rangeOptions.scaleNegative'></span>
+					        <span><input class='scale' type='radio' name='{{question.name}}' value='1' ng-model='answers[question.name]' id='r1'></input>
+					        <label class='scale' for="r1"></label></span>
+					        <span><input class='scale' type='radio' name='{{question.name}}' value='2' ng-model='answers[question.name]' id='r2'></input>
+					          <label class='scale' for="r2"></label></span>
+					        <span><input class='scale'type='radio' name='{{question.name}}' value='3' ng-model='answers[question.name]' id='r3'></input>
+					          <label class='scale' for="r3"></label></span>
+					        <span><input class='scale' type='radio' name='{{question.name}}' value='4' ng-model='answers[question.name]' id='r4'></input>
+					          <label class='scale' for="r4"></label></span>
+					        <span><input class='scale' type='radio' name='{{question.name}}' value='5' ng-model='answers[question.name]' id='r5'></input>
+					          <label class='scale' for="r5"></label></span>
+					        <span><input class='scale' type='radio' name='{{question.name}}' value='6' ng-model='answers[question.name]' id='r6'></input>
+					          <label class='scale' for="r6"></label></span>
+					        <span><input class='scale' type='radio' name='{{question.name}}' value='7' ng-model='answers[question.name]' id='r7'></input>
+					          <label class='scale' for="r7"></label></span>
+					        <span><input class='scale' type='radio' name='{{question.name}}' value='8' ng-model='answers[question.name]' id='r8'></input>
+					          <label class='scale' for="r8"></label></span>
+					        <span><input class='scale' type='radio' name='{{question.name}}' value='9' ng-model='answers[question.name]' id='r9'></input>
+					          <label class='scale' for="r9"></label></span>
+					        <span><input class='scale' type='radio' name='{{question.name}}' value='10' ng-model='answers[question.name]' id='r10'></input>
+					          <label class='scale' for="r10"></label></span>
+					      </input><span ng-bind='question.rangeOptions.scalePositive'></span></div>
 				</div>
 				<div ng-if='question.type==="demographic information"'>
 					<span ng-show='question.fullName'>Full Name:
@@ -99,7 +146,7 @@
 						<span ng-bind='question.text'></span>
 					</p>
 				</div>
-				<div class='question-button-container' ng-click='removeQuestion(question)'>
+				<div class='question-button-container' ng-click='removeQuestion(question)' ng-class='{"active" : newFormQuestions.length > $index+1}'>
 					<span class='fa-stack fa-fw fa-button'>
 						<i class='fa fa-square fa-stack-2x fa-fw danger '></i>
 						<i class='fa fa-times fa-inverse fa-stack-1x fa-fw fa-lg'></i>
@@ -113,7 +160,12 @@
 						<i class='fa fa-arrows fa-inverse fa-stack-1x fa-fw'></i>
 					</span><br>
 				</div>
+<<<<<<< HEAD
 
+=======
+				</div>
+		
+>>>>>>> origin/master
 		</div>
 		<button class='create-btn btn-addfield' ng-click='open("lg")' ng-if='currentStep ===3' type='button'>
 			<i class="fa fa-plus fa-fw fa-lg"></i>Add Question
