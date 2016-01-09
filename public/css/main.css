@@ -199,7 +199,7 @@ z-index:5;
 }
 
 .progress-icon {
-	
+
 	width:100px;
 	display:table-cell;
 	height:100%;
@@ -210,17 +210,16 @@ z-index:5;
  line-height:58px;
 }
 .survey-creation-container {
-height:25%; 
+height:25%;
 padding:20px 0 40px 0;
-display:table	
+display:table
 }
-<<<<<<< HEAD
 
 
 
 .progress-bar-steps li:before{
 	content:counter(step);
-=======
+}
 .progress-icon.tag-icon:before {
 	content:'\f02b';
 }
@@ -238,8 +237,7 @@ display:table
 	height:70%;
 }
 .progress-icon:before{
-	content:counter(step);	
->>>>>>> origin/master
+	content:counter(step);
 font-family: FontAwesome;
 	border:2px solid #ccc;
 	font-size:28px;
@@ -1453,12 +1451,9 @@ input.title-form:disabled {
 transition:all .5s ease;
 	color:#111;
 	font-weight:500;
-<<<<<<< HEAD
   box-sizing:border-box;
-
-=======
 	border-color:#ccc;
->>>>>>> origin/master
+
 }
 .move-up{
    transform: translateY(-100px);
@@ -1611,7 +1606,7 @@ margin-right:auto;
   width:85%;
   margin-left:1px;
   margin-top:2px;
-  background:#fff;   
+  background:#fff;
 }
 .dropdown button:focus ~ ul{
   display:block;

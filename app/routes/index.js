@@ -77,13 +77,21 @@ module.exports = function (app, db, bcrypt,jwt,request) {
 
           res.setHeader('Content-Type','application/json');
           console.log(req.headers)
-            if (req.headers.authorization === undefined) {res.sendStatus(401); console.log('draft access denied')}
+            if (req.headers.authorization === undefined) {
+
+              res.redirect('/login');
+              console.log('draft access denied')}
             else jwt.verify(req.headers.authorization, 'cookiesandcream', function(err, decoded) {
-            if (err) res.sendStatus(401);
-          drafts.find({'email':decoded.email}).toArray(function(err,data){
+            if (err) {
+            res.redirect('/login');
+            res.end();
+            }
+            else  {
+            drafts.find({'email':decoded.email}).toArray(function(err,data){
               if (err) throw err;
               res.send(data)
 });
+}
 
 
       });

@@ -1,22 +1,7 @@
 <div class='content'>
-<<<<<<< HEAD
-
-		<div class='progress-bar-steps alignleft'>
-			<ul class='icons'>
-				<li ng-class='{active : currentStep > 1}'></li>
-				<li ng-class='{active : currentStep > 2}'></li>
-				<li></li>
-			<li ng-repeat='question in newFormQuestions'></li>
-
-			</ul>
-		</div>
-	<div style='height:25%; min-height:200px' ng-class='{fadedgrey : currentStep > 1}'>
-
-=======
 	<div class='survey-creation-container' ng-class='{fadedgrey : currentStep > 1}'>
 		<div class='progress-icon tag-icon' ng-class='{active: currentStep > 1}'></div>
 		<div style='display:table-cell'>
->>>>>>> origin/master
 		<h2 >Step 1: Let's get started</h2>
 		<p>One project might contain several surveys. Naming your projects will make it easier for you to quickly find your different surveys in the overview. The project title won't be visible to participants. The survey title is the official name of your survey and will be visible to all participants.</p>
 		<input class='title-form' ng-model='survey.name' ng-disabled='currentStep > 1' placeholder='Survey Title' required type='text'/></input>
@@ -55,11 +40,11 @@
 			<label for='profession'></label>
 			<span class='tag'>Profession</span>
 		</div>
-	
+
 		</div>
-		<button id='classAdder' class='btn-main' ng-click='nextStep()' ng-disabled='currentStep > 2'>Done!</button>	
+		<button id='classAdder' class='btn-main' ng-click='nextStep()' ng-disabled='currentStep > 2'>Done!</button>
 		</div>
-	
+
 	</div>
 	</div>
 
@@ -69,39 +54,24 @@
 		<h2>Step 3: Add Questions</h2>
 		<div class='survey-creation-box' ng-if='currentStep > 2'>
 			<p>This is where the real fun begins. You are now able to add as many questions to your survey as you like. If you want to take a break editing, you can always save your survey as a draft and come back at a later time.</p>
-<<<<<<< HEAD
+
+		</div>
 		</div>
 	</div>
 			<div>
 
-					<div class='question-container' ng-class-even='"question-even"' ng-class-odd='"question-odd"' ng-repeat='question in newFormQuestions'>
-						<h4>Question {{$index+1}}: <span ng-bind='question.name'></span></h4>
-
-						<textarea style='width:90%' ng-if='question.type==="open question"' readonly rows='6'></textarea>
-
-						<div ng-if='question.type==="multiple choice"' ng-repeat='option in question.options'>
-							<input name='optRadio' readonly type='radio'>
-							<span ng-bind='option.value'></span>
-							</input><br>
-						</div>
-=======
-		</div>	
-		</div>
-	</div>	
-			<div>
-			
 					<div class='question-container'  ng-repeat='question in newFormQuestions' style='display:table'>
 									<div class='progress-icon' ng-class='{"qendicon" : newFormQuestions.length < $index+2, "active" : newFormQuestions.length > $index+1}'></div>
 				<div style='display:table-cell'>
 						<h2> Question {{$index+1}}: <span ng-bind='question.name'></span></h2><br>
-						
+
 						<textarea style='width:100%' ng-if='question.type==="open question"' readonly rows='6'></textarea>
-						
+
 						<span class='live-selection' ng-if='question.type==="multiple choice"'style='float:left;margin-top:5%' ng-repeat='option in question.options'>
 									<input name='optRadio' class='square' type='radio' id='{{option.value}}'>
 								</input>	<label for='{{option.value}}' class=square></label>		<span ng-bind='option.value'></span>
 							</span>
->>>>>>> origin/master
+
 						<div ng-if='question.type==="numerical scale"'>
 										<div class='scale-container' style='float:left;margin-top:5%'>
 					        	<span ng-bind='question.rangeOptions.scaleNegative'></span>
@@ -160,12 +130,7 @@
 						<i class='fa fa-arrows fa-inverse fa-stack-1x fa-fw'></i>
 					</span><br>
 				</div>
-<<<<<<< HEAD
-
-=======
 				</div>
-		
->>>>>>> origin/master
 		</div>
 		<button class='create-btn btn-addfield' ng-click='open("lg")' ng-if='currentStep ===3' type='button'>
 			<i class="fa fa-plus fa-fw fa-lg"></i>Add Question
