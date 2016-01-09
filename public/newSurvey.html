@@ -1,4 +1,5 @@
-<div class='content'>
+<div class='full-container'>
+	<div class='full-width-content'>
 	<div class='survey-creation-container' ng-class='{fadedgrey : currentStep > 1}'>
 		<div class='progress-icon tag-icon' ng-class='{active: currentStep > 1}'></div>
 		<div style='display:table-cell'>
@@ -65,7 +66,7 @@
 				<div style='display:table-cell'>
 						<h2> Question {{$index+1}}: <span ng-bind='question.name'></span></h2><br>
 
-						<textarea style='width:100%' ng-if='question.type==="open question"' readonly rows='6'></textarea>
+						<textarea ng-if='question.type==="open question"' readonly rows='6'></textarea>
 
 						<span class='live-selection' ng-if='question.type==="multiple choice"'style='float:left;margin-top:5%' ng-repeat='option in question.options'>
 									<input name='optRadio' class='square' type='radio' id='{{option.value}}'>
@@ -138,11 +139,10 @@
 
 	<div class='btn-center-nav'>
 		<button class='create-btn' ng-click='prevStep()' ng-if='currentStep > 1'>Back</button>
-		<button class='create-btn btn-default' ng-click='nextStep()' ng-if='currentStep < 3'>Continue</button>
 		<button class='create-btn btn-default' ng-click='saveDraft()' ng-if='currentStep === 3' type='button'>Save Draft</button>
 		<button class='create-btn btn-default' ng-click='survey.published = true; saveDraft()' ng-if='!survey.published && currentStep === 3' type='button'>
 		<i class='fa fa-paper-plane'></i>
 		Publish</button>
 		<button class='create-btn btn-danger' ng-click='survey.published = false; saveDraft()' ng-if='survey.published && currentStep === 3' type='button'>Unpublish</button>
-
+</div>
 </div>

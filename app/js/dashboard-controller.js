@@ -33,7 +33,6 @@ angular.module('votingapp').controller('surveyOverviewCtrl',function($scope,$htt
 });
 angular.module('votingapp').controller('surveyCreationCtrl',function($scope,$http,$uibModal,$routeParams){
 	$scope.currentStep = 1;
-
 	$scope.animationsEnabled = true;
 	$scope.survey = {};
 	$scope.newFormQuestions = [];
@@ -419,12 +418,12 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$wi
 			clearInterval(heroAnimation)
 		}
 	}*/
-	
+
 	window.onscroll = function() {
 		if (document.body.scrollTop > 0 && !document.getElementById('navbar').classList.contains('stick')) {
 						document.getElementById('navbar').classList.remove('top-navbar');
 			document.getElementById('navbar').classList.add('stick');
-		
+
 		}
 		if (document.body.scrollTop < 5 && !document.getElementById('navbar').classList.contains('top-navbar')) {
 						document.getElementById('navbar').classList.add('top-navbar');

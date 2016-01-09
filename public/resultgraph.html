@@ -4,14 +4,14 @@
 	<h2><span ng-bind='content.name'></span></h2>
 		<div class='full-width'><canvas></canvas></div>
 		</div>
-		<div ng-if='content.type === "multiple choice"' class='textbox-info'>
+		<div ng-if='content.type === "multiple choice"' class='textbox-info' style='display:none'>
 		<p class='alignleft'><i class='fa fa-arrow-circle-o-up fa-fw fa-lg blue'></i> Highest Answer: <span class='blue'><span ng-bind='highestResult'></span> (<span ng-bind='highestResultPercent'></span>%)</span></p><p class='alignright'><i class='fa fa-arrow-circle-o-down fa-lg fa-fw purple'></i> Lowest Answer: <span class='purple'>
 		<span ng-bind='lowestResult'></span> (<span ng-bind='lowestResultPercent'></span>%)</span><p>
 </div>
-<div ng-if='content.type === "numerical scale"' class='textbox-info flex'>
+<div class='textbox-info flex'>
 	<span>Filters: </span><span ng-if='activeFilters.length === 0' style='color:#666'>No active Filters.</span>
 	<span ng-repeat='filter in activeFilters track by $index'><span class='filter-label' style='border-left-color:{{filter[filter.length-1]}}' ><span ng-bind='filter[filter.length-2]'></span><i class='clickable fa fa-times fa-fw' ng-click='removeDataset($index)'></i> </span></span>
-		<div class='data-table'>
+		<div class='data-table' style='display:none'>
 	<table style='width:100%'>
 		<tr >
 			<th>Dataset</th>

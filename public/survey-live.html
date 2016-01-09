@@ -20,8 +20,10 @@
 		<div class='question-container-live'>
 
 		<h1 class='center-heading' ng-bind='activeSurvey.name'></h1>
+    			<h4 class='live-subheading'>Demographic Data</h4>
+      <div class='live-question'>
 		<span ng-if='activeSurvey.filters.gender'>
-		  Gender: <div class='dropdown'> 
+		  Gender: <div class='dropdown'>
   <button>Please Select</button>
   <span></span> <!--don't remove, needed for closing the menu-->
   <ul>
@@ -30,16 +32,17 @@
   </ul>
 </div>
 </span>
-  
-    <span ng-if='activeSurvey.filters.income'>
+
+<span ng-if='activeSurvey.filters.income'>
            Annual Income: <input type='number' style='height:40px;border-radius:5px; border:1px solid #ccc' ng-model='answers.income'></input>
-          </span>
+           </span>
           <span ng-if='activeSurvey.filters.age'>
                   Age: <input type='number' style='height:40px;border-radius:5px; border:1px solid #ccc' ng-model='answers.age'></input>
-                </span>
+                 </span>
+              </div>
 		<div ng-repeat='question in activeSurvey.questions' class='live-question'>
 			<h4 class='live-subheading' ng-bind='question.name'></h4>
-			<textarea class='form-control' rows='6' ng-if='question.type==="open question"' ng-model='answers[question.name]'></textarea>
+			<textarea style='width:100%' rows='6' ng-if='question.type==="open question"' ng-model='answers[question.name]'></textarea>
 			<div ng-if='question.type==="multiple choice"'>
 	    <span class='live-selection' ng-repeat='option in question.options'><input class='square' type='radio' name='{{question.name}}' ng-model='answers[question.name]' value='{{option.value}}' id='{{option.value}}'></input>
 			<label class='square' for='{{option.value}}'></label>{{option.value}}</span>
@@ -85,7 +88,7 @@
 
 	</div>
 
-<button class='btn btn-primary' ng-click='submitSurvey(activeSurvey)'>Submit</button>
+<button class='btn-main' ng-click='submitSurvey(activeSurvey)'>Submit</button>
 </div>
 
 	</body>

@@ -1,22 +1,22 @@
-<div class='content'>
-<div class='margin'>
-<div class='survey-overview-container full-width'>
-
-  <div class='survey-overview-tile full-width' style='padding:0 39px 15px 30px'>
-<h2>{{ name | uppercase}}</h2>
-<span class='alignleft'>Created: {{survey.publishedDate}}</span>
-<span class='alignright'>
-Total Responses: 45,  Average Age: 34,  Female Respondents: 45%,  Male Respondents 55%
-</span>
-
+<div class='full-container'>
+  <div class='answer-header-tile'>
+  <div class='dashboard-content'>
+<h2 style='display:block; line-height:10px'>{{ name | uppercase}}</h2>
+<span>Created: {{survey.publishedDate}}</span>
+<button class='btn-round btn-blue'><i class='fa fa-male fa-lg'></i> </button> 55%
+<button class='btn-round btn-purple'><i class='fa fa-female fa-lg'></i> </button> 45%
+<button class='btn-round btn-purple'><i class='fa fa-dollar fa-lg'></i> </button> 20424$
+<button class='btn-round btn-purple'><i class='fa fa-birthday-cake fa-lg'></i> </button> 24 yrs
+    <div class='survey-menu-code'>http://www.placeholder.com/aAbeE</div>
 
 </div>
+<div class='dashboard-info' style='line-height:2em;'>
+  <span>
+  Total Responses: 45
+</span><br><br>
+<button class='btn btn-block btn-secondary'>Export all data</button>
+<button class='btn btn-block btn-secondary'>Change view</button>
 </div>
-<div class='divider'></div>
-<div class='survey-menu'>
-    <div class='survey-menu-button'><i class='fa fa-download fa-fw' style='vertical-align:text-bottom'></i> Export All Data</div>
-    <div class='survey-menu-button' style='vertical-align:text-bottom'><i class='fa fa-th-large fa-fw'></i> Change View</div>
-    <div class='survey-menu-code'><i class='fa fa-share-alt' style='position:absolute; left:-30px; top:8px; font-size:16px'></i>http://www.placeholder.com/aAbeE</div>
 </div>
 <div ng-repeat='question in questions' class='question-wrapper' >
 
@@ -34,9 +34,5 @@ Total Responses: 45,  Average Age: 34,  Female Respondents: 45%,  Male Responden
     <numerical-graph obj='results[$index]' filter='filter' num='$index' content='question' scale='scale'></numerical-graph>
     </div>
     </div>
-
-
 </div>
-</div>
-
 </div>

@@ -529,7 +529,7 @@ h2 {
 }
 
 .content{
-width:calc(100% - 150px) ;
+
 margin-left:150px;
 
 
@@ -642,12 +642,16 @@ color:#aaa;
 	position:relative;
 
 }
+textarea, textarea.ng-pristine {
+	border: 1px solid #ccc;
+}
 .question-container-live {
 	display:block;
 	box-shadow:2px 2px 15px rgba(0,0,0,0.2);
 	width:60%;
 	margin:auto;
 	margin-top:25px;
+	margin-bottom:25px;
 	background:#f6f6f6;
 	padding:30px;
 
@@ -663,14 +667,8 @@ color:#aaa;
 	text-align:center;
 }
 .full-container {
-
-	display:inline-block;
-	float:left;
 	width:100%;
-	padding-top:20px;
-	padding-left:30px;
-	padding-right:50px;
-	padding-bottom:50px;
+	padding:25px 50px 25px 350px;
 }
 
 
@@ -964,16 +962,12 @@ canvas{
 .textbox {
 	float:left;
 	margin-bottom:15px;
-  flex-flow:column;
-	align-items:center;
+	width:49%;
   position:relative;
   box-sizing:border-box;
   align-items:center;
-  display:flex;
-	transition: all .7s ease;
-  background:#f4f4f4;
-  width:calc(50% - 7.5px);
-
+	transition: all .5s ease;
+  background:#f6f6f6;
 
 }
 .red-demo {
@@ -993,16 +987,7 @@ canvas{
 	border-left-style: solid;
 	border-left-color:green;
 }
-.dashboard-tile {
-	margin:15px;
-  position:relative;
-  box-sizing:border-box;
-	flex-flow:row;
-  display:flex;
-  background:#fafafa;
-  width:98%;
 
-}
 
 
 .data-table {
@@ -1010,18 +995,13 @@ canvas{
 }
 .new-survey-tile {
 	float:left;
-	background:#fafafa;
   width:98%;
 	padding: 25px 50px 25px 50px;
-	width:calc(100% - 150px) ;
 	margin-left:150px;
 }
-.dashboard-content {
-	padding: 25px 50px 25px 50px;
-	width:80%;
-}
+
 .textbox-top-menu {
-	width:100%;
+	float:right;
 	color:#000;
 		padding: 10px 10px 10px 10px;
 }
@@ -1046,15 +1026,12 @@ canvas{
 	cursor:pointer;
 }
 
-.btn-ghost {
-	border:none;
-	background:none;
-}
+
 
 .textbox-content {
 	width:100%;
-	min-height:500px;
-	padding: 25px 50px 25px 50px;
+	min-height:440px;
+	padding: 0px 50px 25px 50px;
 }
 .textbox-info {
 	font-size:1.1em;
@@ -1069,6 +1046,8 @@ canvas{
 .textbox-container {
 	padding: 0px 20px 0px 20px;
 }
+
+/* Button Styles */
 .btn-primary {
 	background: #934BFF;
 	border:none;
@@ -1078,22 +1057,114 @@ canvas{
 	background: #436482;
 border:none;
 }
+
+.btn-ghost {
+	border:none;
+	background:none;
+}
+/*Dashboard Tiles */
+
+.dashboard-content {
+	padding: 25px 50px 25px 50px;
+		background:#f6f6f6;
+		position:relative;
+		float:left;
+		width:75%;
+		height:100%;
+}
+
+.dashboard-tile {
+	height:460px;
+	margin-bottom:25px;
+}
+
 .dashboard-info {
 	font-size:1.1em;
 	line-height:4em;
 	color:#dfdfdf;
-	display:block;
-	height:inherit;
-	width:20%;
+	float:left;
 	background:#111;
+	height:100%;
+	width:25%;
 	padding: 25px 35px 25px 35px;
 	border-right:5px solid #000;
+}
+/* Survey Overview tiles */
+
+.survey-overview-tile {
+	width:70%;
+	padding-left:15px;
+	float:left;
+	height:100%;
+	background:#f6f6f6;
+}
+
+.survey-overview-info {
+	padding-left:15px;
+	color:#f6f6f6;
+	float:left;
+	vertical-align:top;
+	width:30%;
+	height:100%;
+	background:#111;
+}
+
+.survey-overview-container {
+	height:80px;
+	line-height:40px;
+		margin-bottom:15px;
+}
+/* survey creation tiles */
+.full-width-content {
+	padding:25px 50px 25px 50px;
+	background:#fafafa;
+	min-height:100%;
+
+}
+
+.title-form {
+	margin-bottom:15px;
+	border-radius:0px;
+	transition:all .5s ease;
+	height:50px;
+	width:80%;
+	float:left;
+	padding:5px 10px 5px 10px;
+	background:#fff;
+	border:none;
+	border-top:1px solid #999;
+	border-bottom:1px solid #999;
+	border-left:1px solid #999;
+	font-family:'Roboto';
+	font-weight:500;
+	font-size:16px;
+	box-sizing:border-box;
+	color:#111;
+}
+.survey-creation-container p {
+	margin-bottom:25px;
+}
+.checkbox-creation-container {
+	border:1px solid #ccc;
+	width:80%;
+	min-height:50px;
+	float:left;
+	line-height:42px;
+	background:#fff;
+	padding:5px 10px 0px 10px;
+}
+
+.question-container textarea {
+	width:100%;
 }
 .textbox-slider {
 	transition: all 2s ease;
 
 }
-
+.answer-header-tile {
+	height:200px;
+	margin-bottom:25px;
+}
 .fadeout {
 	opacity:0;
 }
@@ -1106,7 +1177,7 @@ border:none;
 width: 75%;
 }
 .question-wrapper:nth-child(even) .textbox{
-		margin-right:15px;
+	margin-right:2%;
 }
 
 .scroll-btn {
@@ -1402,34 +1473,8 @@ div.demo-test span {
 .title-form:focus {
 	outline:none;
 }
-.checkbox-creation-container {
-	border:1px solid #ccc;
-	width:70%;
-	min-height:50px;
-	float:left;
-	line-height:42px;
-	background:#eee;
-	padding:5px 10px 0px 10px;
-}
-.title-form {
-	margin-bottom:15px;
-	border-radius:0px;
-	transition:all .5s ease;
-	height:50px;
-	width:70%;
-	float:left;
-	padding:5px 10px 5px 10px;
-	background:#fff;
-	border:none;
-	border-top:1px solid #999;
-	border-bottom:1px solid #999;
-	border-left:1px solid #999;
-	font-family:'Roboto';
-	font-weight:500;
-	font-size:16px;
-	box-sizing:border-box;
-	color:#111;
-}
+
+
 
 .form-dark {
 	border-radius:0px;
@@ -1465,44 +1510,35 @@ transition:all .5s ease;
 .overview-draft {
 	border-left:6px solid orange;
 }
-.survey-overview-tile {
-	display:block;
-	width:70%;
 
-	vertical-align:top;
-	padding:0px 0px 0px 15px;
-	display:table-cell;
-	background:#f6f6f6;
-}
-.survey-overview-info {
-	padding: 0 0 0px 15px;
-	display:table-cell;
-	color:#f6f6f6;
-	vertical-align:top;
-	width:30%;
-	background:#111;
-}
-.survey-overview-container {
-	display:table;
-	height:80px;
-	width:100%;
-	line-height:40px;
-		margin-bottom:0px;
-}
 .survey-menu-code {
-	background:#e2e2e2;
-	border-top:10px solid #f6f6f6;
-	border-bottom:10px solid #f6f6f6;
-	border-left:50px solid #f6f6f6;
-	position:relative;
-	padding-left:20px;
+	background:#eee;
+	margin-top:10px;
+	border:1px solid #ddd;
+	border-radius:10px;
+	position:absolute;
+	padding:2px 5px 2px 60px;
 	font-family:courier;
 	font-size:14px;
-	height:50px;
-	float:left;
+	float:right;
 	line-height:30px;
-	width:50%;
+	width:88%;
+	bottom:35px;
 	box-sizing:border-box;
+}
+.survey-menu-code:after {
+	background:#fff;
+	border-top-left-radius:10px;
+	border-bottom-left-radius:10px;
+	font-family:fontAwesome;
+	width:40px;
+	height:100%;
+	content:'\f1e0';
+	position:absolute;
+	padding:2px;
+	left:0;
+	top:0;
+	text-align:center;
 }
 .divider {
 	width:100%;

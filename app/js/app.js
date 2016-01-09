@@ -56,7 +56,7 @@ function fadeOut(id,speed){
 
 function fadeIn(id,speed){
   if (typeof id === 'string')
-  
+
   var element = document.getElementById(id);
   else
   var element = id;
@@ -75,15 +75,16 @@ function fadeIn(id,speed){
   requestAnimationFrame(draw)
   }
   }
-  
+
 }
 }
 function weeklyView(data) {
 	if (data.length < 7){
-
-		var mon1   = parseInt(data[data.length-1].substring(0,2));
-		var dt1  = parseInt(data[data.length-1].substring(3,5));
-		var yr1   = parseInt(data[data.length-1].substring(6,10));
+    var rgx = /(\d*)\/(\d*)\/(\d*)/g;
+    var currDate = (rgx.exec(data));
+		var mon1   = parseInt(currDate[1]);
+		var dt1  = parseInt(currDate[2]);
+		var yr1   = parseInt(currDate[3]);
 		var d = new Date(yr1,mon1-1,dt1);
 		for (var i = data.length;i < 7;i++){
 		d.setDate(d.getDate()+1)
