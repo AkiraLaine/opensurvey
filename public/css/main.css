@@ -1162,7 +1162,7 @@ border:none;
 
 }
 .answer-header-tile {
-	height:200px;
+	height:230px;
 	margin-bottom:25px;
 }
 .fadeout {
@@ -1545,6 +1545,18 @@ transition:all .5s ease;
 	height:5px;
 	background:linear-gradient(to right, rebeccapurple,30%,#B36AA4);
 }
+.stat-icon {
+	width:45px;
+	height:45px;
+	margin-right:5px;
+	margin-left:20px;
+	border-width:2px;
+	border-style:solid;
+	border-radius:50%;
+
+	background:transparent;
+}
+
 .btn-round {
 	width:45px;
 	height:45px;

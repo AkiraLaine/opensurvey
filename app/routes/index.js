@@ -112,6 +112,7 @@ app.route('/api/survey')
   console.log(req.headers)
   var id = req.headers.survey;
   jwt.verify(req.headers.authorization,'cookiesandcream',function(err,decoded){
+    if (err) res.redirect('/login')
     var email = decoded.email;
     drafts.find({"link":id,"email":email}).limit(1).toArray(function(err,data){
       if (err) throw err;
