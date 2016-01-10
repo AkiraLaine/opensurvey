@@ -190,7 +190,8 @@ var fieldAction = function() {
 
 angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$http,$routeParams){
 		$scope.filter = [];
-		$scope.scale = {};
+		$scope.view = {};
+		$scope.view.expanded = false;
 
 		$scope.viewContent = '/public/answers.html'
 		var temp = [];
@@ -199,6 +200,12 @@ angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$http
 	$http.get('/api/survey',{headers:{survey:$routeParams.survey.match(/[^:].*/g)[0]}}).then(function(data){
 		var survey = data.data;
 		console.log(data.data)
+
+
+		$scope.setViewExpanded = function(){
+			console.log('expanding')
+			$scope.view.expanded = true;
+		}
 			$scope.filterGender = function(x,str,arr){
 				results = [];
 				if (arguments.length > 2){

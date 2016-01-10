@@ -126,17 +126,28 @@ app.config(function($routeProvider,$locationProvider){
   when('/restore',{templateUrl:'/public/login.html',
   controller:'restoreCtrl'})
 });
+app.factory('userInfo', function($http){
+  console.log('into the factory')
+  var userInfo = {
+     async: function() {
+       // $http returns a promise, which has a then function, which also returns a promise
+       var promise = $http.get('/user').then(function (response) {
+         // The then function here is an opportunity to modify the response
+         // The return value gets picked up by the then in the controller.
+         return response.data;
+       });
+       // Return the promise to the controller
+       return promise;
+     }
+   };
+   return userInfo;
+});
 app.directive('sideBar',function($http){
   return {
     restrict:'E',
     replace:true,
     templateUrl:'/public/sidebar.html',
-    link:function(scope,elm){
-    scope.userName = 'Tobias'
-    $http.get('/user').then(function(data){
-      scope.user = data.data[0]
-    });
-    }
+    controller:'testCtrl',
   }
 })
 app.directive('pageNumbers',function(){
@@ -318,12 +329,13 @@ app.directive('barGraph',function(){
 						content: '=',
 			filter:'=',
       num:'=',
-      scale:'='
+      view:'='
 		},
 		templateUrl:'/public/resultgraph.html',
 		replace:true,
 		link:function(scope,elm){
-
+      console.log('testing the view variable:')
+console.log(scope.view)
 			console.log(myNewChart)
 			var labels = [];
 			for (var key in scope.content.options){
@@ -331,41 +343,16 @@ app.directive('barGraph',function(){
 				labels.push(scope.content.options[key].value)
 			}
 
-      scope.$watch('scale.active',function(newThing,oldThing){
-        if (!counter) var counter = elm[0].clientWidth;
-        if (newThing === true){
-        console.log(elm)
-        console.log('IT WORKS')
-        var chartInterval = setInterval(function(){
-          console.log('test')
-          counter += 20;
+      scope.$watch('view.expanded',function(newThing,oldThing){
+        if (newThing){
+            console.log('expanding the chart!')
+            console.log(myNewChart)
+              myNewChart.scale.width = 900;
+
+                myNewChart.update();
 
 
-          myNewChart.scale.width = counter;
-          myNewChart.update();
-
-                myNewChart.resize();
-                if (counter > 1140){
-                  clearInterval(chartInterval)
-                }
-        },15)
-
-    }
-    else if (newThing === false) {
-
-      console.log(elm)
-      console.log('IT WORKS')
-      var chartInterval = setInterval(function(){
-        counter -= 150;
-        myNewChart.scale.width = counter;
-        myNewChart.update();
-              myNewChart.resize();
-              if (counter <= 600) {
-                clearInterval(chartInterval);
-                }
-
-      },10)
-    }
+        }
   });
 			console.log('scope obj '+JSON.stringify(scope.obj))
 			var results = countArrayStrings(scope.obj,labels)
@@ -683,6 +670,16 @@ app.controller('loginCtrl',function($scope,$http,$window){
 	}
 
 })
+app.controller('testCtrl',function($scope,$http,userInfo){
+
+  userInfo.async().then(function(d) {
+      console.log('received data')
+  $scope.data = d;
+  $scope.user.name = d[0].name;
+  $scope.user.imageMd = d[0].imageMd;
+});
+
+})
 app.controller('userCtrl',function($scope,$http,$location,$window){
   $scope.viewContent = '/public/login-box.html';
   $scope.login = {};
@@ -713,14 +710,22 @@ app.controller('userCtrl',function($scope,$http,$location,$window){
 	 $scope.FBlogin = function(){
 		 FB.login(function(response){
 			 if (response.status === 'connected'){
-				 FB.api('/me', {fields:'email,name'},function(response) {
-					 console.log(response)
-				 $http.post('/login/facebook',response).then(function(data){
-					 console.log(data.data.token)
-					 $window.localStorage.token = data.data.token;
-					 $location.path('/dashboard')
-				 })
-		 })
+         FB.api('/me/picture', {type:'normal'},function(res){
+           FB.api('/me', {fields:'email,name'},function(response) {
+              console.log('this is the data')
+             console.log(response)
+             response.image = res.data.url;
+             console.log('updated data')
+             console.log(response)
+           $http.post('/login/facebook',response).then(function(data){
+              console.log('facebook response incoming')
+             console.log(data.data.token)
+             $window.localStorage.token = data.data.token;
+             $location.path('/dashboard')
+           })
+       })
+         })
+
 			 }
 
 		 },{scope:'email'});

@@ -4,7 +4,7 @@
 <h2 style='display:block' class='alignleft'>{{ name | uppercase}}</h2>
 
 <br><br>
-<div style='display:inline-block;margin-top: 10px;margin-bottom: 15px;width:100%'><span style='alignleft'>Created: {{survey.publishedDate}}</span>
+<div style='display:inline-block;margin-top: 5px;padding-bottom: 60px;width:100%'><span style='alignleft'>Created: {{survey.publishedDate}}</span>
 <span class='icon-container alignright'>
 <button class='stat-icon btn-blue'><i class='fa fa-male fa-lg'></i> </button> <span class='blue' style='font-weight:600'>55%</span>
 <button class='stat-icon btn-purple'><i class='fa fa-female fa-lg'></i> </button><span class='purple' style='font-weight:600'>45%</span>
@@ -22,24 +22,42 @@
   <span>
   Total Responses: 45
 </span><br><br>
-<button class='btn btn-block btn-secondary'>Export all data</button>
-<button class='btn btn-block btn-secondary'>Change view</button>
+<div class='dropdown dropdown-left full-width'>
+  <button class='btn btn-block btn-secondary'>Export all data
+  <ul>
+    <li>csv format</li>
+    <li>xls format</li>
+    <li>txt format</li>
+  </ul>
+    </button>
+  <span></span> <!--don't remove, needed for closing the menu-->
+</div>
+<div class='dropdown dropdown-left full-width' style='margin-top:15px;'>
+  <button class='btn btn-block btn-secondary'>Change View
+  <ul>
+    <li>Compact</li>
+    <li ng-click='setViewExpanded()'>Expanded</li>
+    <li>Expanded + Raw Data</li>
+  </ul>
+    </button>
+  <span></span> <!--don't remove, needed for closing the menu-->
+</div>
 </div>
 </div>
 <div ng-repeat='question in questions' class='question-wrapper' >
 
-    <div class='textbox' ng-class='{"full-width" : scale.active}'>
+    <div class='textbox' ng-class='{expanded : view.expanded}'>
 	<div style="clear: both;"></div>
-		<top-menu obj='$index' filter='filterGender' scale='scale' questions='questions'></top-menu>
+		<top-menu obj='$index' filter='filterGender' view='view' questions='questions'></top-menu>
 	<div class='full-width' ng-if='question.type === "open question"'>
 
     <answer-container obj='results[$index]' content='question'></answer-container>
     </div>
     <div class='full-width' ng-if='question.type === "multiple choice"'>
-    <bar-graph obj='results[$index]' content='question'  scale='scale' filter='filter' num='$index'></bar-graph>
+    <bar-graph obj='results[$index]' content='question'  view='view' filter='filter' num='$index'></bar-graph>
     </div>
     <div class='full-width' ng-if='question.type === "numerical scale"'>
-    <numerical-graph obj='results[$index]' filter='filter' num='$index' content='question' scale='scale'></numerical-graph>
+    <numerical-graph obj='results[$index]' filter='filter' num='$index' content='question' view='view'></numerical-graph>
     </div>
     </div>
 </div>

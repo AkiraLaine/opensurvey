@@ -227,14 +227,20 @@ app.route('/api/results')
     console.log(req.body)
     var email = req.body.email;
     var fbid = req.body.id;
-    var name = req.body.name
+    var name = req.body.name;
+    var image = req.body.image;
     users.find({email:email}).limit(1).toArray(function(err,data){
     if (data[0] === undefined){
     console.log('no existing user found, creating new user');
-    users.insert({fbid:fbid, name:name, email:email})
+    users.insert({fbid:fbid, name:name, email:email, imageMd:image})
     }
     else {
     console.log('user found!')
+    console.log(data[0])
+    if (image && !data[0].imageMd){
+      users.update({email:email},{$set:{imageMd:image}})
+      console.log('added image');
+    }
     if (data[0].password) delete data[0].password;
     var token = jwt.sign(data[0],'cookiesandcream',{expiresIn:14400});
     console.log('here is your token:')

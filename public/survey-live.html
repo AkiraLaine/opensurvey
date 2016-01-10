@@ -23,14 +23,15 @@
     			<h4 class='live-subheading'>Demographic Data</h4>
       <div class='live-question'>
 		<span ng-if='activeSurvey.filters.gender'>
-		  Gender: <div class='dropdown'>
-  <button>Please Select</button>
-  <span></span> <!--don't remove, needed for closing the menu-->
-  <ul>
-  <li>Male</li>
-   <li>Female</li>
-  </ul>
-</div>
+		  Gender: 		<div class='dropdown'>
+      		  <button>Filter
+      		  <ul>
+      				<li>Male</li>
+      				<li>Female</li>
+      		  </ul>
+      		    </button>
+      		  <span></span> <!--don't remove, needed for closing the menu-->
+      		</div>
 </span>
 
 <span ng-if='activeSurvey.filters.income'>
