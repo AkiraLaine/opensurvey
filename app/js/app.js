@@ -80,7 +80,8 @@ function fadeIn(id,speed){
 }
 function weeklyView(data) {
 	if (data.length < 7){
-    var rgx = /(\d*)\/(\d*)\/(\d*)/g;
+		console.log(data)
+    var rgx = /(\d*)\D(\d*)\D(\d*)/g;
     var currDate = (rgx.exec(data));
 		var mon1   = parseInt(currDate[1]);
 		var dt1  = parseInt(currDate[2]);
@@ -88,7 +89,7 @@ function weeklyView(data) {
 		var d = new Date(yr1,mon1-1,dt1);
 		for (var i = data.length;i < 7;i++){
 		d.setDate(d.getDate()+1)
-		data.push(d.toLocaleDateString())
+		data.push(d.toLocaleDateString('en-US'))
 	}
 	}
 }
@@ -347,9 +348,11 @@ console.log(scope.view)
         if (newThing){
             console.log('expanding the chart!')
             console.log(myNewChart)
-              myNewChart.scale.width = 900;
-
-                myNewChart.update();
+            myNewChart.scale.width = 1200;
+           window.setTimeout(function(){
+       			myNewChart.update();
+            myNewChart.resize();          	
+           },50)
 
 
         }
@@ -607,7 +610,7 @@ app.directive('myChart', function(){
 
 		var labels = Object.keys(scope.survey.answers)
 	}
-		else labels = [today.toLocaleDateString()];
+		else labels = [today.toLocaleDateString('en-US')];
 
 		weeklyView(labels);
 		var ctx = elm[0].children[1].children[0].getContext("2d");
@@ -672,9 +675,16 @@ app.controller('loginCtrl',function($scope,$http,$window){
 })
 app.controller('testCtrl',function($scope,$http,userInfo){
 
+		$http.get('/avatar').then(function(data){
+			console.log(data)
+					$scope.testElm = data.data;
+		});
+
+	
   userInfo.async().then(function(d) {
       console.log('received data')
-  $scope.data = d;
+      console.log(d)
+  $scope.user.avatar = d[0].avatar
   $scope.user.name = d[0].name;
   $scope.user.imageMd = d[0].imageMd;
 });
@@ -808,6 +818,9 @@ app.controller('liveCtrl',function($scope,$window,$http){
 		$http.post('/api/surveydata/',path).then(function(data){
 			console.log(data)
 		$scope.answers = {};
+		$scope.setGender = function(str){
+			$scope.answers.gender = str;
+		}
 			$scope.activeSurvey = data.data;
 			$scope.answers = {
 				title: $scope.activeSurvey.name,

@@ -4,7 +4,7 @@ var ClickHandler = require(process.cwd() + '/app/controllers/clickHandler.server
    var keys = require(process.cwd()+'/keys.js');
    var Mailgun = require('mailgun').Mailgun;
    var mg = new Mailgun(mailgunKey);
-module.exports = function (app, db, bcrypt,jwt,request) {
+module.exports = function (app, db, bcrypt,jwt,request,identicon,fmt) {
 
    var questions = db.collection('questions');
    var drafts = db.collection('drafts');
@@ -77,21 +77,13 @@ module.exports = function (app, db, bcrypt,jwt,request) {
 
           res.setHeader('Content-Type','application/json');
           console.log(req.headers)
-            if (req.headers.authorization === undefined) {
-
-              res.redirect('/login');
-              console.log('draft access denied')}
+            if (req.headers.authorization === undefined) {res.sendStatus(401); console.log('draft access denied')}
             else jwt.verify(req.headers.authorization, 'cookiesandcream', function(err, decoded) {
-            if (err) {
-            res.redirect('/login');
-            res.end();
-            }
-            else  {
-            drafts.find({'email':decoded.email}).toArray(function(err,data){
+            if (err) res.sendStatus(401);
+          drafts.find({'email':decoded.email}).toArray(function(err,data){
               if (err) throw err;
               res.send(data)
 });
-}
 
 
       });
@@ -112,7 +104,6 @@ app.route('/api/survey')
   console.log(req.headers)
   var id = req.headers.survey;
   jwt.verify(req.headers.authorization,'cookiesandcream',function(err,decoded){
-    if (err) res.redirect('/login')
     var email = decoded.email;
     drafts.find({"link":id,"email":email}).limit(1).toArray(function(err,data){
       if (err) throw err;
@@ -227,20 +218,14 @@ app.route('/api/results')
     console.log(req.body)
     var email = req.body.email;
     var fbid = req.body.id;
-    var name = req.body.name;
-    var image = req.body.image;
+    var name = req.body.name
     users.find({email:email}).limit(1).toArray(function(err,data){
     if (data[0] === undefined){
     console.log('no existing user found, creating new user');
-    users.insert({fbid:fbid, name:name, email:email, imageMd:image})
+    users.insert({fbid:fbid, name:name, email:email})
     }
     else {
     console.log('user found!')
-    console.log(data[0])
-    if (image && !data[0].imageMd){
-      users.update({email:email},{$set:{imageMd:image}})
-      console.log('added image');
-    }
     if (data[0].password) delete data[0].password;
     var token = jwt.sign(data[0],'cookiesandcream',{expiresIn:14400});
     console.log('here is your token:')
@@ -328,6 +313,13 @@ app.route('/api/results')
   else res.end('error');
   })
 });
+app.route('/avatar')
+.get(function(req,res){
+  var avatar = fmt("<img alt='kibo' src='%s' />", identicon('tobe.guse@gmail.com', { pixelSize: 16 }).toDataURL());
+  var regexp = /src='(\S*)'/g;
+  var filtered = regexp.exec(avatar);
+res.send(filtered[1])
+})
 app.route('/restore')
 .post (function(req,res){
   users.find({email:req.body.email}).toArray(function(err,data){
@@ -351,13 +343,17 @@ app.route('/restore')
   .post(function(req,res){
     var email = req.body.email;
     var name = req.body.name;
+    var avatar = fmt("<img alt='kibo' src='%s' />", identicon(email, { pixelSize: 16 }).toDataURL());
+    var regexp = /src='(\S*)'/g;
+    var filtered = regexp.exec(avatar);
+    avatar = filtered[1];
     users.find({email:email}).toArray(function(err,data){
       if(data.length === 0) {
       console.log('creating new user')
       var hash = bcrypt.hashSync(req.body.password,bcrypt.genSaltSync(10));
       var confirmationLink = bcrypt.hashSync(req.body.password,bcrypt.genSaltSync(10));
       confirmationLink.replace(/\B\./g,'K');
-      users.insert({email: email, name:name, password:hash,confirmationLink:confirmationLink, activated:false});
+      users.insert({email: email, name:name, password:hash,confirmationLink:confirmationLink, avatar:avatar, activated:false});
       mg.sendText('tobe.guse@gmail.com',
          ['tobe.guse@gmail.com'],
          'Welcome to OpenSurveys.com!','Your confirmation Link is: http://localhost:3000/validate/?code='+confirmationLink ,

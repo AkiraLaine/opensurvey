@@ -1,7 +1,8 @@
 <div class='sidebar' ng-init='testThis()'>
-
-		<img ng-src='{{user.imageMd}}' style='border-radius:50%; with:90px; height:90px; margin:auto; display:block; margin-top:100px;'></img>
-	<div class='menu-item' style='text-align:center;'>Welcome Back,<br><span style='font-weight:500' ng-bind='::user.name'</span></div>
+	<img ng-if='user.imageMd'ng-src='{{user.imageMd}}' style='border-radius:50%; width:90px; height:90px; margin:auto; display:block; margin-top:100px;'></img>
+	<img ng-if='!user.imageMd' ng-src='{{user.avatar}}' style='border-radius:50%; background-color:#333;  width:90px; height:90px; margin:auto; display:block; margin-top:100px;'></img>
+		<div ng-bind-html='testElm'></div>
+	<div class='menu-item' style='text-align:center;'>Welcome back,<br><span style='font-weight:500' ng-bind='::user.name'</span></div>
 	<a href='/dashboard'><div class='menu-item'><i class='fa fa-line-chart fa-fw'></i>&nbsp; Dashboard</div></a>
 	<a href='/create'><div class='menu-item' ng-click='createEmptySurvey()'><i class='fa fa-plus-circle fa-fw'></i>&nbsp;  New Survey</div></a>
 	<a href='/surveys'><div class='menu-item'><i class='fa fa-list-ul fa-fw'></i>&nbsp;  My Surveys</div></a>
