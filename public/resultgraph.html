@@ -9,20 +9,20 @@
 		<span ng-bind='lowestResult'></span> (<span ng-bind='lowestResultPercent'></span>%)</span><p>
 </div>
 <div class='textbox-info flex'>
-	<span>Filters: </span><span ng-if='activeFilters.length === 0' style='color:#666'>No active Filters.</span>
-	<span ng-repeat='filter in activeFilters track by $index'><span class='filter-label' style='border-left-color:{{filter[filter.length-1]}}' ><span ng-bind='filter[filter.length-2]'></span><i class='clickable fa fa-times fa-fw' ng-click='removeDataset($index)'></i> </span></span>
-		<div class='data-table' style='display:none'>
-	<table style='width:100%'>
-		<tr >
-			<th>Dataset</th>
-			<th ng-repeat='label in labels'>{{label}}</th>
+	<div><span>Filters: </span><span ng-if='activeFilters.length === 0' style='color:#666'>No active Filters.</span>
+	<span ng-repeat='filter in activeFilters track by $index'><span class='filter-label' style='border-left-color:{{filter[filter.length-1]}}' ><span ng-bind='filter[filter.length-2]'></span><i class='clickable fa fa-times fa-fw' ng-click='removeDataset($index)'></i> </span></span></div>
+		<div class='data-table' ng-if='view.data'>
+	<table style='width:100%; background:#222; text-align:center'>
+		<tr  >
+			<th style='text-align:center' >Dataset</th>
+			<th ng-repeat='label in labels' style='text-align:center'>{{label}}</th>
 		</tr>
-		<tr ng-repeat='(key,dataset) in legend'>
+		<tr ng-repeat='(key,dataset) in legend'> 
 			<td>{{key}}</td>
-			<td ng-repeat='value in dataset track by $index'>{{value}}</td>
+			<td ng-repeat='value in dataset track by $index' style='background:#333; height:40px'>{{value}}</td>
 		</tr>
 	</table>
-	<i class='fa fa-compass fa-fw fa-lg blue'></i> Average: <span class='blue' ng-bind='avg'> </span><i class='fa fa-arrow-circle-o-up fa-lg fa-fw blue'></i> 75th Percentile: <span class='purple' ng-bind='lowPercentile'></span><i class='fa fa-arrow-circle-o-down fa-fw purple fa-lg'></i> 25th Percentile: <span class='purple' ng-bind='highPercentile'></span>
+	<!-- <i class='fa fa-compass fa-fw fa-lg blue'></i> Average: <span class='blue' ng-bind='avg'> </span><i class='fa fa-arrow-circle-o-up fa-lg fa-fw blue'></i> 75th Percentile: <span class='purple' ng-bind='lowPercentile'></span><i class='fa fa-arrow-circle-o-down fa-fw purple fa-lg'></i> 25th Percentile: <span class='purple' ng-bind='highPercentile'></span>!-->
 
 </div>
 </div>

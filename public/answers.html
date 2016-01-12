@@ -15,30 +15,31 @@
 </div>
 
 
-    <div class='survey-menu-code'>http://www.placeholder.com/aAbeE</div>
+    <div class='survey-menu-code'>http://www.placeholder.com/{{survey.link}}</div>
 
 </div>
 <div class='dashboard-info' style='line-height:2em;'>
   <span>
   Total Responses: 45
 </span><br><br>
-<div class='dropdown dropdown-left full-width'>
-  <button class='btn btn-block btn-secondary'>Export all data
+<div class='dropdown full-width'>
+  <button class='btn btn-block btn-secondary'>Export all data</button>
+  <span></span> <!--don't remove, needed for closing the menu-->
   <ul>
-    <li>csv format</li>
+    <a ng-href='/testDownload?id={{survey._id}}' target='_self'><li>csv format</li></a>
     <li>xls format</li>
     <li>txt format</li>
   </ul>
     </button>
-  <span></span> <!--don't remove, needed for closing the menu-->
+ 
 </div>
 		<div class='dropdown full-width'> 
   <button class='btn btn-block btn-secondary' style='margin-top:15px'>Change view</button>
   <span></span> <!-- dont remove, needed for closing the menu !-->
   <ul>
-    <li>Compact</li>
-    <li ng-click='setViewExpanded()'>Expanded</li>
-    <li>Expanded + Raw Data</li>
+    <li ng-click='setViewCompact()'><i class='fa fa-check' ng-if='!view.expanded'></i> Compact</li>
+    <li ng-click='setViewExpanded()'><i class='fa fa-check' ng-if='view.expanded && !view.data'></i> Expanded</li>
+    <li ng-click='setViewData()'><i class='fa fa-check' ng-if='view.expanded && view.data'></i>Expanded + Raw Data</li>
   </ul>
 </div> 
 

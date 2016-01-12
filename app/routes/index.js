@@ -18,6 +18,52 @@ module.exports = function (app, db, bcrypt,jwt,request,identicon,fmt) {
        res.send(decoded)
      })
    })
+function toCSV(object){
+    var counter = 1;
+    var results = {};
+    var output = 'Question;';
+    var questionAnswers = [];
+    for (var key in object){
+        object[key].forEach(function(x){
+            output += 'participant '+counter+';';
+                     delete x['title']
+            delete x['origin']
+            x.participant = counter;
+            for (var elm in x){
+                if(results[elm])
+                results[elm] += ';'+x[elm]
+                else
+                results[elm] = x[elm]
+             
+            }
+           
+            counter +=1;
+        })
+    }
+   for (var key in results) {
+           output += '\r\n';
+    output += key+';';
+    output += results[key];
+
+           }
+        return output
+}
+   app.route('/testDownload')
+   .get(function(req,res){
+     var ObjectId = require('mongodb').ObjectID;
+     console.log('the id of the requested survey is '+req.query.id)
+     drafts.find({"_id": ObjectId(req.query.id)}).toArray(function(err,data){
+     var output = toCSV(data[0].answers)
+          res.setHeader('Content-disposition', 'attachment; filename=theDocument.txt');
+res.setHeader('Content-type', 'text/plain');
+res.charset = 'UTF-8';
+console.log(output)
+res.write(output);
+res.end();
+     })
+     console.log('serving file')
+
+   })
    app.route('/')
       .get(function (req, res) {
          res.sendFile(process.cwd() + '/public/index.html');

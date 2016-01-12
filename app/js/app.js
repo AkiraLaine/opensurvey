@@ -345,17 +345,16 @@ console.log(scope.view)
 			}
 
       scope.$watch('view.expanded',function(newThing,oldThing){
-        if (newThing){
             console.log('expanding the chart!')
             console.log(myNewChart)
-            myNewChart.scale.width = 1200;
            window.setTimeout(function(){
-       			myNewChart.update();
-            myNewChart.resize();          	
+           	 myNewChart.scale.width = document.getElementsByClassName('textbox')[0].offsetWidth-100;
+       		
+            myNewChart.resize().update();     
+  
            },50)
 
 
-        }
   });
 			console.log('scope obj '+JSON.stringify(scope.obj))
 			var results = countArrayStrings(scope.obj,labels)
@@ -433,12 +432,12 @@ app.directive('numericalGraph',function(){
 				content:'=',
         filter: '=',
         num: '=',
-        scale: '='
+        view: '='
 			},
 			link: function(scope,elm){
         scope.legend = {}
-        scope.labels = labels;
-        scope.legend['total'] = results;
+
+      
         scope.activeFilters = [];
 				Chart.defaults.global.responsive = true;
 				Chart.defaults.global.maintainAspectRatio = false;
@@ -452,46 +451,25 @@ app.directive('numericalGraph',function(){
   console.log('scaled? '+scope.scale)
 
   // watching size changes of tiles, still works with absolute numbers, need to find a way to find the real width of parent
-  scope.$watch('scale.active',function(newThing,oldThing){
-    if (!counter) var counter = elm[0].clientWidth;
-    if (newThing === true){
-    console.log(elm)
-    console.log('IT WORKS')
-    var chartInterval = setInterval(function(){
-      console.log('test')
-      counter += 12;
+  scope.$watch('view.expanded',function(newThing,oldThing){
+   
+            console.log('expanding the chart!')
+            console.log(myNewChart)
+            myNewChart.scale.width = 
+           window.setTimeout(function(){
+           	 myNewChart.scale.width = document.getElementsByClassName('textbox')[0].offsetWidth-100;
+       			myNewChart.update();
+            myNewChart.resize();          	
+           },100)
 
 
-      myNewChart.scale.width = counter;
-      myNewChart.update();
-
-            myNewChart.resize();
-            if (counter > 1140){
-              clearInterval(chartInterval)
-            }
-    },15)
-
-}
-else if (newThing === false) {
-
-  console.log(elm)
-  console.log('IT WORKS')
-  var chartInterval = setInterval(function(){
-    counter -= 150;
-    myNewChart.scale.width = counter;
-    myNewChart.update();
-          myNewChart.resize();
-          if (counter <=600) {
-            clearInterval(chartInterval);
-            }
-
-  },10)
-}
+        
 
 
   })
-
-
+    scope.legend['total'] = results;
+        scope.labels = labels;
+console.log(labels)
   console.log('my labels: '+scope.labels)
 	var values = []
   scope.removeDataset = function(index){

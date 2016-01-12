@@ -200,11 +200,23 @@ angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$http
 	$http.get('/api/survey',{headers:{survey:$routeParams.survey.match(/[^:].*/g)[0]}}).then(function(data){
 		var survey = data.data;
 		console.log(data.data)
-
+	$scope.setViewData = function(){
+			$scope.view.expanded = true;
+			$scope.view.data = true;
+	}
+	$scope.testDownload = function(){
+		$http.get('/testDownload');
+	}
+	$scope.setViewCompact = function(){
+			console.log('compacting')
+			$scope.view.expanded = false;
+			$scope.view.data = false;
+		}
 
 		$scope.setViewExpanded = function(){
 			console.log('expanding')
 			$scope.view.expanded = true;
+			$scope.view.data = false;
 		}
 			$scope.filterGender = function(x,str,arr){
 				results = [];
