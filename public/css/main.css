@@ -1066,10 +1066,7 @@ canvas{
 border:none;
 }
 
-.btn-ghost {
-	border:none;
-	background:none;
-}
+
 /*Dashboard Tiles */
 
 .dashboard-content {
@@ -1336,6 +1333,25 @@ input[type='checkbox'] + label{
 	padding-left:20px;
 	padding-right:20px;
 
+}
+.invisible {
+	display:none;
+}
+.btn-ghost {
+	padding:10px 30px 10px;
+	border:2px solid #8475FF;
+	color:#8475FF;
+	background:none;
+	font-weight:500;
+	min-height:50px;
+}
+.btn-ghost:hover {
+	padding:10px 30px 10px;
+	border:2px solid #8475FF;
+	background:#eee8FF;
+	transition:all .2s ease;
+	font-weight:500;
+	min-height:50px;
 }
 .btn-main:disabled {
 	background:#ccc;
@@ -1627,7 +1643,7 @@ float:right;
 }
 .btn-center-nav {
 
-	text-align:center;
+	text-align:right;
 margin-top:50px;
 margin-left:auto;
 margin-right:auto;

@@ -349,9 +349,9 @@ console.log(scope.view)
             console.log(myNewChart)
            window.setTimeout(function(){
            	 myNewChart.scale.width = document.getElementsByClassName('textbox')[0].offsetWidth-100;
-       		
-            myNewChart.resize().update();     
-  
+
+            myNewChart.resize().update();
+
            },50)
 
 
@@ -415,7 +415,10 @@ datasets: [
 	}
 ]
 }
-			var myNewChart = new Chart(ctx).Bar(data);
+			var myNewChart = new Chart(ctx).Bar(data,{
+        animation:false
+      });
+
 
 
 	}
@@ -437,7 +440,7 @@ app.directive('numericalGraph',function(){
 			link: function(scope,elm){
         scope.legend = {}
 
-      
+
         scope.activeFilters = [];
 				Chart.defaults.global.responsive = true;
 				Chart.defaults.global.maintainAspectRatio = false;
@@ -449,22 +452,22 @@ app.directive('numericalGraph',function(){
 	var labels = ['1','2','3','4','5','6','7','8','9','10']
   console.log(elm)
   console.log('scaled? '+scope.scale)
-
+  var textboxSize = document.getElementsByClassName('textbox')[0].offsetWidth-100;
   // watching size changes of tiles, still works with absolute numbers, need to find a way to find the real width of parent
+  // bugfix for scaling still needs a checkup
   scope.$watch('view.expanded',function(newThing,oldThing){
-   
-            console.log('expanding the chart!')
-            console.log(myNewChart)
-            myNewChart.scale.width = 
-           window.setTimeout(function(){
-           	 myNewChart.scale.width = document.getElementsByClassName('textbox')[0].offsetWidth-100;
-       			myNewChart.update();
-            myNewChart.resize();          	
-           },100)
-
-
-        
-
+console.log('this is the SIZE')
+console.log(textboxSize)
+ if (newThing === false){
+   myNewChart.scale.width = textboxSize;
+  myNewChart.resize().update();
+ }
+ else {
+      window.setTimeout(function(){
+              myNewChart.scale.width = document.getElementsByClassName('textbox')[0].offsetWidth-100;
+             myNewChart.resize().update();
+           },50)
+         }
 
   })
     scope.legend['total'] = results;
@@ -553,7 +556,7 @@ console.log(labels)
            bezierCurveTension : 0.05,
 					pointDot:false,
 					    datasetStrokeWidth : 8,
-
+              animation:false,
 
 				});
 			}
@@ -658,7 +661,7 @@ app.controller('testCtrl',function($scope,$http,userInfo){
 					$scope.testElm = data.data;
 		});
 
-	
+
   userInfo.async().then(function(d) {
       console.log('received data')
       console.log(d)

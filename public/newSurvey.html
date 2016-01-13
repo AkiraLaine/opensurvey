@@ -133,15 +133,15 @@
 				</div>
 				</div>
 		</div>
-		<button class='create-btn btn-addfield' ng-click='open("lg")' ng-if='currentStep ===3' type='button'>
+		<button class='create-btn btn-addfield' ng-click='open("lg")' ng-if='currentStep ===3 && !survey.published' type='button'>
 			<i class="fa fa-plus fa-fw fa-lg"></i>Add Question
 		</button>
-
 	<div class='btn-center-nav'>
-		<button class='create-btn' ng-click='prevStep()' ng-if='currentStep > 1'>Back</button>
-		<button class='create-btn btn-default' ng-click='saveDraft()' ng-if='currentStep === 3' type='button'>Save Draft</button>
-		<button class='create-btn btn-default' ng-click='survey.published = true; saveDraft()' ng-if='!survey.published && currentStep === 3' type='button'>
-		<i class='fa fa-paper-plane'></i>
+		<button class='btn-ghost' ng-click='survey.published = true; saveDraft()' ng-if='currentStep === 3' type='button'>
+		<i class='fa fa-floppy-o'></i>
+		Save as Draft</button>
+		<button class='btn-ghost' ng-click='survey.published = true; saveDraft()' ng-if='!survey.published && currentStep === 3' type='button'>
+		<i class='fa fa-paper-plane-o'></i>
 		Publish</button>
 		<button class='create-btn btn-danger' ng-click='survey.published = false; saveDraft()' ng-if='survey.published && currentStep === 3' type='button'>Unpublish</button>
 </div>

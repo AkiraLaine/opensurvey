@@ -154,7 +154,12 @@ var fieldAction = function() {
 		else {
 			console.log('creating new entry')
 		}
-		$http.post('/',$scope.draft);
+		$http.post('/',$scope.draft).then(function(data){
+			console.log('save successful')
+
+
+
+		})
 	}
 	$scope.addField = function(){
 
@@ -188,7 +193,7 @@ var fieldAction = function() {
    };
 })
 
-angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$http,$routeParams){
+angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$http,$routeParams,$timeout){
 		$scope.filter = [];
 		$scope.view = {};
 		$scope.view.expanded = false;
@@ -209,14 +214,14 @@ angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$http
 	}
 	$scope.setViewCompact = function(){
 			console.log('compacting')
-			$scope.view.expanded = false;
 			$scope.view.data = false;
+			$scope.view.expanded = false;
 		}
 
 		$scope.setViewExpanded = function(){
 			console.log('expanding')
-			$scope.view.expanded = true;
-			$scope.view.data = false;
+					$scope.view.expanded = true;
+				$scope.view.data = false;
 		}
 			$scope.filterGender = function(x,str,arr){
 				results = [];
@@ -286,6 +291,13 @@ $scope.createChart = function(chartName) {
 						console.log('made it' +chartName)
 					})
 	        }
+})
+angular.module('votingapp').controller('userSettingsCtrl',function($scope,$http,$location,userInfo){
+userInfo.async().then(function(data){
+	$scope.viewContent = '/public/settings.html';
+	$scope.user = data;
+})
+
 })
 angular.module('votingapp').controller('restoreCtrl',function($scope,$http,$location){
   $scope.viewContent = '/public/recover-box.html';

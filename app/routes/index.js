@@ -34,9 +34,9 @@ function toCSV(object){
                 results[elm] += ';'+x[elm]
                 else
                 results[elm] = x[elm]
-             
+
             }
-           
+
             counter +=1;
         })
     }
@@ -70,18 +70,12 @@ res.end();
 
       })
       .post(function(req,res){
-        console.log(req.headers)
         jwt.verify(req.headers.authorization, 'cookiesandcream', function(err, decoded) {
           if (err) throw err;
-            console.log(decoded)
             req.body.email = decoded.email;
         var shortId = require('short-mongo-id');
         if (req.body._id !== undefined) {
-
-
           var ObjectID = require('mongodb').ObjectID;
-          console.log('saving draft with id '+req.body._id);
-          console.log(typeof req.body._id)
           var id = new ObjectID(req.body._id);
           delete req.body._id;
 
@@ -107,16 +101,14 @@ res.end();
          var id = new ObjectID(req.body._id);
          var link = shortId(id);
           if (err) throw err;
-          console.log("DEBUG inserted document: "+JSON.stringify(data));
-          drafts.update({_id: data.insertedIds[0]},{ $set: {link:link}},function(err,data){
+          drafts.update({_id: data.insertedIds[0]},{ $set: {link:link}},function(err,moredata){
             if (err) throw err;
+            console.log("trying to send out the data")
+            console.log(data.ops[0])
+            res.redirect('/edit:_KlfY8')
           })
         })};
-        drafts.find().toArray(function(err,data){
-          if (err) throw err;
 
-        });
-        res.end();
       })})
   app.route('/drafts')
     .get(function(req,res){
@@ -136,7 +128,6 @@ res.end();
     });
   app.route('/api/surveydata')
   .post(function(req,res){
-    console.log('arrived')
     console.log(req.body.surveyLink.match(/[^/survey].*/g)[0].toString())
     var survey = req.body.surveyLink.match(/[^/survey].*/g).toString();
     drafts.find({"link":survey}).limit(1).toArray(function(err,data){
