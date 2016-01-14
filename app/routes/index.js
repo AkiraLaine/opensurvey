@@ -2,8 +2,8 @@
 
 var ClickHandler = require(process.cwd() + '/app/controllers/clickHandler.server.js');
    var keys = require(process.cwd()+'/keys.js');
-   var Mailgun = require('mailgun').Mailgun;
-   var mg = new Mailgun(mailgunKey);
+var mailgun = require('mailgun-js')({apiKey: mailgunKey, domain: mailgunDomain});
+var mailcomposer = require('mailcomposer');
 module.exports = function (app, db, bcrypt,jwt,request,identicon,fmt) {
 
    var questions = db.collection('questions');
@@ -366,11 +366,16 @@ app.route('/restore')
   var restoreLink = bcrypt.hashSync(req.body.email,bcrypt.genSaltSync(10));
   users.update({email:req.body.email},{$set:{restoreLink:restoreLink}});
   console.log('sent restore link')
-  mg.sendText('tobe.guse@gmail.com',
-     ['tobe.guse@gmail.com'],
-     'Reset your OpenSurvey.com Password!','Click here to update your password: http://localhost:3000/restore?code='+restoreLink ,
-     {'X-Campaign-Id': 'something'},
-     function(err) { err && console.log(err) });
+  var data = {
+  from: 'Excited User <me@samples.mailgun.org>',
+  to: 'tobe.guse@gmail.com',
+  subject: 'Hello',
+  text: 'Testing some Mailgun awesomness!'
+};
+ 
+mailgun.messages().send(data, function (error, body) {
+  console.log(body);
+});
   res.end()
   }
 });
@@ -391,11 +396,29 @@ app.route('/restore')
       var confirmationLink = bcrypt.hashSync(req.body.password,bcrypt.genSaltSync(10));
       confirmationLink.replace(/\B\./g,'K');
       users.insert({email: email, name:name, password:hash,confirmationLink:confirmationLink, avatar:avatar, activated:false});
-      mg.sendText('tobe.guse@gmail.com',
-         ['tobe.guse@gmail.com'],
-         'Welcome to OpenSurveys.com!','Your confirmation Link is: http://localhost:3000/validate/?code='+confirmationLink ,
-         {'X-Campaign-Id': 'something'},
-         function(err) { err && console.log(err) });
+      var mail = mailcomposer({
+  from: 'you@samples.mailgun.org',
+  to: 'tobe.guse@gmail.com',
+  subject: 'Test email subject',
+  body: 'Test email text',
+  html: {path: process.cwd() +'/public/email/welcome.html'}
+});
+
+mail.build(function(mailBuildError, message) {
+ 
+    var dataToSend = {
+        to: 'tobe.guse@gmail.com',
+        message: message.toString('ascii')
+    };
+ dataToSend.message = dataToSend.message.replace(/###confirmation.link###/g,confirmationLink)
+ console.log(dataToSend.message)
+    mailgun.messages().sendMime(dataToSend, function (sendError, body) {
+        if (sendError) {
+            console.log(sendError);
+            return;
+        }
+    });
+});
              res.end('user created')
       }
       else {
