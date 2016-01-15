@@ -60,15 +60,12 @@ function fadeIn(id,speed){
   var element = document.getElementById(id);
   else
   var element = id;
-    	console.log('fading stuff1')
   if (element.style.visibility !== 'visible'){
-  		console.log('fading stuff2')
   var counter = 0;
   element.style.opacity = 0;
   element.style.visibility = 'visible';
   draw();
   function draw(){
-  	console.log('fading stuff3')
   	counter += 0.1;
   element.style.opacity = counter;
   if (element.style.opacity <1){

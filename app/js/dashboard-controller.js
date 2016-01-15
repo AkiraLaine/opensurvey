@@ -312,7 +312,7 @@ angular.module('votingapp').controller('restoreCtrl',function($scope,$http,$loca
 	}
 });
 angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$window,$location){
-		animate();
+
 	window.fbAsyncInit = function() {
 		FB.init({
 			appId      : '165180297173897',
@@ -416,7 +416,6 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$wi
 				},15)
 			}
 		else if (elm.offsetTop < document.body.scrollTop) {
-			console.log('its smaller')
 			var scrollAmount = document.body.scrollTop-elm.offsetTop;
 			console.log(scrollAmount)
 			var scrollInterval = setInterval(function(){
@@ -426,30 +425,6 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$wi
 			},15)
 		}
 	}
-	/*
-	function activateHeroAnimation() {
-		if (!animated){
-			animated = true;
-			console.log('doing stuff')
-			heroAnimation = setInterval(function(){
-			document.getElementById('hero-linechart1').style.left = c +'px';
-			document.getElementById('hero-linechart1').style.width = w+'px';
-			w+=1;
-			c -=1;
-			if (w >= 3840){
-				w=1920;
-				c = 0;
-			}
-		},60)
-		}
-	}
-	function deactivateHeroAnimation() {
-		if (animated){
-			animated = false;
-			clearInterval(heroAnimation)
-		}
-	}*/
-
 	window.onscroll = function() {
 		if (document.body.scrollTop > 0 && !document.getElementById('navbar').classList.contains('stick')) {
 						document.getElementById('navbar').classList.remove('top-navbar');
