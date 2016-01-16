@@ -21,17 +21,18 @@ module.exports = function (app, db, bcrypt,jwt,request,identicon,fmt) {
 function toCSV(object){
     var counter = 1;
     var results = {};
-    var output = 'Question;';
+    var output = '"Question';
     var questionAnswers = [];
     for (var key in object){
         object[key].forEach(function(x){
-            output += 'participant '+counter+';';
+          output += '","';
+            output += 'participant';
                      delete x['title']
             delete x['origin']
             x.participant = counter;
             for (var elm in x){
                 if(results[elm])
-                results[elm] += ';'+x[elm]
+                results[elm] += '","'+x[elm]
                 else
                 results[elm] = x[elm]
 
@@ -39,16 +40,19 @@ function toCSV(object){
 
             counter +=1;
         })
+
     }
    for (var key in results) {
-           output += '\r\n';
-    output += key+';';
+           output += '"\r\n';
+           output +='"';
+    output += key+'","';
     output += results[key];
 
            }
+           output += '"';
         return output
 }
-   app.route('/testDownload')
+   app.route('/download')
    .get(function(req,res){
      var ObjectId = require('mongodb').ObjectID;
      console.log('the id of the requested survey is '+req.query.id)
@@ -141,6 +145,9 @@ app.route('/api/survey')
   console.log(req.headers)
   var id = req.headers.survey;
   jwt.verify(req.headers.authorization,'cookiesandcream',function(err,decoded){
+    console.log(err)
+    console.log(decoded)
+    if (err) {res.redirect('/login'); res.end()}
     var email = decoded.email;
     drafts.find({"link":id,"email":email}).limit(1).toArray(function(err,data){
       if (err) throw err;
@@ -218,18 +225,24 @@ app.route('/api/results')
       request.get(options,function(err,response,body){
         console.log('entering main function')
         var obj = JSON.parse(body);
+        console.log(body)
         var email = obj.email;
         var githubId = obj.id;
         var name = obj.name;
+        var image = obj.avatar_url;
         console.log(email)
         console.log(name)
         users.find({email:email}).limit(1).toArray(function(err,data){
         if (data[0] === undefined){
         console.log('no existing user found, creating new user');
-        users.insert({githubId:githubId, name:name, email:email})
+        users.insert({githubId:githubId, name:name, email:email, imageMd:image})
         }
         else {
         console.log('user found!')
+        if (image && !data[0].imageMd){
+          users.update({email:email},{$set:{imageMd:image}})
+          console.log('added image');
+        }
         if (data[0].password) delete data[0].password;
         var token = jwt.sign(data[0],'cookiesandcream',{expiresIn:14400});
         console.log('here is your token:')
@@ -249,32 +262,38 @@ app.route('/api/results')
     console.log(response.headers['content-type']) // 'image/png'
 })
 });
-  app.route('/login/facebook')
-  .post(function(req,res){
-    console.log('a facebook login is happening')
-    console.log(req.body)
-    var email = req.body.email;
-    var fbid = req.body.id;
-    var name = req.body.name
-    users.find({email:email}).limit(1).toArray(function(err,data){
-    if (data[0] === undefined){
-    console.log('no existing user found, creating new user');
-    users.insert({fbid:fbid, name:name, email:email})
-    }
-    else {
-    console.log('user found!')
-    if (data[0].password) delete data[0].password;
-    var token = jwt.sign(data[0],'cookiesandcream',{expiresIn:14400});
-    console.log('here is your token:')
-    console.log(token)
-    res.send({
-      success:true,
-      message:'your token is ready',
-      token: token
-    });
-    }
-    })
+app.route('/login/facebook')
+.post(function(req,res){
+  console.log('a facebook login is happening')
+  console.log(req.body)
+  var email = req.body.email;
+  var fbid = req.body.id;
+  var name = req.body.name;
+  var image = req.body.image;
+  users.find({email:email}).limit(1).toArray(function(err,data){
+  if (data[0] === undefined){
+  console.log('no existing user found, creating new user');
+  users.insert({fbid:fbid, name:name, email:email, imageMd:image})
+  }
+  else {
+  console.log('user found!')
+  console.log(data[0])
+  if (image && !data[0].imageMd){
+    users.update({email:email},{$set:{imageMd:image}})
+    console.log('added image');
+  }
+  if (data[0].password) delete data[0].password;
+  var token = jwt.sign(data[0],'cookiesandcream',{expiresIn:14400});
+  console.log('here is your token:')
+  console.log(token)
+  res.send({
+    success:true,
+    message:'your token is ready',
+    token: token
+  });
+  }
   })
+})
   app.route('/login')
   .post(function(req,res){
     console.log('trying login...')
@@ -372,7 +391,7 @@ app.route('/restore')
   subject: 'Hello',
   text: 'Testing some Mailgun awesomness!'
 };
- 
+
 mailgun.messages().send(data, function (error, body) {
   console.log(body);
 });
@@ -405,7 +424,7 @@ mailgun.messages().send(data, function (error, body) {
 });
 
 mail.build(function(mailBuildError, message) {
- 
+
     var dataToSend = {
         to: 'tobe.guse@gmail.com',
         message: message.toString('ascii')

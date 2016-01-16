@@ -332,6 +332,13 @@ app.directive('barGraph',function(){
 		templateUrl:'/public/resultgraph.html',
 		replace:true,
 		link:function(scope,elm){
+      scope.activeFilters = [];
+      scope.legend = {};
+      scope.removeDataset = function(index){
+        myNewChart.datasets.splice(index+1,1);
+        scope.activeFilters.splice(index,1);
+        myNewChart.update();
+      }
       console.log('testing the view variable:')
 console.log(scope.view)
 			console.log(myNewChart)
@@ -342,6 +349,8 @@ console.log(scope.view)
 			}
 
       scope.$watch('view.expanded',function(newThing,oldThing){
+
+
             console.log('expanding the chart!')
             console.log(myNewChart)
            window.setTimeout(function(){
@@ -361,10 +370,11 @@ console.log(scope.view)
 			scope.lowestResultPercent = (results.min()/scope.obj.length*100).toFixed(2);
 			scope.$watch('filter[num]',function(newThing,oldThing){
 				if (newThing !== undefined){
+              var nextColor = assignColor(newThing)
 				var result = countArrayStrings(newThing[0],labels)
 				var newDataset = {
 					label: "Women",
-					fillColor: getNiceColor(),
+					fillColor: nextColor,
 					highlightFill: "rgba(92,155,204,0.5)",
 					data: result,
 				}
@@ -386,8 +396,13 @@ console.log(scope.view)
 				myNewChart.datasets.push({
 					bars: bars
 				})
+        scope.legend[newThing[1]] = result;
+
 				myNewChart.update();
+          newThing.push(nextColor)
+        scope.activeFilters.push(newThing)
 				}
+
 			})
 
 	Chart.defaults.global.scaleFontFamily = "'Roboto'";
@@ -412,6 +427,8 @@ datasets: [
 	}
 ]
 }
+scope.legend['total'] = results;
+    scope.labels = labels;
 			var myNewChart = new Chart(ctx).Bar(data,{
         animation:false
       });
@@ -453,7 +470,6 @@ app.directive('numericalGraph',function(){
   // watching size changes of tiles, still works with absolute numbers, need to find a way to find the real width of parent
   // bugfix for scaling still needs a checkup
   scope.$watch('view.expanded',function(newThing,oldThing){
-console.log('this is the SIZE')
 console.log(textboxSize)
  if (newThing === false){
    myNewChart.scale.width = textboxSize;
@@ -469,8 +485,6 @@ console.log(textboxSize)
   })
     scope.legend['total'] = results;
         scope.labels = labels;
-console.log(labels)
-  console.log('my labels: '+scope.labels)
 	var values = []
   scope.removeDataset = function(index){
     myNewChart.datasets.splice(index+1,1);
@@ -480,9 +494,9 @@ console.log(labels)
 
   //Add new dataset
   scope.$watch('filter[num]',function(newThing,oldThing){
-    var nextColor = assignColor(newThing)
-    if (newThing !== undefined){
 
+    if (newThing !== undefined){
+  var nextColor = assignColor(newThing)
       var result = countArrayStrings(newThing[0],labels)
       var newDataset = {
         fillColor: nextColor,
@@ -651,14 +665,17 @@ app.controller('loginCtrl',function($scope,$http,$window){
 	}
 
 })
-app.controller('testCtrl',function($scope,$http,userInfo){
+app.controller('testCtrl',function($scope,$http,$window,userInfo){
 
 		$http.get('/avatar').then(function(data){
 			console.log(data)
 					$scope.testElm = data.data;
 		});
 
-
+    $scope.logout = function() {
+    	console.log('logging out')
+    	$window.localStorage.removeItem('token')
+    }
   userInfo.async().then(function(d) {
       console.log('received data')
       console.log(d)
@@ -782,10 +799,7 @@ $scope.createEmptySurvey = function() {
 	$scope.newFormQuestions = [];
 }
 
-$scope.logout = function() {
-	console.log('logging out')
-	$window.localStorage.removeItem('token')
-}
+
 
 }
 );

@@ -17,11 +17,6 @@
 			<p>Collecting demographic data will help you to filter your survey results based on the age, gender income and other factors. Please select those demographic factors that will be relevant for your survey. Don't worry - you will be able to adapt the wording of your selected demographic questions in the next step.</p>
 		<div class='checkbox-creation-container'>
 		<div class='check-container'>
-			<input class='filter-checkbox' ng-model='survey.filters.name' id='name' type='checkbox' ng-disabled='currentStep >2'></input>
-			<label for='name'></label>
-			<span class='tag'>Name</span>
-		</div>
-		<div class='check-container'>
 			<input class='filter-checkbox' ng-model='survey.filters.gender' id='gender' type='checkbox' ng-disabled='currentStep >2'></input>
 			<label for='gender'></label>
 			<span class='tag'>Gender</span>
@@ -36,12 +31,6 @@
 			<label for='income'></label>
 			<span class='tag'>Income</span>
 		</div>
-		<div class='check-container'>
-			<input class='filter-checkbox' id='profession' type='checkbox' ng-disabled='currentStep >2'></input>
-			<label for='profession'></label>
-			<span class='tag'>Profession</span>
-		</div>
-
 		</div>
 		<button id='classAdder' class='btn-main' ng-click='nextStep()' ng-disabled='currentStep > 2'>Done!</button>
 		</div>

@@ -27,7 +27,7 @@ mongo.connect('mongodb://localhost:27017/clementinejs', function (err, db) {
      console.log('redirecting something')
      res.sendFile(process.cwd()+'/public/index.html');
    })
-   app.listen(process.env.PORT, function () {
+   app.listen(process.env.port || 3000, function () {
       console.log('Node.js listening on port 3000...');
    });
 

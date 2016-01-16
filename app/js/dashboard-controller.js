@@ -204,6 +204,26 @@ angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$http
 		var counter = 0;
 	$http.get('/api/survey',{headers:{survey:$routeParams.survey.match(/[^:].*/g)[0]}}).then(function(data){
 		var survey = data.data;
+		console.log('THIS SURVEY IS')
+		getGenderRatio();
+	function getGenderRatio() {
+		var counterMale = 0;
+		var counterFemale = 0;
+		var counterAll = 0;
+		for (date in survey.answers){
+			survey.answers[date].forEach(function(answer){
+				if (answer.gender === 'male'){
+					counterMale += 1;
+				}
+				else if (answer.gender ==='female'){
+					counterFemale +=1;
+				}
+				counterAll +=1;
+			})
+		}
+		$scope.maleRatio = Math.floor(counterMale/counterAll*100);
+		$scope.femaleRatio = Math.floor(counterFemale/counterAll*100);
+	}
 		console.log(data.data)
 	$scope.setViewData = function(){
 			$scope.view.expanded = true;
@@ -434,7 +454,7 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$wi
 		if (document.body.scrollTop < 5 && !document.getElementById('navbar').classList.contains('top-navbar')) {
 						document.getElementById('navbar').classList.add('top-navbar');
 			document.getElementById('navbar').classList.remove('stick');
-			animate();
+//animate();
 		}
 
 		if (document.body.scrollTop >= document.getElementById('lineCharts').offsetTop-300 && !section3){
@@ -457,6 +477,7 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$wi
 	if (document.body.scrollTop >= document.getElementById('dashboardInfo').offsetTop-420 && !document.getElementById('dashboard-window').classList.contains('dashboard-window-expanded')){
 		fadeIn('dashboard-window',30)
 		document.getElementById('dashboard-window').classList.add('dashboard-window-expanded');
+		document.getElementById('dashboard-text').classList.add('active')
 	}
 }
 
