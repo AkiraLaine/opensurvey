@@ -47,13 +47,17 @@ function assignColor(arr){
 function fadeOut(id,speed){
   var element = document.getElementById(id)
   element.style.opacity = 1;
-  var fade = window.setInterval(function(){
-    element.style.opacity -= 0.1;
+  draw();
+  function draw(){
+
     if (element.style.opacity <= 0){
       element.style.visibility = 'hidden';
-      window.clearInterval(fade)
-    };
-  },speed)
+    }
+      else {
+    element.style.opacity -= 0.1;
+    requestAnimationFrame(draw)
+      }
+}
 }
 
 function fadeIn(id,speed){
@@ -147,6 +151,14 @@ app.directive('sideBar',function($http){
     restrict:'E',
     replace:true,
     templateUrl:'/public/sidebar.html',
+    controller:'testCtrl',
+  }
+})
+app.directive('topBar',function($http){
+  return {
+    restrict:'E',
+    replace:true,
+    templateUrl:'/public/topbar.html',
     controller:'testCtrl',
   }
 })
@@ -275,6 +287,7 @@ app.directive('topMenu',function(){
     questions:'='
   },
 	link:function(scope,elm){
+    scope.questiontype = scope.questions[scope.obj].type;
     scope.activeFilters = [];
     scope.input = {};
     scope.$watch('elm',function(){
@@ -660,7 +673,8 @@ app.config(function($httpProvider){
 });
 
 app.controller('loginCtrl',function($scope,$http,$window){
-	console.log('loginCtrl active!')
+	console.log('loginCtrl active!');
+  window.onscroll = null;
 	if ($window.localStorage.token !== undefined){
 		$http.get('/backend').then(function(data){
 			console.log('login ok')
@@ -675,7 +689,9 @@ app.controller('testCtrl',function($scope,$http,$window,userInfo){
 			console.log(data)
 					$scope.testElm = data.data;
 		});
-
+$scope.expandMobileNav = function() {
+  document.getElementById('backend-top-navbar').classList.toggle('active');
+}
     $scope.logout = function() {
     	console.log('logging out')
     	$window.localStorage.removeItem('token')
@@ -831,8 +847,9 @@ app.controller('liveCtrl',function($scope,$window,$http){
 
 	$scope.submitSurvey = function(survey) {
 		var date = new Date();
-		$scope.answers.date = date.toLocaleDateString()
-	console.log($scope.answers)
-	$http.post('/api/results',$scope.answers)
+    fadeOut('question-container-live');
+    fadeIn('thankyou-message');
+		$scope.answers.date = date.toLocaleDateString();
+    $http.post('/api/results',$scope.answers)
 	}
 })

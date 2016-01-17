@@ -13,8 +13,14 @@
 
 <div class='hero-linechart1' id='hero-linechart1'></div>
 <div class='hero'>
-  <div class='mobile-navbar'>
-        <a ng-click='scrollPage("dashboardInfo")' class='alignleft  white' style='padding:8px 10px 2px 10px; vertical-align:middle;'> <i class='fa fa-bars fa-2x' style='vertical-align:middle'></i> <span style='vertical-align:middle; padding-left:10px; font-size:120%;font-weight:600'>OSurvey.io</span></a>
+  <div class='mobile-navbar' id='mobile-navbar'>
+    <ul>
+      <li><a ng-click='scrollPage("dashboardInfo")'>About</a></li>
+      <li><a ng-click='scrollPage("open-source")'>Contribute</a></li>
+      <li><a ng-click='scrollPage("dashboardInfo")'>Features</a></li>
+      <li><a ng-click='expandMobileNav()' style='padding:8px 10px 2px 0px; vertical-align:middle;'> <i class='fa fa-bars fa-2x' style='vertical-align:middle'></i> <span style='vertical-align:middle; padding-left:10px; font-size:120%;font-weight:600'>OSurvey.io</span></a></li>
+    </ul>
+
 
 
   </div>

@@ -148,11 +148,14 @@ app.route('/api/survey')
     console.log(err)
     console.log(decoded)
     if (err) {res.redirect('/login'); res.end()}
+    else {
     var email = decoded.email;
     drafts.find({"link":id,"email":email}).limit(1).toArray(function(err,data){
       if (err) throw err;
       res.send(data[0])
+
     })
+      }
   })
 })
 

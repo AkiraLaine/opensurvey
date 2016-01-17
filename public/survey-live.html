@@ -16,23 +16,23 @@
 
 
 	<body>
-
-		<div class='question-container-live'>
+<div id='thankyou-message' class='thankyou-message'><i class='fa fa-check fa-3x blue'></i><span class='blue'>Your response was sent.</span><br>Thank you for participating.</div>
+		<div class='question-container-live' id='question-container-live'>
 
 		<h1 class='center-heading' ng-bind='activeSurvey.name'></h1>
 		<h2>Demographic Information</h2><br>
 		<span ng-if='activeSurvey.filters.gender'>
-		  Gender: 		<div class='dropdown'> 
+		  Gender: 		<div class='dropdown'>
   <button class='btn-white'><span ng-bind='answers.gender || "Select"'></span></button>
   <span></span> <!-- dont remove, needed for closing the menu !-->
   <ul>
   <li ng-click='setGender("male")'>male</li>
    <li ng-click='setGender("female")'>female</li>
   </ul>
-  
-</div> 
+
+</div>
 </span>
-  
+
     <span ng-if='activeSurvey.filters.income'>
            Annual Income: <input type='number' style='height:40px;border-radius:5px; border:1px solid #ccc' ng-model='answers.income'></input>
           </span>
@@ -87,7 +87,7 @@
 
 	</div>
 
-<button class='btn btn-primary' ng-click='submitSurvey(activeSurvey)'>Submit</button>
+<button class='btn btn-primary' ng-click='submitSurvey(activeSurvey)' ng-if='!submitted'>Submit</button>
 </div>
 
 	</body>

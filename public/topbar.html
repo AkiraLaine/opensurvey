@@ -1,0 +1,13 @@
+<div>
+
+
+	<a href='/dashboard'><i class='fa fa-line-chart fa-fw'></i>&nbsp; Dashboard</a>
+	<a href='/create'><i class='fa fa-plus-circle fa-fw'></i>&nbsp;  New Survey</a>
+	<a href='/surveys'><i class='fa fa-list-ul fa-fw'></i>&nbsp;  My Surveys</a>
+	<div style='position:relative'>
+	<a href='/surveys' ng-click='expandMobileNav()'><i class='fa fa-bars fa-lg'></i></a>
+	<div class='mobile-user-image'><span class='caret alignright'></span>
+	<span style='font-weight:500' class='alignright' ng-bind='::user.name'></span>
+		<img ng-if='!user.imageMd' ng-src='{{user.avatar}}' class='alignright' style='height:40px; width:40px; border-radius:50%; margin-top:-10px; margin-right:10px;'></img>
+			<img ng-if='user.imageMd'ng-src='{{user.imageMd}}' class='alignright' style='height:40px; width:40px; border-radius:50%; margin-top:-10px; margin-right:10px;'></img></div></div>
+</div>
