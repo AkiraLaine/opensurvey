@@ -1633,6 +1633,38 @@ transition:all .5s ease;
 	border-radius:50%;
 	background:transparent;
 }
+.stat-icon-wrapper {
+	display:inline;
+	position:relative;
+}
+.stat-icon-overlay {
+	position:absolute;
+	background:#111;
+	color:#fff;
+	width:180px;
+	padding:10px;
+	border-radius:10px;
+	top:-90px;
+	left:-40%;
+	display:none;
+}
+.stat-icon-overlay:before {
+	position:absolute;
+	width: 0;
+	height: 0;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	bottom:-10px;
+	left:0;
+	right:12px;
+	margin:auto;
+	z-index:100;
+	content:'';
+	border-top: 10px solid #111;
+}
+.stat-icon-wrapper:hover > .stat-icon-overlay {
+	display:block;
+}
 .ghost-blue {
 	border-color: #5C9BCC;
 	color: #5C9BCC;

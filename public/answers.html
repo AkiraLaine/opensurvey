@@ -6,9 +6,14 @@
 <br><br>
 <div style='display:inline-block;margin-top: 5px;padding-bottom: 60px;width:100%'><span style='alignleft'>Created: {{survey.publishedDate}}</span>
 <span class='icon-container alignright'>
-<button class='stat-icon ghost-blue'><i class='fa fa-male fa-lg'></i> </button> <span class='blue' style='font-weight:600'><span ng-bind='maleRatio'></span>%</span>
-<button class='stat-icon ghost-purple1' ng-if='survey.filters.gender'><i class='fa fa-female fa-lg'></i> </button><span class='ghost-purple1' style='font-weight:600'> <span ng-bind='femaleRatio'></span>%</span>
-<span class='ghost-purple2' ng-if='survey.filters.income'><button class='stat-icon ghost-purple2'><i class='fa fa-dollar fa-lg'></i> </button> <span style='font-weight:600'>20424$</span></span>
+<div class='stat-icon-wrapper'>
+<div class='stat-icon-overlay'><span ng-bind='maleRatio'></span>% of respondents are <span class='ghost-blue'>male</span>.</div>
+<button class='stat-icon ghost-blue'><i class='fa fa-male fa-lg'></i> </button> <span class='blue' style='font-weight:600'><span ng-bind='maleRatio'></span>%</span></div>
+
+<div class='stat-icon-wrapper'>
+<div class='stat-icon-overlay'><span ng-bind='femaleRatio'></span>% of respondents are <span class='ghost-purple1'>female</span>.</div>
+<button class='stat-icon ghost-purple1' ng-if='survey.filters.gender'><i class='fa fa-female fa-lg'></i> </button><span class='ghost-purple1' style='font-weight:600'> <span ng-bind='femaleRatio'></span>%</span></div>
+<span class='ghost-purple2' ng-if='survey.filters.income'><button class='stat-icon ghost-purple2'><i class='fa fa-dollar fa-lg'></i> </button> <span style='font-weight:600' ng-bind='avgIncome'></span></span>
 <span ng-if='survey.filters.age'><button class='stat-icon'><i class='fa fa-birthday-cake fa-lg'></i> </button> 24 yrs</span>
 </span><br>
 <span>Last Response: {{survey.publishedDate}}</span>

@@ -206,6 +206,7 @@ angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$http
 		var survey = data.data;
 		console.log('THIS SURVEY IS')
 		getGenderRatio();
+		getAverageIncome();
 	function getGenderRatio() {
 		var counterMale = 0;
 		var counterFemale = 0;
@@ -223,6 +224,15 @@ angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$http
 		}
 		$scope.maleRatio = Math.floor(counterMale/counterAll*100);
 		$scope.femaleRatio = Math.floor(counterFemale/counterAll*100);
+	}
+	function getAverageIncome() {
+		var sum = 0;
+		for (date in survey.answers){
+			survey.answers[date].forEach(function(answer){
+				sum += answer.income;
+			})
+		}
+		$scope.avgIncome = sum;
 	}
 		console.log(data.data)
 	$scope.setViewData = function(){

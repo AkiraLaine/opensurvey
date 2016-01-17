@@ -1,3 +1,5 @@
+
+
 var app = angular.module('votingapp',['ngAnimate','ui.bootstrap','ngRoute']);
 var counter = 1;
 //helper funcitons
@@ -273,11 +275,10 @@ app.directive('topMenu',function(){
     questions:'='
   },
 	link:function(scope,elm){
-    console.log(scope.filter+scope.obj)
     scope.activeFilters = [];
     scope.input = {};
     scope.$watch('elm',function(){
-      console.log(elm)
+
     })
     scope.expandTile = function(test){
       if (!scope.scale.active)
@@ -339,30 +340,34 @@ app.directive('barGraph',function(){
         scope.activeFilters.splice(index,1);
         myNewChart.update();
       }
-      console.log('testing the view variable:')
+
 console.log(scope.view)
 			console.log(myNewChart)
 			var labels = [];
 			for (var key in scope.content.options){
 				console.log(scope.content.options)
-				labels.push(scope.content.options[key].value)
-			}
 
+			labels.push(scope.content.options[key].value)
+			}
+      console.log('the labels are:')
+      console.log(labels)
+      var textboxSize = document.getElementsByClassName('textbox')[0].offsetWidth-100;
       scope.$watch('view.expanded',function(newThing,oldThing){
 
-
-            console.log('expanding the chart!')
-            console.log(myNewChart)
-           window.setTimeout(function(){
-           	 myNewChart.scale.width = document.getElementsByClassName('textbox')[0].offsetWidth-100;
-
-            myNewChart.resize().update();
-
-           },50)
+        if (newThing === false){
+          myNewChart.scale.width = textboxSize;
+         myNewChart.resize().update();
+        }
+        else {
+             window.setTimeout(function(){
+                     myNewChart.scale.width = document.getElementsByClassName('textbox')[0].offsetWidth-100;
+                    myNewChart.resize().update();
+                  },50)
+                }
 
 
   });
-			console.log('scope obj '+JSON.stringify(scope.obj))
+
 			var results = countArrayStrings(scope.obj,labels)
 			scope.highestResult = labels[results.indexOf(results.max())];
 			scope.highestResultPercent = (results.max()/scope.obj.length*100).toFixed(2);
@@ -430,7 +435,8 @@ datasets: [
 scope.legend['total'] = results;
     scope.labels = labels;
 			var myNewChart = new Chart(ctx).Bar(data,{
-        animation:false
+        animation:false,
+        labelLength:15,
       });
 
 
@@ -464,13 +470,12 @@ app.directive('numericalGraph',function(){
 	gradient.addColorStop(1, 'rgba(81,17,109,0.6)');
 	var results = countArrayStrings(scope.obj,['1','2','3','4','5','6','7','8','9','10']);
 	var labels = ['1','2','3','4','5','6','7','8','9','10']
-  console.log(elm)
-  console.log('scaled? '+scope.scale)
+
   var textboxSize = document.getElementsByClassName('textbox')[0].offsetWidth-100;
   // watching size changes of tiles, still works with absolute numbers, need to find a way to find the real width of parent
   // bugfix for scaling still needs a checkup
   scope.$watch('view.expanded',function(newThing,oldThing){
-console.log(textboxSize)
+
  if (newThing === false){
    myNewChart.scale.width = textboxSize;
   myNewChart.resize().update();
@@ -521,13 +526,12 @@ console.log(textboxSize)
         points: points,
         strokeColor: newDataset.strokeColor,
       })
-      console.log(myNewChart.datasets)
+
       newThing.push(nextColor)
       myNewChart.update();
       scope.legend[newThing[1]] = result;
       scope.activeFilters.push(newThing);
-      console.log(scope.activeFilters)
-      console.log('active Filters are: '+scope.activeFilters)
+
       }
 });
 	 			for(i=0;i<10;i++){
@@ -589,7 +593,7 @@ app.directive('myChart', function(){
 					Chart.defaults.global.scaleFontFamily = "'Roboto'";
 						Chart.defaults.global.scaleFontColor = "#333";
 							Chart.defaults.global.scaleFontSize = 16;
-	console.log('graph test'+ elm[0].children[1].children[0])
+
 		var graphDataset = [];
 		var today = new Date();
 		var tomorrow = new Date();
@@ -677,7 +681,6 @@ app.controller('testCtrl',function($scope,$http,$window,userInfo){
     	$window.localStorage.removeItem('token')
     }
   userInfo.async().then(function(d) {
-      console.log('received data')
       console.log(d)
   $scope.user.avatar = d[0].avatar
   $scope.user.name = d[0].name;
