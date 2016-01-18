@@ -9,9 +9,8 @@
       <script src='/js/angular-route.js'></script>
       <link href="http://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet" type="text/css">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-      <link href="/public/css/bootstrap.min.css" rel="stylesheet" type="text/css">
       <link href="/public/css/main.css" rel="stylesheet" type="text/css">
-         <base href="/">
+      <base href="/">
    </head>
 
 
@@ -20,7 +19,7 @@
 		<div class='question-container-live' id='question-container-live'>
 
 		<h1 class='center-heading' ng-bind='activeSurvey.name'></h1>
-		<h2>Demographic Information</h2><br>
+		<h4>Demographic Information</h4>
 		<span ng-if='activeSurvey.filters.gender'>
 		  Gender: 		<div class='dropdown'>
   <button class='btn-white'><span ng-bind='answers.gender || "Select"'></span></button>
@@ -29,10 +28,8 @@
   <li ng-click='setGender("male")'>male</li>
    <li ng-click='setGender("female")'>female</li>
   </ul>
-
 </div>
 </span>
-
     <span ng-if='activeSurvey.filters.income'>
            Annual Income: <input type='number' style='height:40px;border-radius:5px; border:1px solid #ccc' ng-model='answers.income'></input>
           </span>
@@ -41,7 +38,7 @@
                 </span>
 		<div ng-repeat='question in activeSurvey.questions' class='live-question'>
 			<h4 class='live-subheading' ng-bind='question.name'></h4>
-			<textarea class='form-control' rows='6' ng-if='question.type==="open question"' ng-model='answers[question.name]'></textarea>
+			<textarea class='answer-box' rows='6' ng-if='question.type==="open question"' ng-model='answers[question.name]'></textarea>
 			<div ng-if='question.type==="multiple choice"'>
 	    <span class='live-selection' ng-repeat='option in question.options'><input class='square' type='radio' name='{{question.name}}' ng-model='answers[question.name]' value='{{option.value}}' id='{{option.value}}'></input>
 			<label class='square' for='{{option.value}}'></label>{{option.value}}</span>
@@ -49,7 +46,7 @@
 </div>
 		<div ng-if='question.type==="numerical scale"'>
 
-			<div class='scale-container'>
+			<div class='scale-container' style='margin:0'>
         	<span ng-bind='question.rangeOptions.scaleNegative'></span>
         <span><input class='scale' type='radio' name='{{question.name}}' value='1' ng-model='answers[question.name]' id='r1'></input>
         <label class='scale' for="r1"></label></span>

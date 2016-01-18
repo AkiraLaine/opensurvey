@@ -66,7 +66,7 @@ body,html,.container-fluid{
 .mobile-navbar {
 	display:none;
 	width:100%;
-	top:-195px;
+	top:-210px;
 	padding:0px 0px 10px 0px;
 	position:relative;
 	z-index:10;
@@ -742,9 +742,6 @@ textarea, textarea.ng-pristine {
 .live-question {
 	margin-bottom:50px;
 }
-.live-subheading {
-	margin-bottom:20px;
-}
 .center-heading {
 	margin-bottom:50px;
 	text-align:center;
@@ -855,8 +852,34 @@ font-size:18px;
 	padding:10px;
 	position:relative;
 }
+.answer-box {
+border-radius:10px;	
+width:100%;
+}
+textarea {
+	padding:10px;
+	font-family:roboto;
+}
+textarea:focus {
+    box-shadow: 0 0 3pt 1pt lightblue;
+}
 
+/* Hard "outline" with box-shadow: */
+textarea:focus {
+    box-shadow: 0 0 0 1pt lightblue;
+}
+h4 {
+	font-size:120%;
+	font-weight:500;
+}
+textarea {
+	outline:none;
+}
 
+input {
+	border-radius:10px;
+	box-sizing:border-box;
+}
 .btn-ok {
 	background:#5E2B85;
 	color:white;
@@ -1879,6 +1902,7 @@ margin-right:auto;
 	width:50%;
 
 }
+
 .dropdown button:before {
 
     content:'';
@@ -1921,6 +1945,9 @@ margin-right:auto;
 	right:0;
 	bottom:8px;
 }
+.mobile-menu-button {
+	visibility:hidden;
+}
 .backend-top-navbar {
 	position:fixed;
 	top:0;
@@ -1940,10 +1967,10 @@ margin-right:auto;
 	padding-right:30px;
 	padding-left:30px;
 }
-.backend-top-navbar a:last-child {
+.backend-top-navbar a:nth-last-child(2) {
 		border-right:none;
 }
-@media screen and (max-width: 1650px) {
+@media screen and (max-width: 1900px) {
     .question-image-wrapper {
     	margin-left:-80px;
     }
@@ -2049,6 +2076,9 @@ padding:75px 50px 75px 50px;
 
 }
 @media screen and (max-width: 760px) {
+	.mobile-menu-button {
+		visibility:visible;
+	}
 	.backend-top-navbar a {
 		width:100%;
 		display:block;
