@@ -82,7 +82,8 @@ body,html,.container-fluid{
 
 }
 a:active,a:visited,a:link,a:hover {
-	color:#fff;
+	color:inherit;
+	cursor:pointer;
 	text-decoration:none;
 }
 .mobile-navbar.active ul li{
@@ -853,7 +854,7 @@ font-size:18px;
 	position:relative;
 }
 .answer-box {
-border-radius:10px;	
+border-radius:10px;
 width:100%;
 }
 textarea {
@@ -883,10 +884,14 @@ input {
 .btn {
 	padding:10px 20px 10px 20px;
 	line-height:normal;
+	background: #116699;
+	border:none;
+	color:#fff;
 }
+
 .btn-ok {
 	background:#5E2B85;
-	color:white;
+	color:#fff;
 	width:33%;
 	height:45px;
 	font-weight:500;
@@ -1219,7 +1224,7 @@ border:none;
 .dashboard-info {
 	font-size:1.1em;
 	line-height:4em;
-	color:#dfdfdf;
+	color:#fff;
 	background:#111;
 	display:table-cell;
 	height:100%;
@@ -1227,6 +1232,8 @@ border:none;
 	padding: 25px 35px 25px 35px;
 	border-right:5px solid #000;
 }
+
+
 /* Survey Overview tiles */
 
 .survey-overview-tile {
@@ -1378,7 +1385,6 @@ width: 75%;
 }
 a {
   text-decoration:none;
-  color:inherit;
 }
 .counter li.active{
   background:rgba(92,155,204,1);
@@ -1440,6 +1446,7 @@ input[type='checkbox']:disabled:checked ~ .tag {
 	transition: color .3s;
 }
 input[type='checkbox'] + label{
+		box-sizing:border-box;
   position:absolute;
   left:10px;
   top:-1px;
@@ -1503,14 +1510,14 @@ input[type='checkbox']:checked + label{
   border-bottom-color:#8475FF;
   border-width:4px;
   border-left-color:transparent;
-transform:rotate(-50deg) translate(4px,-5px);
+transform:rotate(-50deg);
 
 }
 
 input[type='checkbox']:checked + label:before {
   content: "";
   position: absolute;
-  right: 3px;
+  right: 0px;
   bottom: -3px;
   height: 12px;
   width: 100%;  /* or 100px */
@@ -1621,6 +1628,7 @@ input[type="radio"].scale + label:hover {
 .live-selection {
 	padding-right:100px;
 	display:inline-block;
+	margin-bottom:10px;
 }
 .scale-container {
 	display: table;
