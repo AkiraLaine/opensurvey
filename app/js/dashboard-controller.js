@@ -207,28 +207,42 @@ angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$http
 		getAverages();
 	function getAverages() {
 		var sumIncome = 0;
+		var counterIncome = 0;
 		var sumAge = 0;
-		var sumAll = 0;
+		var counterAge = 0;
+		var counterAll = 0;
 		var sumMale = 0;
 		var sumFemale = 0;
+		var counterGender = 0;
+		var sumAll = 0;
 		for (date in survey.answers){
 			survey.answers[date].forEach(function(answer){
 				if (answer.gender === 'male'){
 					sumMale += 1;
+					counterGender += 1;
 				}
 				else if (answer.gender ==='female'){
 					sumFemale +=1;
+					counterGender += 1;
 				}
+				console.log(answer.income)
+				if (answer.income){
 				sumIncome += answer.income;
-				sumAge += answer.age;
-				sumAll += 1;
+				counterIncome += 1;
+				}
+				if (answer.age){
+					console.log('answer age is: '+answer.age)
+				sumAge += answer.age;					
+				counterAge += 1;	
+				}
+				counterAll += 1;
 			})
 		}
-		$scope.maleRatio = Math.floor(sumMale/sumAll*100);
-		$scope.femaleRatio = Math.floor(sumFemale/sumAll*100);
-		$scope.avgIncome = sumIncome/sumAll;
-		$scope.avgAge = sumAge/sumAll;
-		$scope.sumAnswers = sumAll;
+		$scope.maleRatio = Math.floor(sumMale/counterGender*100);
+		$scope.femaleRatio = Math.floor(sumFemale/counterGender*100);
+		$scope.avgIncome = sumIncome/counterIncome;
+		$scope.avgAge = sumAge/counterAge || 0;
+		$scope.sumAnswers = counterAll;
 	}
 		console.log(data.data)
 	$scope.setViewData = function(){
@@ -388,10 +402,11 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$wi
 	$scope.createNewUser = function(form){
 		console.log($scope.registration)
 		console.log(form)
+				if (!form.$invalid){
 		$http.post('/signup',$scope.registration).then(function(data){
 	  if (data.data === 'user created') {
 			$scope.errorMessage = '';
-			if (!form.$invalid){
+	
 					document.getElementById('hero-box-overlay').classList.add('overlay-expanded');
 					window.setTimeout(function(){
 						document.getElementById('hero-box-overlay').innerHTML='<h2>Welcome!</h2><span class="hero-box-overlay-text" id="hero-box-overlay-text">We have sent you a confirmation email to make sure you will be able to receive notifications survey responses and to enable you to reset your password in the future. <br><br>After you have clicked on the confirmation link in the email, you will be able to login to your dashboard and create your first survey.<br><br>Not received your email? <a href="#">Click here</a> and we will send it again.</span>'
@@ -399,13 +414,14 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$wi
 					window.setTimeout(function(){
 						document.getElementById('hero-box-overlay-text').classList.add('fadein')
 					},600)
-				}
+			
 	}
 		else {
 			$scope.errorMessage = 'Looks like this email address is already in use. Try a different address or sign in instead.';
 
 		}
 	})
+				}
 	}
 	var elm = document.getElementById('hero-linechart1');
 	var w = 1920;

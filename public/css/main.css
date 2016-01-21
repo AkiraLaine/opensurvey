@@ -1,5 +1,5 @@
 /****** Main Styling ******/
-@import url(https://fonts.googleapis.com/css?family=Roboto);
+@import url(https://fonts.googleapis.com/css?family=Roboto:500,400,300,200);
 @import url(https://fonts.googleapis.com/css?family=Oxygen:400,300);
 body {
 	font-family: 'Roboto', sans-serif;
@@ -115,7 +115,7 @@ a:active,a:visited,a:link,a:hover {
 }
 .hero {
 	font-family:Oxygen;
-	background-image: linear-gradient(rgba(102,51,153,1),rgba(45,0,80,1));
+	background-image: linear-gradient(#7766EE,30%,#662288);
 	background-size:cover;
 	height:100%;
 	width:100%;
@@ -348,7 +348,12 @@ h2.active {
 }
 
 h2 {
-	font-size:22px;
+	font-weight:500;
+	font-size:140%;
+}
+h3 {
+	font-weight:500;
+	font-size:140%;	
 }
 .progress-bar-steps li:last-child:after {
 	width:0px;
@@ -607,7 +612,7 @@ h2 {
 	box-shadow:2px 2px 8px 0px rgba(0,0,0,0.2);
 	position:fixed;
 	background:#111;
-	width:300px;
+	width:250px;
 	height:100%;
 }
 
@@ -636,7 +641,7 @@ margin-left:150px;
 	background-color:#222;
 }
 .blue {
-	color:rgba(92,155,204,1);
+	color:#99F;
 }
 .btn-blue {
 	color:#5C9BCC;
@@ -749,7 +754,7 @@ textarea, textarea.ng-pristine {
 }
 .full-container {
 	width:100%;
-	padding:25px 50px 25px 350px;
+	padding:25px 50px 25px 300px;
 }
 
 
@@ -800,7 +805,7 @@ font-size:18px;
 	content:'';
 	position:absolute;
 	top:-2px;
-	left:6px;
+	left:12px;
 	color:black;
 	border-width:0px 0px 4px 0px;
 	border-style:solid;
@@ -809,6 +814,10 @@ font-size:18px;
 	height:20px;
 	width:10px;
 	display:block;
+}
+small {
+	color:#999;
+	font-weight:400;
 }
 .hero-box-content input.ng-valid + span:before {
 	content:'';
@@ -884,9 +893,13 @@ input {
 .btn {
 	padding:10px 20px 10px 20px;
 	line-height:normal;
-	background: #116699;
+	background: #7766EE;
+	font-size:90%;
 	border:none;
 	color:#fff;
+	display:inline-block;
+	box-sizing:border-box;
+	text-align:center;
 }
 
 .btn-ok {
@@ -1208,7 +1221,6 @@ border:none;
 	padding: 25px 50px 25px 50px;
 		background:#fff;
 		position:relative;
-		width:75%;
 			height:100%;
 		display:table-cell;
 }
@@ -1228,7 +1240,9 @@ border:none;
 	background:#111;
 	display:table-cell;
 	height:100%;
-	width:25%;
+	width:250px;
+	position:relative;
+	z-index:5;
 	padding: 25px 35px 25px 35px;
 	border-right:5px solid #000;
 }
@@ -1312,6 +1326,7 @@ border:none;
 .answer-header-tile {
 	display:table;
 	width:100%;
+	position:relative;
 	min-height:230px;
 	margin-bottom:25px;
 	box-shadow:2px 2px 6px 0px rgba(0,0,0,0.2);
@@ -1703,7 +1718,6 @@ transition:all .5s ease;
 	border-bottom-left-radius:10px;
 	font-family:fontAwesome;
 	width:40px;
-	height:100%;
 	content:'\f1e0';
 	position:absolute;
 	padding:2px;
@@ -1713,8 +1727,9 @@ transition:all .5s ease;
 }
 .divider {
 	width:100%;
+	z-index:2;
 	height:5px;
-	background:linear-gradient(to right, rebeccapurple,30%,#B36AA4);
+	background:linear-gradient(to right, #7766EE,30%,#662288);
 }
 .stat-icon {
 	width:45px;
@@ -2010,6 +2025,9 @@ margin-right:auto;
     	right:-100px;
 			margin-right:-350px;
     }
+    	.question-container-live {
+		width:70%;
+	}
     	.info-section-2 {
 		padding-right:200px;
 	}
@@ -2028,6 +2046,9 @@ margin-right:auto;
 	}
 	.sidebar {
 		display:none;
+	}
+	.question-container-live {
+		width:80%;
 	}
 	.full-container {
 	padding:95px 50px 25px 50px;
@@ -2075,6 +2096,9 @@ padding:75px 50px 75px 50px;
 	.textbox {
 			width:100%;
 	}
+	.question-container-live {
+		width:100%;
+	}
 	.ui-window {
 		background-size:contain;
 	}
@@ -2091,6 +2115,7 @@ padding:75px 50px 75px 50px;
 	.mobile-menu-button {
 		visibility:visible;
 	}
+
 	.backend-top-navbar a {
 		width:100%;
 		display:block;

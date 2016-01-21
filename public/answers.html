@@ -1,5 +1,7 @@
 <div class='full-container'>
+
   <div class='answer-header-tile'>
+      <div class='divider' style='position:absolute;top:0;left:0;'></div>
   <div class='dashboard-content'>
 <h2 style='display:block' class='alignleft'>{{ name | uppercase}}</h2>
 
@@ -34,10 +36,10 @@
   <i class="fa fa-file-text-o fa-fw fa-lg blue"></i> Replies: <span class='blue' ng-bind='sumAnswers'></span>
 </span><br><br>
 
-  <a ng-href='/download?id={{survey._id}}' target='_self'><button class='btn btn-block btn-secondary'>Export all data</button></a>
+  <a ng-href='/download?id={{survey._id}}' target='_self'><button class='btn full-width'>Export all data</button></a>
 
 		<div class='dropdown full-width'>
-  <button class='btn btn-block btn-secondary' style='margin-top:15px'>Change view</button>
+  <button class='btn full-width' style='margin-top:15px'>Change view</button>
   <span></span> <!-- dont remove, needed for closing the menu !-->
   <ul>
     <li ng-click='setViewCompact()'><i class='fa fa-check' ng-if='!view.expanded'></i> Compact</li>

@@ -674,6 +674,8 @@ app.config(function($httpProvider){
 
 app.controller('loginCtrl',function($scope,$http,$window){
 	console.log('loginCtrl active!');
+	
+
   window.onscroll = null;
 	if ($window.localStorage.token !== undefined){
 		$http.get('/backend').then(function(data){
@@ -707,6 +709,26 @@ $scope.expandMobileNav = function() {
 app.controller('userCtrl',function($scope,$http,$location,$window){
   $scope.viewContent = '/public/login-box.html';
   $scope.login = {};
+  $scope.registration = {};
+  		$scope.createNewUser = function(form){
+			console.log('test')
+		console.log($scope.registration)
+		console.log(form)
+		if (!form.$invalid){
+		$http.post('/signup',$scope.registration).then(function(data){
+	  if (data.data === 'user created') {
+			$scope.errorMessage = '';
+	
+		
+			
+	}
+		else {
+			$scope.errorMessage = 'Looks like this email address is already in use. Try a different address or sign in instead.';
+
+		}
+	})
+				}
+	}
   $scope.updateView = function(page) {
     console.log('test')
     $scope.viewContent = '/public/'+page+'.html';
