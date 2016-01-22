@@ -353,6 +353,7 @@ angular.module('votingapp').controller('restoreCtrl',function($scope,$http,$loca
 });
 angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$window,$location){
 
+	document.getElementById('heroFullscreen').setAttribute("style","height:"+window.innerHeight+"px");
 	window.fbAsyncInit = function() {
 		FB.init({
 			appId      : '165180297173897',

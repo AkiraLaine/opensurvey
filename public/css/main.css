@@ -113,13 +113,16 @@ a:active,a:visited,a:link,a:hover {
 	border-color:#fff;
 	color:#fff;
 }
+#heroFullscreen {
+	margin-top:10%;
+}
 .hero {
 	font-family:Oxygen;
 	background-image: linear-gradient(#7766EE,30%,#662288);
 	background-size:cover;
 	height:100%;
 	width:100%;
-	padding:150px 200px 150px 200px;
+	padding:50px 200px 0px 200px;
 }
 .ui-window {
 	background:url('/public/img/screen.jpg');
@@ -527,9 +530,10 @@ h3 {
 	display:block;
 }
 .info-section {
-		padding:150px 200px 0px 200px;
-	background:#ebebeb;
+		padding:0px 0px 0px 0px;
+	background:none;
 	width:100%;
+	color:#fff;
 	height:980px;
 	text-align:center;
 	font-size:18px;
