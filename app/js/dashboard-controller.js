@@ -3,6 +3,8 @@ angular.module('votingapp').controller('dashboardCtrl',function($scope,$http){
 	$scope.viewContent = '/public/dashboard.html'
 	$http.get('api/active').then(function(data){
 			$scope.activeSurveys = data.data;
+      console.log('active survey is')
+      console.log($scope.activeSurveys)
 		})
 	$scope.getAnswerAmount = function(object){
 		var counter = 0;
@@ -37,6 +39,7 @@ angular.module('votingapp').controller('surveyCreationCtrl',function($scope,$htt
 	$scope.survey = {};
 	$scope.newFormQuestions = [];
 	$scope.survey.filters = {};
+  $scope.draft = {};
 	$scope.newQuestion = {};
 	$scope.newQuestion.rangeOptions = {};
 	$scope.newQuestion.rangeOptions.scaleNegative = "Don't Agree";
@@ -131,18 +134,20 @@ var fieldAction = function() {
 		$scope.newFormQuestions.splice(	$scope.newFormQuestions.indexOf(question),1);
 	}
 
-	$scope.saveDraft = function(){
+	$scope.saveDraft = function(str){
+    if (str === 'draft') {
+      document.getElementById('save-draft-btn').classList.add('confirmed');
+      document.getElementById('save-draft-btn').innerHTML = '<i class="fa fa-check"></i> Draft saved';
+
+}
 
 		var date = new Date();
 		console.log($scope.survey.published)
-		$scope.draft = {
-			published: $scope.survey.published,
-			project: $scope.survey.project,
-			name: $scope.survey.name,
-			filters: $scope.survey.filters,
-			questions: $scope.newFormQuestions,
-			edited:date.toLocaleString()
-		}
+		$scope.draft.published = $scope.survey.published;
+    $scope.draft.name = $scope.survey.name;
+    $scope.draft.filters = $scope.survey.filters;
+    $scope.draft.questions =$scope.newFormQuestions;
+    $scope.draft.edited = date.toLocaleString();
 		console.log("saving survey: "+JSON.stringify($scope.draft))
 		if ($scope.survey.published === true){
 			$scope.draft.publishedDate = date.toLocaleString();
@@ -154,10 +159,12 @@ var fieldAction = function() {
 		else {
 			console.log('creating new entry')
 		}
+    console.log($scope.draft)
 		$http.post('/',$scope.draft).then(function(data){
 			console.log('save successful')
-
-
+      console.log(data.data)
+      $scope.draft.link = data.data;
+      console.log($scope.draft)
 
 		})
 	}
@@ -193,7 +200,7 @@ var fieldAction = function() {
    };
 })
 
-angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$http,$routeParams,$timeout){
+angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$window,$http,$routeParams,$timeout){
 		$scope.filter = [];
 		$scope.view = {};
 		$scope.view.expanded = false;
@@ -240,11 +247,27 @@ angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$http
 		}
 		$scope.maleRatio = Math.floor(sumMale/counterGender*100);
 		$scope.femaleRatio = Math.floor(sumFemale/counterGender*100);
-		$scope.avgIncome = sumIncome/counterIncome;
-		$scope.avgAge = sumAge/counterAge || 0;
+		$scope.avgIncome = Math.floor(sumIncome/counterIncome) || 0;
+		$scope.avgAge = Math.floor(sumAge/counterAge) || 0;
 		$scope.sumAnswers = counterAll;
 	}
-		console.log(data.data)
+
+
+  var setBoxSizes = function() {
+    var boxes = document.querySelectorAll('.textbox-content');
+    var max = 0;
+    for (var i = 0; i<boxes.length; i++){
+      if (boxes[i].clientHeight > max) max = boxes[i].clientHeight;
+    }
+      if (max > 0){
+      for (var i = 0; i<boxes.length; i++){
+        boxes[i].setAttribute('style','height:'+max+'px')
+      }
+
+}
+  document.getElementById('textbox-wrapper').classList.add('visible')
+  }
+  window.setTimeout(function(){setBoxSizes()},0);
 	$scope.setViewData = function(){
 			$scope.view.expanded = true;
 			$scope.view.data = true;

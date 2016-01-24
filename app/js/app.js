@@ -594,7 +594,6 @@ app.directive('numericalGraph',function(){
 });
 app.directive('myChart', function(){
 
-	console.log('directive running')
     return {
 			  restrict: 'E',
 			  templateUrl:'/public/dashboard-graph.html' ,
@@ -638,8 +637,10 @@ gradient.addColorStop(1, '#662288');
         }
     ]
 };
-
-				var myNewChart = new Chart(ctx).Bar(data);
+    console.log('creating dashboard chart')
+				window.setTimeout(function(){
+          var myNewChart = new Chart(ctx).Bar(data);
+        },5);
 
 
 				}

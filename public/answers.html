@@ -47,12 +47,13 @@
 
 </div>
 </div>
+
 <div ng-repeat='question in questions' class='question-wrapper'>
 
     <div class='textbox' ng-class='{expanded : view.expanded}'>
-	<div style="clear: both;"></div>
+	<div style="clear: both;" ></div>
 		<top-menu obj='$index' filter='filterGender' view='view' questions='questions'></top-menu>
-	<div class='full-width' ng-if='question.type === "open question"'>
+	<div class='full-width' ng-if='question.type === "open question"' >
 
     <answer-container obj='results[$index]' content='question'></answer-container>
     </div>
@@ -63,5 +64,7 @@
     <numerical-graph obj='results[$index]' filter='filter' num='$index' content='question' view='view'></numerical-graph>
     </div>
     </div>
+
 </div>
+
 </div>

@@ -126,12 +126,10 @@
 			<i class="fa fa-plus fa-fw fa-lg"></i>Add Question
 		</button>
 	<div class='btn-center-nav'>
-		<button class='btn-ghost' ng-click='survey.published = true; saveDraft()' ng-if='currentStep === 3' type='button'>
+		<button id='save-draft-btn' class='btn-ghost' ng-click='saveDraft("draft")' ng-if='currentStep === 3' type='button'>
 		<i class='fa fa-floppy-o'></i>
 		Save as Draft</button>
-		<button class='btn-ghost' ng-click='survey.published = true; saveDraft()' ng-if='!survey.published && currentStep === 3' type='button'>
-		<i class='fa fa-paper-plane-o'></i>
-		Publish</button>
-		<button class='create-btn btn-danger' ng-click='survey.published = false; saveDraft()' ng-if='survey.published && currentStep === 3' type='button'>Unpublish</button>
+		<button class='btn-ghost' ng-click='survey.published = true; saveDraft("published")' ng-if='currentStep === 3' type='button' ng-class='{confirmed : survey.published}'>
+		<span ng-if='!survey.published'><i class='fa fa-paper-plane-o'></i> Publish</span><span ng-if='survey.published'><i class='fa fa-check'></i> Published</span></button>
 </div>
 </div>

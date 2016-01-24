@@ -77,28 +77,20 @@ res.end();
         jwt.verify(req.headers.authorization, 'cookiesandcream', function(err, decoded) {
           if (err) throw err;
             req.body.email = decoded.email;
+
         var shortId = require('short-mongo-id');
-        if (req.body._id !== undefined) {
-          var ObjectID = require('mongodb').ObjectID;
-          var id = new ObjectID(req.body._id);
-          delete req.body._id;
-
-          req.body.link = shortId(id);
+        if (req.body.link !== undefined) {
           console.log(req.body);
-          drafts.find().toArray(function(err,data){
+          drafts.find({'link': req.body.link }).toArray(function(err,data){
             if (err) throw err;
-            console.log('looking for drafts in general and found '+JSON.stringify(data))
           });
-          drafts.find({'_id': id }).toArray(function(err,data){
-            if (err) throw err;
-            console.log('looking for drafts with id '+req.body._id+ 'and found '+data)
-          });
-          drafts.update({_id: id},req.body,function(err,data){
+          console.log("updating draft");
+          drafts.update({'link': req.body.link},req.body,function(err,data){
              if (err) throw err;
-
            });
         }
         else {
+
             console.log('adding new draft')
        drafts.insert(req.body,function(err,data){
          var ObjectID = require('mongodb').ObjectID;
@@ -107,9 +99,7 @@ res.end();
           if (err) throw err;
           drafts.update({_id: data.insertedIds[0]},{ $set: {link:link}},function(err,moredata){
             if (err) throw err;
-            console.log("trying to send out the data")
-            console.log(data.ops[0])
-            res.redirect('/edit:_KlfY8')
+            res.send(link)
           })
         })};
 
