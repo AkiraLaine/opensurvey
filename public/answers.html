@@ -3,39 +3,36 @@
   <div class='answer-header-tile'>
       <div class='divider' style='position:absolute;top:0;left:0;'></div>
   <div class='dashboard-content'>
-<h2 style='display:block' class='alignleft'>{{ name | uppercase}}</h2>
-
-<br><br>
-<div style='display:inline-block;margin-top: 5px;padding-bottom: 60px;width:100%'><span style='alignleft'>Created: {{survey.publishedDate}}</span>
-<span class='icon-container alignright'>
-
+<h2 style='display:block; margin-top:0px;'>{{ name | uppercase}}</h2>
+<div style='display:inline-block;margin-top: 5px'>
+    <div class='survey-menu-code'>http://www.placeholder.com/{{survey.link}}</div>
+<span class='alignright'>
+  <div class='stat-icon-wrapper'>
+  <div class='stat-icon-overlay'>Total responses: <span class='ghost-purple1' ng-bind='sumAnswers'></span>.</div>
+  <button class='stat-icon ghost-purple1' ><i class='fa fa-file-text-o fa-lg'></i> </button><span class='ghost-purple1' style='font-weight:600'> <span ng-bind='sumAnswers'></span></span></div>
 <div class='stat-icon-wrapper' ng-if='survey.filters.gender'>
-<div class='stat-icon-overlay'><span ng-bind='maleRatio'></span>% of respondents are <span class='ghost-blue'>male</span>.</div>
-<button class='stat-icon ghost-blue'><i class='fa fa-male fa-lg'></i> </button> <span class='blue' style='font-weight:600'><span ng-bind='maleRatio'></span>%</span>
+<div class='stat-icon-overlay'><span ng-bind='maleRatio'></span>% of respondents are <span class='ghost-purple1'>male</span>.</div>
+<button class='stat-icon ghost-purple1'><i class='fa fa-male fa-lg'></i> </button> <span class='ghost-purple1' style='font-weight:600'><span ng-bind='maleRatio'></span>%</span>
 </div>
+
+
 
 <div class='stat-icon-wrapper' ng-if='survey.filters.gender'>
 <div class='stat-icon-overlay'><span ng-bind='femaleRatio'></span>% of respondents are <span class='ghost-purple1'>female</span>.</div>
 <button class='stat-icon ghost-purple1' ><i class='fa fa-female fa-lg'></i> </button><span class='ghost-purple1' style='font-weight:600'> <span ng-bind='femaleRatio'></span>%</span></div>
 
 <div class='stat-icon-wrapper' ng-if='survey.filters.income'>
-<div class='stat-icon-overlay'>The <span class='ghost-purple2'>average income</span> is <span ng-bind='avgIncome'></span> $.</div>
-<button class='stat-icon ghost-purple2'><i class='fa fa-dollar fa-lg'></i> </button><span class='ghost-purple2' style='font-weight:600'> <span ng-bind='avgIncome'></span>$</span></div>
+<div class='stat-icon-overlay'>The <span class='ghost-purple1'>average income</span> is <span ng-bind='avgIncome'></span> $.</div>
+<button class='stat-icon ghost-purple1'><i class='fa fa-dollar fa-lg'></i> </button><span class='ghost-purple1' style='font-weight:600'> <span ng-bind='avgIncome'></span>$</span></div>
 
 <div class='stat-icon-wrapper' ng-if='survey.filters.age'>
-<div class='stat-icon-overlay'>The <span class='ghost-purple2'>average age</span> is <span ng-bind='avgAge'></span> years.</div>
-<button class='stat-icon ghost-purple2'><i class='fa fa-birthday-cake fa-lg'></i> </button><span class='ghost-purple2' style='font-weight:600'> <span ng-bind='avgAge'></span></span></div>
+<div class='stat-icon-overlay'>The <span class='ghost-purple1'>average age</span> is <span ng-bind='avgAge'></span> years.</div>
+<button class='stat-icon ghost-purple1'><i class='fa fa-birthday-cake fa-lg'></i> </button><span class='ghost-purple1' style='font-weight:600'> <span ng-bind='avgAge'></span></span></div>
 </div>
 
 
-    <div class='survey-menu-code'>http://www.placeholder.com/{{survey.link}}</div>
-
 </div>
-<div class='dashboard-info' style='line-height:2em;'>
-  <span>
-  <i class="fa fa-file-text-o fa-fw fa-lg blue"></i> Replies: <span class='blue' ng-bind='sumAnswers'></span>
-</span><br><br>
-
+<div class='dashboard-info' style='line-height:normal;'>
   <a ng-href='/download?id={{survey._id}}' target='_self'><button class='btn full-width'>Export all data</button></a>
 
 		<div class='dropdown full-width'>

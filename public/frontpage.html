@@ -1,108 +1,117 @@
-
 <div class='testContainer'>
-<div class='top-navbar' id='navbar'>
-<span class='alignleft'>PlaceHolder</span>
-<span class='top-navbar-right'>
+  <div class='top-navbar' id='navbar'>
+    <span class='alignleft'>PlaceHolder</span>
+    <span class='top-navbar-right'>
 <a href='/login'  class='alignright'>Sign In</a>
 <a ng-click='scrollPage("dashboardInfo")' class='alignright'>About</a>
 <a ng-click='scrollPage("open-source")' class='alignright'>Contribute</a>
 <a ng-click='scrollPage("dashboardInfo")' class='alignright'>Examples</a>
 <a ng-click='scrollPage("dashboardInfo")' class='alignright'>Features</a>
 </span>
-</div>
-
-<div class='hero-linechart1' id='hero-linechart1'></div>
-<div class='hero'>
-  
-  <div class='mobile-navbar' id='mobile-navbar'>
-    <ul>
-      <li><a ng-click='scrollPage("dashboardInfo")'>About</a></li>
-      <li><a ng-click='scrollPage("open-source")'>Contribute</a></li>
-      <li><a ng-click='scrollPage("dashboardInfo")'>Features</a></li>
-      <li><a ng-click='expandMobileNav()' style='padding:8px 10px 2px 0px; vertical-align:middle;'> <i class='fa fa-bars fa-2x' style='vertical-align:middle'></i> <span style='vertical-align:middle; padding-left:10px; font-size:120%;font-weight:600'>OSurvey.io</span></a></li>
-    </ul>
-
-
-
   </div>
-  <div id='heroFullscreen'>
-  <div class='hero-content'>
-    <div>
-  <h1>OPEN-SOURCE SURVEYS.</br> MODERN, CLEAN, POWERFUL.</h1>
-    <div class='line'></div>
-  <p>Heirloom lo-fi locavore, hashtag literally pop-up occupy chia gluten-free. Post-ironic yolo church-key literally shabby chic, keffiyeh sartorial taxidermy single-origin coffee occupy raw denim sustainable gluten-free truffaut. Leggings lo-fi direct trade dreamcatcher, viral celiac cold-pressed deep v. Cliche four dollar toast hammock, bitters polaroid flexitarian twee keytar retro gentrify.</p>
-</div>
+  <div class='hero-linechart1' id='hero-linechart1'></div>
+  <div class='hero'>
+    <div class='mobile-navbar' id='mobile-navbar'>
+      <ul>
+        <li><a ng-click='scrollPage("dashboardInfo")'>About</a></li>
+        <li><a ng-click='scrollPage("open-source")'>Contribute</a></li>
+        <li><a ng-click='scrollPage("dashboardInfo")'>Features</a></li>
+        <li>
+          <a ng-click='expandMobileNav()' style='padding:8px 10px 2px 0px; vertical-align:middle;'> <i class='fa fa-bars fa-2x' style='vertical-align:middle'></i> <span style='vertical-align:middle; padding-left:10px; font-size:120%;font-weight:600'>OSurvey.io</span></a>
+        </li>
+      </ul>
+    </div>
+    <div id='heroFullscreen'>
+      <div class='hero-content'>
+        <div>
+          <h1>OPEN-SOURCE SURVEYS.</br> MODERN, CLEAN, POWERFUL.</h1>
+          <div class='line'></div>
+          <p>Heirloom lo-fi locavore, hashtag literally pop-up occupy chia gluten-free. Post-ironic yolo church-key literally shabby chic, keffiyeh sartorial taxidermy single-origin coffee occupy raw denim sustainable gluten-free truffaut. Leggings lo-fi
+            direct trade dreamcatcher, viral celiac cold-pressed deep v. Cliche four dollar toast hammock, bitters polaroid flexitarian twee keytar retro gentrify.</p>
+        </div>
 
-</div>
-  <div class='hero-content-right'>
-<hero-registration></hero-registration>
-</div>
-</div>
-<div class='info-section' id='dashboardInfo'>
-  <div class='section-content' id='dashboard-text'>
-  <h1>MEET YOUR NEW DASHBOARD.</h1>
-  <p>Microdosing post-ironic paleo, tilde mixtape pinterest yuccie tacos. Crucifix banh mi small batch messenger bag vice kale chips. Craft beer wayfarers waistcoat meggings, kitsch bushwick iPhone DIY kombucha fap cred tilde hoodie viral ramps. Franzen iPhone fap shabby chic mlkshk, hella vinyl you probably haven't heard of them ennui typewriter salvia tousled chillwave. </p>
-</div>
-<div class='ui-window' id='dashboard-window'>
-<div class='ui-buttons'>
-</div>
-</div>
-</div>
-</div>
+      </div>
+      <div class='hero-content-right'>
+        <hero-registration></hero-registration>
+      </div>
+      <div class='bottom-scroll-button'>
+        <span class="fa-stack fa-lg" ng-click='heroScroll()'>
+          <i class="fa fa-circle-thin fa-stack-2x"></i>
+          <i class="fa fa-chevron-down fa-stack-1x "></i>
+        </span>
+    </div>
+  </div>
+    <div class='info-section' id='dashboardInfo'>
+      <div class='section-content' id='dashboard-text'>
+        <h1>MEET YOUR NEW DASHBOARD.</h1>
+        <p>Microdosing post-ironic paleo, tilde mixtape pinterest yuccie tacos. Crucifix banh mi small batch messenger bag vice kale chips. Craft beer wayfarers waistcoat meggings, kitsch bushwick iPhone DIY kombucha fap cred tilde hoodie viral ramps. Franzen
+          iPhone fap shabby chic mlkshk, hella vinyl you probably haven't heard of them ennui typewriter salvia tousled chillwave. </p>
+      </div>
+      <div class='ui-window' id='dashboard-window'>
+        <div class='ui-buttons'>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
-<div class='info-section-2' id='questionChoice'>
+  <div class='info-section-2' id='questionChoice'>
 
-  <div class='frontpage-content alignright' style='color:#333'>
+    <div class='frontpage-content alignright' style='color:#333'>
 
-    <div>
-  <h1>Ask the right questions</h1>
-  <p>Heirloom lo-fi locavore, hashtag literally pop-up occupy chia gluten-free. Post-ironic yolo church-key literally shabby chic, keffiyeh sartorial taxidermy single-origin coffee occupy raw denim sustainable gluten-free truffaut. Leggings lo-fi direct trade dreamcatcher, viral celiac cold-pressed deep v. Cliche four dollar toast hammock, bitters polaroid flexitarian twee keytar retro gentrify.</p>
-</div>
+      <div>
+        <h1>Ask the right questions</h1>
+        <p>Heirloom lo-fi locavore, hashtag literally pop-up occupy chia gluten-free. Post-ironic yolo church-key literally shabby chic, keffiyeh sartorial taxidermy single-origin coffee occupy raw denim sustainable gluten-free truffaut. Leggings lo-fi direct
+          trade dreamcatcher, viral celiac cold-pressed deep v. Cliche four dollar toast hammock, bitters polaroid flexitarian twee keytar retro gentrify.</p>
+      </div>
 
-</div>
- <div class='question-image-wrapper alignleft' id='question-image-wrapper'>
-<img src='/public/img/question-a.png' style='position:absolute; left:0'></img>
-<img src='/public/img/question-b.png' style='position:absolute; left:40px; top:110px'></img>
-<img src='/public/img/question-c.png' style='position:absolute; left:80px; top:220px'></img>
-</div>
-</div>
-<div class='info-section-3' id='lineCharts'>
-  <div class='frontpage-content alignleft' style='color:#333'>
-    <div>
-  <h1>Find the right answers</h1>
-  <p>Heirloom lo-fi locavore, hashtag literally pop-up occupy chia gluten-free. Post-ironic yolo church-key literally shabby chic, keffiyeh sartorial taxidermy single-origin coffee occupy raw denim sustainable gluten-free truffaut. Leggings lo-fi direct trade dreamcatcher, viral celiac cold-pressed deep v. Cliche four dollar toast hammock, bitters polaroid flexitarian twee keytar retro gentrify.</p>
-</div>
+    </div>
+    <div class='question-image-wrapper alignleft' id='question-image-wrapper'>
+      <img src='/public/img/question-a.png' style='position:absolute; left:0'></img>
+      <img src='/public/img/question-b.png' style='position:absolute; left:40px; top:110px'></img>
+      <img src='/public/img/question-c.png' style='position:absolute; left:80px; top:220px'></img>
+    </div>
+  </div>
+  <div class='info-section-3' id='lineCharts'>
+    <div class='frontpage-content alignleft' style='color:#333'>
+      <div>
+        <h1>Find the right answers</h1>
+        <p>Heirloom lo-fi locavore, hashtag literally pop-up occupy chia gluten-free. Post-ironic yolo church-key literally shabby chic, keffiyeh sartorial taxidermy single-origin coffee occupy raw denim sustainable gluten-free truffaut. Leggings lo-fi direct
+          trade dreamcatcher, viral celiac cold-pressed deep v. Cliche four dollar toast hammock, bitters polaroid flexitarian twee keytar retro gentrify.</p>
+      </div>
 
-</div>
-<div class='frontpage-graph-wrapper'>
-<div class='animated-chart chart-blue' id='chartBlue'></div>
-<div class='animated-chart chart-orange'id='chartOrange'></div>
-<div class='animated-scale'></div>
-</div>
-</div>
-<div class='info-section-4' id='open-source'>
-  <div class='frontpage-content full-width ' style='color:#333'>
-    <div>
-  <h1>100% Open Source</h1>
-  <p>Heirloom lo-fi locavore, hashtag literally pop-up occupy chia gluten-free. Post-ironic yolo church-key literally shabby chic, keffiyeh sartorial taxidermy single-origin coffee occupy raw denim sustainable gluten-free truffaut. Leggings lo-fi direct trade dreamcatcher, viral celiac cold-pressed deep v. Cliche four dollar toast hammock, bitters polaroid flexitarian twee keytar retro gentrify.</p>
-</div>
+    </div>
+    <div class='frontpage-graph-wrapper'>
+      <div class='animated-chart chart-blue' id='chartBlue'></div>
+      <div class='animated-chart chart-orange' id='chartOrange'></div>
+      <div class='animated-scale'></div>
+    </div>
+  </div>
+  <div class='info-section-4' id='open-source'>
+    <div class='frontpage-content full-width ' style='color:#333'>
+      <div>
+        <h1>100% Open Source</h1>
+        <p>Heirloom lo-fi locavore, hashtag literally pop-up occupy chia gluten-free. Post-ironic yolo church-key literally shabby chic, keffiyeh sartorial taxidermy single-origin coffee occupy raw denim sustainable gluten-free truffaut. Leggings lo-fi direct
+          trade dreamcatcher, viral celiac cold-pressed deep v. Cliche four dollar toast hammock, bitters polaroid flexitarian twee keytar retro gentrify.</p>
+      </div>
 
-<div>
-<span class='code-container alignleft'>
+      <div>
+        <span class='code-container alignleft'>
   <br>
   <h2>GitHub Repository:</h2>
-  <span class='code-line'>https://github.com/tbgse/votingApp</span><br>
-  <h2>Technology Stack:</h2>
-  <span class='code-line'>Angular 1.4.7, NodeJS with Express 4.13.3, MongoDB 3.0.2</span><br>
-  <h2>Licence:</h2>
-  <span class='code-line'>GPLv3</span><br>
-</span>
-<img src='/public/img/labtocat.png' style='margin-top:-50px;'></img>
-</div>
-
-</div>
-
-</div>
-<div class='footer'>A project by Tobias Guse<br>
-  <span style='font-size:16px'>Blog | Twitter | LinkedIn</span></div>
+  <span class='code-line'>https://github.com/tbgse/votingApp</span>
+        <br>
+        <h2>Technology Stack:</h2>
+        <span class='code-line'>Angular 1.4.7, NodeJS with Express 4.13.3, MongoDB 3.0.2</span>
+        <br>
+        <h2>Licence:</h2>
+        <span class='code-line'>GPLv3</span>
+        <br>
+        </span>
+        <img src='/public/img/labtocat.png' style='margin-top:-50px;'></img>
+      </div>
+    </div>
+  </div>
+  <div class='footer'>A project by Tobias Guse
+    <br>
+    <span style='font-size:16px'>Blog | Twitter | LinkedIn</span></div>

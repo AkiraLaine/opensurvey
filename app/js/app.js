@@ -430,8 +430,8 @@ console.log(scope.view)
 		Chart.defaults.global.maintainAspectRatio = false;
 			var ctx = elm[0].getElementsByTagName('canvas')[0].getContext("2d");
 			var gradient = ctx.createLinearGradient(0, 0, 0, 400);
-gradient.addColorStop(0, 'rgba(92,155,204,1)');
-gradient.addColorStop(1, 'rgba(81,17,109,0.6)');
+      gradient.addColorStop(0, '#6699EE');
+      gradient.addColorStop(1, '#662288');
 var data = {
 labels:labels,
 datasets: [
@@ -439,7 +439,7 @@ datasets: [
 
 			label: "My Second dataset",
 			fillColor: gradient,
-			highlightFill: "rgba(92,155,204,1)",
+			highlightFill: "#7766EE",
 			data: results,
 
 	}
@@ -479,8 +479,8 @@ app.directive('numericalGraph',function(){
 				Chart.defaults.global.maintainAspectRatio = false;
 								var ctx = elm[0].getElementsByTagName('canvas')[0].getContext("2d");
 				var gradient = ctx.createLinearGradient(0, 0, 0, 300);
-	gradient.addColorStop(0, 'rgba(92,155,204,1)');
-	gradient.addColorStop(1, 'rgba(81,17,109,0.6)');
+        gradient.addColorStop(0, '#6699EE');
+        gradient.addColorStop(1, '#662288');
 	var results = countArrayStrings(scope.obj,['1','2','3','4','5','6','7','8','9','10']);
 	var labels = ['1','2','3','4','5','6','7','8','9','10']
 
@@ -624,8 +624,8 @@ app.directive('myChart', function(){
 		weeklyView(labels);
 		var ctx = elm[0].children[1].children[0].getContext("2d");
 		var gradient = ctx.createLinearGradient(0, 0, 0, 500);
-gradient.addColorStop(0, 'rgba(92,155,204,1)');
-gradient.addColorStop(1, 'rgba(81,17,109,0.6)');
+gradient.addColorStop(0, '#6699EE');
+gradient.addColorStop(1, '#662288');
 		var data = {
     labels: labels,
     datasets: [
@@ -633,7 +633,7 @@ gradient.addColorStop(1, 'rgba(81,17,109,0.6)');
         {
             label: "My Second dataset",
             fillColor: gradient,
-			highlightFill: "rgba(92,155,204,1)",
+			highlightFill: "#7766EE",
             data: graphDataset
         }
     ]
@@ -674,7 +674,7 @@ app.config(function($httpProvider){
 
 app.controller('loginCtrl',function($scope,$http,$window){
 	console.log('loginCtrl active!');
-	
+
 
   window.onscroll = null;
 	if ($window.localStorage.token !== undefined){
@@ -718,9 +718,9 @@ app.controller('userCtrl',function($scope,$http,$location,$window){
 		$http.post('/signup',$scope.registration).then(function(data){
 	  if (data.data === 'user created') {
 			$scope.errorMessage = '';
-	
-		
-			
+
+
+
 	}
 		else {
 			$scope.errorMessage = 'Looks like this email address is already in use. Try a different address or sign in instead.';
