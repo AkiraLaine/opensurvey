@@ -126,7 +126,8 @@ a:active,a:link {
 	color:#fff;
 }
 #heroFullscreen {
-	padding-top:50px;
+	
+	padding-top:10%;
 }
 .hero {
 	font-family:Oxygen;

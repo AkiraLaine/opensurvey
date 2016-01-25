@@ -375,8 +375,21 @@ angular.module('votingapp').controller('restoreCtrl',function($scope,$http,$loca
 	}
 });
 angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$window,$location){
-
-	document.getElementById('heroFullscreen').setAttribute("style","min-height:"+window.innerHeight+"px");
+	if(window.innerWidth > 1300){
+		document.getElementById('heroFullscreen').setAttribute("style","min-height:"+window.innerHeight+"px;padding-top:"+(Math.max((window.innerHeight/2-300),50))+"px;");
+	}
+	window.onresize = function(){
+		console.log('firing resize event')
+		if(window.innerWidth > 1280){
+		document.getElementById('heroFullscreen').setAttribute("style","min-height:"+window.innerHeight+"px;padding-top:"+(Math.max((window.innerHeight/2-300),50))+"px;");
+	}	
+	else if (window.innerWidth < 1280 && window.innerWidth > 700){
+			document.getElementById('heroFullscreen').setAttribute("style","min-height:"+window.innerHeight+"px;padding-top:50px;");
+	}
+		else if (window.innerWidth < 700){
+			document.getElementById('heroFullscreen').setAttribute("style","min-height:"+window.innerHeight+"px;padding-top:10px;");
+	}
+	}
 	window.fbAsyncInit = function() {
 		FB.init({
 			appId      : '165180297173897',
