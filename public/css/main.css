@@ -1,16 +1,18 @@
 /****** Main Styling ******/
 @import url(https://fonts.googleapis.com/css?family=Roboto:500,400,300,200);
 @import url(https://fonts.googleapis.com/css?family=Oxygen:400,300);
+
 body {
 	font-family: 'Roboto', sans-serif;
-	font-size: 18px;
+	font-size: 16px;
 	background: #eee;
 	overflow-x:hidden;
 	color:#111;
 	margin:0;
 	padding:0;
-counter-reset:step -3;
+counter-reset:step 0;
 }
+
 html {
 	font-size:100%;
 	margin:0;
@@ -126,7 +128,7 @@ a:active,a:link {
 	color:#fff;
 }
 #heroFullscreen {
-	
+
 	padding-top:10%;
 }
 .hero {
@@ -285,20 +287,21 @@ z-index:5;
 .testContainer {
 	overflow-x:hidden;
 }
+.progress-count {
+		counter-increment:step;
+}
 .progress-icon {
-
 	width:100px;
 	display:table-cell;
 	height:100%;
-	counter-increment:step;
 	color:#ccc;
-
 	position:relative;
  line-height:58px;
 }
 .survey-creation-container {
 height:25%;
 padding:20px 0 40px 0;
+width:100%;
 display:table
 }
 
@@ -2265,6 +2268,7 @@ a {
 	}
 
 .info-section {
+	padding-top:50px;
 	padding-right:50px;
 	padding-left:50px;
 }

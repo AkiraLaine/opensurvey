@@ -51,7 +51,7 @@
 			<div>
 
 					<div class='question-container'  ng-repeat='question in newFormQuestions' style='display:table'>
-									<div class='progress-icon' ng-class='{"qendicon" : newFormQuestions.length < $index+2, "active" : newFormQuestions.length > $index+1}'></div>
+									<div class='progress-icon progress-count' ng-class='{"qendicon" : newFormQuestions.length < $index+2, "active" : newFormQuestions.length > $index+1}'></div>
 				<div style='display:table-cell'>
 						<h2> Question {{$index+1}}: <span ng-bind='question.name'></span></h2><br>
 
