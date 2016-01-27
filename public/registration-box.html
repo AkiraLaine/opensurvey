@@ -2,11 +2,11 @@
 <h1>PlaceHolder </h1>
 <span ng-bind='errorMessage'></span>
 <form name='registrationForm'>
-<span class='grey'>Name</span><br>
+<span class='grey input-tag'>Name</span><br>
 <input type='text' class="full-width" ng-model='registration.name' ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }"></input><br><br>
-  <span class='grey'>Email</span><br>
+  <span class='grey input-tag'>Email</span><br>
   <input type='email' class="full-width" ng-model='registration.email' ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }"></input><br><br>
-  <span class='grey'>Password</span><br>
+  <span class='grey input-tag'>Password</span><br>
   <input class="full-width" ng-model='registration.password' type='password'></input><br><br>
  <button class='btn btn-ok alignright' ng-click='createNewUser(registrationForm)'>Sign up</button></span><br><br><br><br>
  </form>

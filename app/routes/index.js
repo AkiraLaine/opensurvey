@@ -58,7 +58,7 @@ function toCSV(object){
      console.log('the id of the requested survey is '+req.query.id)
      drafts.find({"_id": ObjectId(req.query.id)}).toArray(function(err,data){
      var output = toCSV(data[0].answers)
-          res.setHeader('Content-disposition', 'attachment; filename=theDocument.txt');
+          res.setHeader('Content-disposition', 'attachment; filename=theDocument.csv');
 res.setHeader('Content-type', 'text/plain');
 res.charset = 'UTF-8';
 console.log(output)
