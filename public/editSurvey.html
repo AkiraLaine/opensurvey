@@ -44,13 +44,13 @@
 
 						<textarea ng-if='question.type==="open question"' readonly rows='6'></textarea>
 
-						<span class='live-selection' ng-if='question.type==="multiple choice"'style='float:left;margin-top:5%' ng-repeat='option in question.options'>
+						<span class='live-selection' ng-if='question.type==="multiple choice"'style='float:left;margin-top:20px' ng-repeat='option in question.options'>
 									<input name='optRadio' class='square' type='radio' id='{{option.value}}'>
 								</input>	<label for='{{option.value}}' class=square></label>		<span ng-bind='option.value'></span>
 							</span>
 
 						<div ng-if='question.type==="numerical scale"'>
-										<div class='scale-container' style='float:left;margin-top:5%'>
+										<div class='scale-container' style='float:left;margin-top:20px'>
 					        	<span ng-bind='question.rangeOptions.scaleNegative'></span>
 					        <span><input class='scale' type='radio' name='{{question.name}}' value='1' ng-model='answers[question.name]' id='r1'></input>
 					        <label class='scale' for="r1"></label></span>
