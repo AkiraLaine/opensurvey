@@ -788,8 +788,6 @@ textarea, textarea.ng-pristine {
 	padding:25px 50px 25px 300px;
 }
 
-
-
 .question-odd {
 	background:#e5e5e5;
 }
@@ -801,9 +799,6 @@ textarea, textarea.ng-pristine {
 	margin-bottom:15px;
 }
 
-.fa-button-danger {
-	color:#a00;
-}
 .header-top {
 	box-shadow:0 4px 4px rgba(0, 0, 0, 0.3);
 	padding:15px;
@@ -816,8 +811,6 @@ background:#5C9BCC;
 }
 .header-right-menu {
 font-size:18px;
-
-
 	float:right;
 }
 .content-container-flex {
