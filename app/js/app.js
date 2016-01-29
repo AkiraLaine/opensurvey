@@ -676,7 +676,7 @@ app.config(function($httpProvider){
 app.controller('loginCtrl',function($scope,$http,$window){
 	console.log('loginCtrl active!');
 
-
+    window.onresize = null;
   window.onscroll = null;
 	if ($window.localStorage.token !== undefined){
 		$http.get('/backend').then(function(data){
@@ -711,6 +711,8 @@ app.controller('userCtrl',function($scope,$http,$location,$window){
   $scope.viewContent = '/public/login-box.html';
   $scope.login = {};
   $scope.registration = {};
+  window.onresize = null;
+window.onscroll = null;
   		$scope.createNewUser = function(form){
 			console.log('test')
 		console.log($scope.registration)

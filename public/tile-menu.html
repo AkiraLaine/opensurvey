@@ -6,10 +6,10 @@
       <div ng-if='gender' class='textbox-overlay'>
       <i class='clickable fa fa-times fa-lg alignright' ng-click='dismiss()'></i>
       </div>
-<div ng-if='overlayContent === "income" || overlayContent === "age"' class='textbox-overlay-content'><h3>Filter results for Income:</h3>
-<span class='blue'><h3>Above: </h3><input type='number' ng-model='input.min'></input></span><br>
-<span class='purple'><h3>Below:</h3><input type='number' ng-model='input.max'></input></span>
-<button class='btn btn-default' ng-click='applyFilter(overlayContent)'>Ok</button>
+<div ng-if='overlayContent === "income" || overlayContent === "age"' class='textbox-overlay-content'><h3 class='heading-centered'>Filter results for <span ng-bind='overlayContent'></span>:</h3>
+<span class='blue'><h3>Above: </h3><input type='number' class='full-width overlay-input' ng-model='input.min'></input></span><br>
+<span class='purple'><h3>Below:</h3><input type='number' class='full-width' ng-model='input.max'></input></span>
+<button class='btn btn-centered half-width' style='margin-top:30px'  ng-click='applyFilter(overlayContent)'>Ok</button>
 </div>
 <div ng-if='overlayActive' class='textbox-overlay'>
 <i class='clickable fa fa-times fa-lg alignright' ng-click='dismiss()'></i>

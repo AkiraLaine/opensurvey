@@ -1,5 +1,6 @@
 angular.module('votingapp').controller('dashboardCtrl',function($scope,$http){
   window.onscroll = null;
+  window.onresize = null;
 	$scope.viewContent = '/public/dashboard.html'
 	$http.get('api/active').then(function(data){
 			$scope.activeSurveys = data.data;
@@ -382,7 +383,7 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$wi
 		console.log('firing resize event')
 		if(window.innerWidth > 1280){
 		document.getElementById('heroFullscreen').setAttribute("style","min-height:"+window.innerHeight+"px;padding-top:"+(Math.max((window.innerHeight/2-300),50))+"px;");
-	}	
+	}
 	else if (window.innerWidth < 1280 && window.innerWidth > 700){
 			document.getElementById('heroFullscreen').setAttribute("style","min-height:"+window.innerHeight+"px;padding-top:50px;");
 	}
