@@ -24,6 +24,7 @@
   "author": "Blake Johnston",
   "license": "MIT",
   "dependencies": {
+    "angular-dragula": "^1.2.2",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.14.1",
     "chart.js": "^1.0.2",

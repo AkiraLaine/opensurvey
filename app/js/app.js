@@ -1,6 +1,4 @@
-
-
-var app = angular.module('votingapp',['ngAnimate','ui.bootstrap','ngRoute']);
+var app = angular.module('votingapp',['ngAnimate','ui.bootstrap','ngRoute', angularDragula(angular)]);
 var counter = 1;
 //helper funcitons
 
@@ -33,7 +31,7 @@ function randomArrayValue(arr) {
 function getNiceColor(){
   var colors=['#27ae60','#2980b9','#16a085','#8e44ad','#2c3e50','#e74c3c','#7f8c8d','#e67e22'];
   var nextColor = colors[(Math.floor(Math.random() * colors.length))]
-  console.log(nextColor)
+
   return nextColor;
 }
 
@@ -83,7 +81,6 @@ function fadeIn(id,speed){
 }
 function weeklyView(data) {
 	if (data.length < 7){
-		console.log(data)
     var rgx = /(\d*)\D(\d*)\D(\d*)/g;
     var currDate = (rgx.exec(data));
 		var mon1   = parseInt(currDate[1]);
@@ -131,7 +128,6 @@ app.config(function($routeProvider,$locationProvider){
   controller:'restoreCtrl'})
 });
 app.factory('userInfo', function($http){
-  console.log('into the factory')
   var userInfo = {
      async: function() {
        // $http returns a promise, which has a then function, which also returns a promise
@@ -241,7 +237,6 @@ app.directive('overviewElement',function(){
 		replace:true,
 		templateUrl: '/public/overview-element.html',
 		link:function(scope,elm){
-			console.log(scope.element)
 				scope.deleteOverlay = function(){
 		scope.overlay = true;
 		}
@@ -302,11 +297,8 @@ app.directive('topMenu',function(){
 		scope.overlay = function(str){
 			scope.overlayActive = true;
       scope.overlayContent = str;
-      console.log('the content variable is: '+scope.overlayContent)
 		}
     scope.applyFilter = function(str){
-
-      console.log('last try..'+scope.input.min+' with '+str)
       if (scope.input.min !== undefined && scope.input.max !== undefined){
 
       scope.filter(scope.obj,str,[scope.input.min,scope.input.max])
@@ -354,16 +346,10 @@ app.directive('barGraph',function(){
         myNewChart.update();
       }
 
-console.log(scope.view)
-			console.log(myNewChart)
 			var labels = [];
 			for (var key in scope.content.options){
-				console.log(scope.content.options)
-
 			labels.push(scope.content.options[key].value)
 			}
-      console.log('the labels are:')
-      console.log(labels)
       var textboxSize = document.getElementsByClassName('textbox')[0].offsetWidth-100;
       scope.$watch('view.expanded',function(newThing,oldThing){
 
@@ -637,7 +623,6 @@ gradient.addColorStop(1, '#662288');
         }
     ]
 };
-    console.log('creating dashboard chart')
 				window.setTimeout(function(){
           var myNewChart = new Chart(ctx).Bar(data);
         },5);
@@ -654,15 +639,12 @@ app.factory('authInterceptor',function($q,$location,$window){
 			return request;
 		},
 		requestError: function(request){
-			console.log('test12345')
 			return request;
 		},
 		response: function(response){
-			console.log('intercepting response')
 			return response;
 		},
 		responseError: function(rejection){
-			console.log('rejection')
 			$location.path('/login')
 			return rejection;
 		}
@@ -674,13 +656,10 @@ app.config(function($httpProvider){
 });
 
 app.controller('loginCtrl',function($scope,$http,$window){
-	console.log('loginCtrl active!');
-
     window.onresize = null;
   window.onscroll = null;
 	if ($window.localStorage.token !== undefined){
 		$http.get('/backend').then(function(data){
-			console.log('login ok')
 
 		});
 	}
@@ -689,18 +668,15 @@ app.controller('loginCtrl',function($scope,$http,$window){
 app.controller('testCtrl',function($scope,$http,$window,userInfo){
 
 		$http.get('/avatar').then(function(data){
-			console.log(data)
 					$scope.testElm = data.data;
 		});
 $scope.expandMobileNav = function() {
   document.getElementById('backend-top-navbar').classList.toggle('active');
 }
     $scope.logout = function() {
-    	console.log('logging out')
     	$window.localStorage.removeItem('token')
     }
   userInfo.async().then(function(d) {
-      console.log(d)
   $scope.user.avatar = d[0].avatar
   $scope.user.name = d[0].name;
   $scope.user.imageMd = d[0].imageMd;
@@ -714,9 +690,6 @@ app.controller('userCtrl',function($scope,$http,$location,$window){
   window.onresize = null;
 window.onscroll = null;
   		$scope.createNewUser = function(form){
-			console.log('test')
-		console.log($scope.registration)
-		console.log(form)
 		if (!form.$invalid){
 		$http.post('/signup',$scope.registration).then(function(data){
 	  if (data.data === 'user created') {
@@ -733,9 +706,7 @@ window.onscroll = null;
 				}
 	}
   $scope.updateView = function(page) {
-    console.log('test')
     $scope.viewContent = '/public/'+page+'.html';
-    console.log($scope.viewContent)
   }
   $scope.recoverPw = function(){
     $http.post('/restore',$scope.login)
@@ -761,14 +732,8 @@ window.onscroll = null;
 			 if (response.status === 'connected'){
          FB.api('/me/picture', {type:'normal'},function(res){
            FB.api('/me', {fields:'email,name'},function(response) {
-              console.log('this is the data')
-             console.log(response)
              response.image = res.data.url;
-             console.log('updated data')
-             console.log(response)
            $http.post('/login/facebook',response).then(function(data){
-              console.log('facebook response incoming')
-             console.log(data.data.token)
              $window.localStorage.token = data.data.token;
              $location.path('/dashboard')
            })
@@ -780,10 +745,7 @@ window.onscroll = null;
 		 },{scope:'email'});
 	;
 	 }
-	function crossTest() {
-		console.log("BIG BAD CROSS TEST")
-	}
-	//redirect function for github popup window
+
 	window.crossTest = function() {
 		$location.path('/dashboard')
 		if(!$scope.$$phase) $scope.$apply()
@@ -795,7 +757,6 @@ window.onscroll = null;
 	}
 	$scope.authorizeLogin = function(login){
 		$http.post('/login',$scope.login).then(function(data){
-      console.log(data)
 			if (data.data.token !== undefined){
 			$window.localStorage.token = data.data.token;
 			$location.path('/dashboard')
@@ -805,10 +766,8 @@ window.onscroll = null;
 })
 app.controller('mainCtrl',function($http,$scope,$window,$uibModal,$log,$timeout,$location,$routeParams){
 
-	console.log('backend activated')
 	$scope.demographic = "demographic information";
 	$scope.routeTest = $routeParams.page
-	console.log($scope.routeTest)
 	$scope.user = {};
 
 	$http.get('/api/profile',{headers:{authorization:$window.localStorage.token}}).then(function(data){
@@ -823,17 +782,12 @@ app.controller('mainCtrl',function($http,$scope,$window,$uibModal,$log,$timeout,
 
 $scope.createUser = function(user){ //not used anymore?
 	$http.post('/signup',user).then(function(data,status,headers){
-  console.log('posted to server')
-  console.log(data);
-  console.log(status);
-  console.log(headers);
   })
 }
 
 
 
 $scope.loadAnswers = function(){
-	console.log(window.localStorage['surveyResult']);
 	$scope.surveyResults = JSON.parse(window.localStorage['surveyResult']);
 }
 
@@ -847,34 +801,3 @@ $scope.createEmptySurvey = function() {
 
 }
 );
-
-app.controller('liveCtrl',function($scope,$window,$http){
-		var path = {surveyLink:window.location.pathname}
-		console.log(path)
-		$http.post('/api/surveydata/',path).then(function(data){
-			console.log(data)
-		$scope.answers = {};
-		$scope.setGender = function(str){
-			$scope.answers.gender = str;
-		}
-			$scope.activeSurvey = data.data;
-			$scope.answers = {
-				title: $scope.activeSurvey.name,
-				origin: $scope.activeSurvey.link,
-				//gender: '',
-				//income: '',
-			};
-				console.log($scope.activeSurvey)
-				$scope.activeSurvey.questions.forEach(function(question){
-							$scope.answers[question.name] = '';
-			});
-		})
-
-	$scope.submitSurvey = function(survey) {
-		var date = new Date();
-    fadeOut('question-container-live');
-    fadeIn('thankyou-message');
-		$scope.answers.date = date.toLocaleDateString();
-    $http.post('/api/results',$scope.answers)
-	}
-})

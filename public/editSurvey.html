@@ -4,8 +4,7 @@
 		<div class='progress-icon tag-icon active'></div>
 		<div style='display:table-cell'>
 		<h2 >Title</h2><br>
-		<input class='title-form' ng-model='survey.name' placeholder='Survey Title' required type='text'/></input>
-		<button id='classAdder' class='btn-main' ng-click='nextStep()' ng-disabled='currentStep > 1'>Done!</button>
+		<input class='title-form full-width' ng-model='survey.name' style='border-right:1px solid #ccc; border-color:#ccc' placeholder='Survey Title' required type='text'/></input>
 		</div>
 	</div>
 	<div class='survey-creation-container' >
@@ -13,7 +12,7 @@
 				<div style='display:table-cell'>
 	<h2>Demographic Filters</h2>
 			<div class='survey-creation-box' id='survey-creation-container-2'>
-		<div class='checkbox-creation-container'>
+		<div class='checkbox-creation-container full-width'>
 		<div class='check-container'>
 			<input class='filter-checkbox' ng-model='survey.filters.gender' id='gender' type='checkbox'></input>
 			<label for='gender'></label>
@@ -30,14 +29,13 @@
 			<span class='tag'>Income</span>
 		</div>
 		</div>
-		<button id='classAdder' class='btn-main' ng-click='nextStep()' ng-disabled='currentStep > 2'>Done!</button>
 		</div>
 
 	</div>
 	</div>
-			<div>
+			<div dragula='"first-bag"' dragula-model='newFormQuestions'>
 
-					<div class='question-container'  ng-repeat='question in newFormQuestions' style='display:table'>
+					<div class='question-container'  ng-repeat='question in newFormQuestions' style='display:table;padding-right:0px'>
 									<div class='progress-icon progress-count' ng-class='{"qendicon" : newFormQuestions.length < $index+2, "active" : newFormQuestions.length > $index+1}'></div>
 				<div style='display:table-cell'>
 						<h2> Question {{$index+1}}: <span ng-bind='question.name'></span></h2><br>
@@ -93,8 +91,8 @@
 						<span ng-bind='question.text'></span>
 					</p>
 				</div>
-				<div class='question-button-container' ng-click='removeQuestion(question)' ng-class='{"active" : newFormQuestions.length > $index+1}'>
-					<span class='fa-stack fa-fw fa-button'>
+				<div class='question-button-container handle'  ng-class='{"active" : newFormQuestions.length > $index+1}'>
+					<span class='fa-stack fa-fw fa-button' ng-click='removeQuestion(question)'>
 						<i class='fa fa-square fa-stack-2x fa-fw danger '></i>
 						<i class='fa fa-times fa-inverse fa-stack-1x fa-fw fa-lg'></i>
 					</span><br>
@@ -104,19 +102,19 @@
 					</span><br>
 					<span class='fa-stack fa-fw fa-button'>
 						<i class='fa fa-square fa-stack-2x fa-fw'></i>
-						<i class='fa fa-arrows fa-inverse fa-stack-1x fa-fw'></i>
+						<i class='fa fa-arrows fa-inverse fa-stack-1x fa-fw handle'></i>
 					</span><br>
 				</div>
 				</div>
 		</div>
-		<button class='create-btn btn-addfield' ng-click='open("lg")' ng-if='currentStep ===3 && !survey.published' type='button'>
+	</div>
+		<button class='create-btn btn-addfield' ng-click='open("lg")' type='button'>
 			<i class="fa fa-plus fa-fw fa-lg"></i>Add Question
 		</button>
 	<div class='btn-center-nav'>
-		<button id='save-draft-btn' class='btn-ghost' ng-click='saveDraft("draft")' ng-if='currentStep === 3' type='button'>
+		<button id='save-draft-btn' class='btn-ghost' ng-click='saveDraft("draft")' type='button'>
 		<i class='fa fa-floppy-o'></i>
 		Save as Draft</button>
-		<button class='btn-ghost' ng-click='survey.published = true; saveDraft("published")' ng-if='currentStep === 3' type='button' ng-class='{confirmed : survey.published}'>
+		<button class='btn-ghost' ng-click='survey.published = true; saveDraft("published")' type='button' ng-class='{confirmed : survey.published}'>
 		<span ng-if='!survey.published'><i class='fa fa-paper-plane-o'></i> Publish</span><span ng-if='survey.published'><i class='fa fa-check'></i> Published</span></button>
-</div>
 </div>

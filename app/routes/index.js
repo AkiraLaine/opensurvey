@@ -74,6 +74,8 @@ res.end();
 
       })
       .post(function(req,res){
+        console.log('server has received a draft:')
+        console.log(req.body)
         jwt.verify(req.headers.authorization, 'cookiesandcream', function(err, decoded) {
           if (err) throw err;
             req.body.email = decoded.email;
@@ -81,6 +83,7 @@ res.end();
         var shortId = require('short-mongo-id');
         if (req.body.link !== undefined) {
           console.log(req.body);
+          delete req.body._id;
           drafts.find({'link': req.body.link }).toArray(function(err,data){
             if (err) throw err;
           });
@@ -91,7 +94,7 @@ res.end();
         }
         else {
 
-            console.log('adding new draft')
+      console.log('adding new draft')
        drafts.insert(req.body,function(err,data){
          var ObjectID = require('mongodb').ObjectID;
          var id = new ObjectID(req.body._id);

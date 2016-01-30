@@ -34,7 +34,15 @@ angular.module('votingapp').controller('surveyOverviewCtrl',function($scope,$htt
 		$scope.overlay = true;
 	}
 });
-angular.module('votingapp').controller('surveyCreationCtrl',function($scope,$http,$uibModal,$routeParams){
+angular.module('votingapp').controller('surveyCreationCtrl',function($scope,$http,$uibModal,$routeParams,dragulaService){
+
+
+  dragulaService.options($scope, 'first-bag', {
+    moves: function (el, container, handle) {
+      return handle.classList.contains('handle');
+    }
+  });
+
 	$scope.currentStep = 1;
 	$scope.animationsEnabled = true;
 	$scope.survey = {};
@@ -74,6 +82,12 @@ angular.module('votingapp').controller('surveyCreationCtrl',function($scope,$htt
 		fieldAction($scope.currentStep)
 			if ($scope.currentStep > 1) $scope.currentStep -= 1;
 	}
+  $scope.$on('first-bag.drag', function (e, el) {
+    console.log('a drag is happening')
+    console.log(e)
+    console.log(el)
+  });
+
 
 var fieldAction = function() {
 		console.log(window.getComputedStyle(document.getElementById('copy2')).height);
@@ -149,6 +163,9 @@ var fieldAction = function() {
     $scope.draft.filters = $scope.survey.filters;
     $scope.draft.questions =$scope.newFormQuestions;
     $scope.draft.edited = date.toLocaleString();
+    if($scope.survey.link){
+      $scope.draft.link = $scope.survey.link;
+    }
 		console.log("saving survey: "+JSON.stringify($scope.draft))
 		if ($scope.survey.published === true){
 			$scope.draft.publishedDate = date.toLocaleString();
@@ -246,8 +263,8 @@ angular.module('votingapp').controller('surveyAnswersCtrl',function($scope,$wind
 				counterAll += 1;
 			})
 		}
-		$scope.maleRatio = Math.floor(sumMale/counterGender*100);
-		$scope.femaleRatio = Math.floor(sumFemale/counterGender*100);
+		$scope.maleRatio = Math.floor(sumMale/counterGender*100) || 0;
+		$scope.femaleRatio = Math.floor(sumFemale/counterGender*100) || 0;
 		$scope.avgIncome = Math.floor(sumIncome/counterIncome) || 0;
 		$scope.avgAge = Math.floor(sumAge/counterAge) || 0;
 		$scope.sumAnswers = counterAll;

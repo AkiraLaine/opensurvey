@@ -741,6 +741,9 @@ color:#8475FF;
 .white {
 	color:#fff;
 }
+p {
+	white-space:normal;
+}
 textarea {
     resize: none;
 }
@@ -950,15 +953,17 @@ input:focus {
 	background:#B36AA4;
 	transition:background .2s ease;
 }
+.login-box p {
+	text-align:center;
+}
 .login-box a {
 	color:#39d;
 }
 .login-box h1 {
 	color:#666;
+	letter-spacing:1px;
 	text-align:center;
-
   line-height: normal;
-	margin-bottom:45px;
 	font-size:3em;
 }
 .grey {
@@ -1359,7 +1364,7 @@ border:none;
 	border-left:1px solid #999;
 	font-family:'Roboto';
 	font-weight:500;
-	font-size:16px;
+	font-size:110%;
 	box-sizing:border-box;
 	color:#111;
 }

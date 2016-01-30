@@ -1,6 +1,9 @@
 <div class='full-container'>
   <div>
       <div ng-if='drafts.length === 0' class='dashboard-error'>You have not yet created any surveys. Get started <a class='ghost-purple2' href='/create'>here</a>.</div>
+      <div>
     <overview-element ng-repeat="element in drafts" class='survey-overview-container' element='element'></overview-element>
   </div>
+</div>
+
 </div>
