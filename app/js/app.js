@@ -50,6 +50,7 @@ function fadeOut(id,speed){
 
     if (element.style.opacity <= 0){
       element.style.visibility = 'hidden';
+      element.style.display = 'none';
     }
       else {
     element.style.opacity -= 0.1;
@@ -690,16 +691,19 @@ app.controller('userCtrl',function($scope,$http,$location,$window){
   window.onresize = null;
 window.onscroll = null;
   		$scope.createNewUser = function(form){
+        console.log(form)
 		if (!form.$invalid){
+
 		$http.post('/signup',$scope.registration).then(function(data){
 	  if (data.data === 'user created') {
-			$scope.errorMessage = '';
-
-
-
+			$scope.errorMessageRegistration = '';
+          fadeOut('registration-box')
+          window.setTimeout(function(){
+          fadeIn('success-box')
+        },400);
 	}
 		else {
-			$scope.errorMessage = 'Looks like this email address is already in use. Try a different address or sign in instead.';
+			$scope.errorMessageRegistration = 'Looks like this email address is already in use.';
 
 		}
 	})
@@ -708,8 +712,22 @@ window.onscroll = null;
   $scope.updateView = function(page) {
     $scope.viewContent = '/public/'+page+'.html';
   }
-  $scope.recoverPw = function(){
-    $http.post('/restore',$scope.login)
+  $scope.recoverPw = function(form){
+    console.log(form)
+    if (!form.$invalid){
+    $http.post('/restore',$scope.login).then(function(data){
+      console.log(data)
+      if (data.data === 'user not found'){
+        $scope.errorMessageRestore = true;
+      }
+      else {
+        fadeOut('pwreset-box');
+        window.setTimeout(function(){
+        fadeIn('success-box')
+      },400);
+      }
+    })
+  }
   }
   window.fbAsyncInit = function() {
 		FB.init({
@@ -755,13 +773,23 @@ window.onscroll = null;
 		win =  window.open('https://github.com/login/oauth/authorize?client_id=f0ccba6a396af395540f&scope=user',"test","height=600,width=900",'modal=yes')
 
 	}
-	$scope.authorizeLogin = function(login){
+	$scope.authorizeLogin = function(form){
+    if (!form.$invalid){
 		$http.post('/login',$scope.login).then(function(data){
+      console.log(data.data)
+
 			if (data.data.token !== undefined){
 			$window.localStorage.token = data.data.token;
 			$location.path('/dashboard')
     }
+    else if (data.data === 'user not activated'){
+      $scope.errorMessageLogin = true;
+    }
+    else if (data.data === 'wrong password'){
+      $scope.errorMessagePassword = true;
+    }
 		});
+  }
 	}
 })
 app.controller('mainCtrl',function($http,$scope,$window,$uibModal,$log,$timeout,$location,$routeParams){

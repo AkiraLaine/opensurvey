@@ -339,18 +339,20 @@ app.route('/login/facebook')
           res.send(data)
         })
       })
+
   app.route('/validate')
     .get(function(req,res){
     console.log(req.query.code)
     users.find({confirmationLink:req.query.code}).toArray(function(err,data){
     if (data.length > 0){
-      res.end(data[0].name)
+      res.sendFile(process.cwd()+'/public/activated.html');
       users.update({confirmationLink:req.query.code}, {$set: {activated:true}});
       users.update({confirmationLink:req.query.code},{$unset: {confirmationLink:""}});
     }
-    else res.end();
+    else res.sendFile(process.cwd()+'/public/activated-fail.html');
     })
   });
+
   app.route('/restore/success')
   .post(function(req,res){
     console.log(req)
@@ -367,13 +369,28 @@ app.route('/login/facebook')
 });
 app.route('/avatar')
 .get(function(req,res){
-  var avatar = fmt("<img alt='kibo' src='%s' />", identicon('tobe.guse@gmail.com', { pixelSize: 16 }).toDataURL());
+  var avatar = fmt("<img alt='kibo' src='%s' />", identicon('tobe.guse@gmail.com', { pixelSize: 10, bgColor:'#ccc' }).toDataURL());
   var regexp = /src='(\S*)'/g;
   var filtered = regexp.exec(avatar);
 res.send(filtered[1])
 })
+app.route('/api/recover')
+.post(function(req,res){
+  console.log(req.body.code);
+  users.find({restoreLink:req.body.code}).toArray(function(err,data){
+    console.log(data)
+  if (data.length < 1) {
+  res.sendStatus(404);
+  }
+  else {
+  res.sendStatus(200);
+  }
+  })
+})
 app.route('/restore')
 .post (function(req,res){
+  console.log(req.body.email)
+  if (req.body.email === undefined) res.end('user not found')
   users.find({email:req.body.email}).toArray(function(err,data){
   if (data.length === 0) res.end('user not found');
   else {
@@ -381,16 +398,30 @@ app.route('/restore')
   var restoreLink = bcrypt.hashSync(req.body.email,bcrypt.genSaltSync(10));
   users.update({email:req.body.email},{$set:{restoreLink:restoreLink}});
   console.log('sent restore link')
-  var data = {
-  from: 'Excited User <me@samples.mailgun.org>',
-  to: 'tobe.guse@gmail.com',
-  subject: 'Hello',
-  text: 'Testing some Mailgun awesomness!'
-};
-
-mailgun.messages().send(data, function (error, body) {
-  console.log(body);
+  var mail = mailcomposer({
+from: 'opensurvey <noresonse@opensurveys.org>',
+to: 'tobe.guse@gmail.com',
+subject: 'Reset your opensurvey password',
+body: '',
+html: {path: process.cwd() +'/public/email/recover.html'}
 });
+
+mail.build(function(mailBuildError, message) {
+
+var dataToSend = {
+    to: 'tobe.guse@gmail.com',
+    message: message.toString('ascii')
+};
+dataToSend.message = dataToSend.message.replace(/###confirmation.link###/g,address +'/restore?code&#61;'+restoreLink)
+console.log(dataToSend.message)
+mailgun.messages().sendMime(dataToSend, function (sendError, body) {
+    if (sendError) {
+        console.log(sendError);
+        return;
+    }
+});
+});
+
   res.end()
   }
 });
@@ -398,9 +429,9 @@ mailgun.messages().send(data, function (error, body) {
 
   app.route('/signup')
   .post(function(req,res){
-    var email = req.body.email;
+    var email = req.body.email.toLowerCase();
     var name = req.body.name;
-    var avatar = fmt("<img alt='kibo' src='%s' />", identicon(email, { pixelSize: 16 }).toDataURL());
+    var avatar = fmt("<img alt='avatar' src='%s' />", identicon(email, { pixelSize: 12,tiles:8, bgColor:'#ccc' }).toDataURL());
     var regexp = /src='(\S*)'/g;
     var filtered = regexp.exec(avatar);
     avatar = filtered[1];
@@ -412,7 +443,7 @@ mailgun.messages().send(data, function (error, body) {
       confirmationLink.replace(/\B\./g,'K');
       users.insert({email: email, name:name, password:hash,confirmationLink:confirmationLink, avatar:avatar, activated:false});
       var mail = mailcomposer({
-  from: 'you@samples.mailgun.org',
+  from: 'opensurvey <noresonse@opensurveys.org>',
   to: 'tobe.guse@gmail.com',
   subject: 'Test email subject',
   body: 'Test email text',
@@ -425,7 +456,7 @@ mail.build(function(mailBuildError, message) {
         to: 'tobe.guse@gmail.com',
         message: message.toString('ascii')
     };
- dataToSend.message = dataToSend.message.replace(/###confirmation.link###/g,confirmationLink)
+ dataToSend.message = dataToSend.message.replace(/###confirmation.link###/g,address +'/validate?code&#61;'+confirmationLink).replace(/###user.name###/g,name)
  console.log(dataToSend.message)
     mailgun.messages().sendMime(dataToSend, function (sendError, body) {
         if (sendError) {

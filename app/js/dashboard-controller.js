@@ -381,15 +381,28 @@ userInfo.async().then(function(data){
 
 })
 angular.module('votingapp').controller('restoreCtrl',function($scope,$http,$location){
-  $scope.viewContent = '/public/recover-box.html';
-	$scope.restore  = {}
+
+	$scope.restore  = {};
+  $scope.restore.code = $location.search().code;
+  $http.post('/api/recover',$scope.restore).then(function(data){
+    console.log('test')
+    console.log(data)
+      $scope.viewContent = '/public/recover-box.html';
+  })
 	$scope.changePw = function(){
-	$scope.restore.code = $location.search().code;
+
 	if ($scope.restore.password === $scope.restore.passwordConfirmation){
 	$http.post('/restore/success',$scope.restore).then(function(data){
-		console.log(data)
+    console.log('recovery successful')
+	fadeOut('recover-box');
+  window.setTimeout(function(){
+  fadeIn('success-box')
+  },400)
 	})
 	}
+  else {
+  $scope.errorMessageMatch = true;
+  }
 	}
 });
 angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$window,$location){

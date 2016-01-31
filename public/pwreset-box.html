@@ -1,11 +1,20 @@
-  <div class='login-box' id='pwreset-box'>
+  <div class='login-box'>
+    <div id='success-box' class='thankyou-message fade-invisible'>
+  <i class='fa fa-check fa-3x blue'></i><span class='blue'>Please check your inbox.</span><br>We've sent a recovery link to your email address.
+  </div>
+    <div id='pwreset-box'>
 <h1>PlaceHolder </h1>
 <p>Don't worry, we've got you covered. Enter your email below and you will receive a link to reset your password.</p><br>
-  <span class='grey'>Email</span><br>
-  <input type='email' class="full-width" ng-model='login.email' ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }"></input><br><br>
- <button class='btn btn-ok full-width' ng-click='recoverPw()'>Reset Password</button></span><br><br><br><br>
+<form name='pwresetForm'>
+  <span class='grey input-label'>Email</span><br>
+  <input type='email' class="full-width" ng-model='login.email' ng-model-options="{ updateOn: 'default blur', debounce: { default: 1000, blur: 0 } }" required></input>
+  <div ng-show='errorMessageRestore' class='error-message' ng-class='{"active" : errorMessageRestore}'>No user is associated with this email address.<br>If this is your email,  <a>click here</a> to sign up.</div><br>
+  <br>
+ <button class='btn btn-ok full-width' ng-click='recoverPw(pwresetForm)'>Reset Password</button></span><br><br><br><br>
+ </form>
  <div style='text-align:center; line-height:32px'>
       <a ng-click='updateView("login-box")'>Back to login</a><br>
      <a href='#'>Create new account</a><br>
   </div>
+</div>
 </div>

@@ -528,6 +528,7 @@ h3 {
 	border-bottom:1px solid #666;
 	margin-top:30px;
 	height:50px;
+	padding-right:30px;
 	outline:none;
 	border-radius:0;
 	position:relative;
@@ -823,6 +824,7 @@ font-size:18px;
 }
 .hero-box-content input+span{
 	position:relative;
+	right:30px;
 }
 
 
@@ -947,6 +949,21 @@ input:focus {
 	width:33%;
 	height:45px;
 	font-weight:500;
+}
+.input-label {
+	vertical-align:super;
+}
+.error-message {
+	padding-top:5px;
+	color:tomato;
+	height:0px;
+	opacity:0;
+	text-align:center;
+}
+.error-message.active {
+	height:30px;
+	opacity:1;
+	transition:all .3s;
 }
 .btn-ok:hover {
 	color:white;
@@ -1204,7 +1221,6 @@ canvas{
 	left:0;
 	right:0;
 	margin:auto;
-	width:400px;
 	height:120px;
 }
 .dashboard-error {
@@ -1325,7 +1341,7 @@ border:none;
 .survey-overview-info {
 	padding-left:15px;
 	color:#fff;
-	vertical-align:top;
+	vertical-align:middle;
 	width:350px;
 	display:table-cell;
 	height:100%;
@@ -2021,19 +2037,18 @@ body.modal-open {
 
 
 .overview-info-content {
-	line-height:normal;
-	margin:15px 10px 0 0;
+	line-height:50px;
 }
 .overview-button-container {
 	position:relative;
-margin:15px 10px 0 0;
-float:right;
- margin:15px 10px 0 0;
+margin:0px 10px 0 0;
 }
 .overview-button-container a {
 	color:#fff;
 }
-
+.fade-invisible {
+	visibility:hidden;
+}
 
 #container {
 	transition: all .5s ease;

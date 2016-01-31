@@ -17,8 +17,8 @@
           <a ng-href='/edit:{{element.link}}'><button class='btn-round btn-white alignright'><i class='fa-fw fa fa-lg fa-pencil'></i></button></a>
         </div>
         <div class='alignleft overview-info-content'>
-          <span style='font-size:22px; line-height:50px' ng-if='element.published'>  <a href='/survey/{{element.link}}' class='blue' target='_blank'>surv.io/<span ng-bind='element.link'></span></a></span>
-          <span class='dark-grey' style='font-size:22px; line-height:50px' ng-if='!element.published'>Not published</span></span>
+          <span style='font-size:22px;' ng-if='element.published'>  <a href='/survey/{{element.link}}' class='blue' target='_blank'>surv.io/<span ng-bind='element.link'></span></a></span>
+          <span class='dark-grey' style='font-size:22px;' ng-if='!element.published'>Not published</span></span>
         </div>
       </div>
     </div>

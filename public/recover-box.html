@@ -1,10 +1,18 @@
-  <div class='login-box' id='recover-box'>
-<h1>PlaceHolder </h1>
+  <div class='login-box'>
+    <div id='success-box' class='thankyou-message fade-invisible'>
+  <i class='fa fa-check fa-3x blue'></i><span class='blue'>Your password has been changed</span><br>To login with your new password <a href='/login'>click here</a>.
+  </div>
+  <div id='recover-box'>
+<h1>PlaceHolder</h1>
 <p>Please enter your new password below and confirm the change.</p><br>
   <span class='grey input-tag'>New Password</span><br>
-  <input type='password' class="full-width" ng-model='restore.password' ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }"></input><br><br>
+  <input type='password' class="full-width" ng-model='restore.password' ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }"></input>
+  <div ng-show='errorMessageMatch' class='error-message' ng-class='{"active" : errorMessageMatch}'>Looks like your Passwords don't match.<br>Please try again.</div>
+  <br><br>
     <span class='grey input-tag'>Repeat New Password</span><br>
-    <input type='password' class="full-width" ng-model='restore.passwordConfirmation' ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }"></input><br><br>
+    <input type='password' class="full-width" ng-model='restore.passwordConfirmation' ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }"></input><br>
+<br>
+    <br>
  <button class='btn btn-ok full-width' ng-click='changePw()'>Change Password</button></span><br><br><br><br>
  <div style='text-align:center; line-height:32px'>
       <a href='#' ng-click='updateView("login-box.html")'>Back to login</a><br>

@@ -1,13 +1,20 @@
-  <div class='login-box' id='registration-box'>
+<div class='login-box'>
+  <div id='success-box' class='thankyou-message fade-invisible'>
+<i class='fa fa-check fa-3x blue'></i><span class='blue'>Registration Successful.</span><br>We've sent an activation link to your email address. Please check your inbox.
+</div>
+  <div id='registration-box'>
 <h1>PlaceHolder </h1>
-<span ng-bind='errorMessage'></span>
+
 <form name='registrationForm'>
-<span class='grey input-tag'>Name</span><br>
-<input type='text' class="full-width" ng-model='registration.name' ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }"></input><br><br>
-  <span class='grey input-tag'>Email</span><br>
-  <input type='email' class="full-width" ng-model='registration.email' ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }"></input><br><br>
-  <span class='grey input-tag'>Password</span><br>
-  <input class="full-width" ng-model='registration.password' type='password'></input><br><br>
+<span class='grey input-label'>Name</span><br>
+<input type='text' class="full-width" ng-model='registration.name' ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }" required></input><br><br>
+  <span class='grey input-label'>Email</span><br>
+
+  <input type='email' class="full-width" ng-model='registration.email' ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }" required></input><br>
+  <div ng-show='errorMessageRegistration' class='error-message' ng-class='{"active" : errorMessageRegistration}'>Looks like this email is already in use.<br> Forgot your Password? <a>Click here</a> to reset it.</div>
+  <br>
+  <span class='grey input-label'>Password</span><br>
+  <input class="full-width" ng-model='registration.password' type='password' required></input><br><br>
  <button class='btn btn-ok alignright' ng-click='createNewUser(registrationForm)'>Sign up</button></span><br><br><br><br>
  </form>
  <div style='text-align:center; line-height:32px'>
@@ -15,4 +22,5 @@
   <a ng-click='FBlogin()'>Sign in with Facebook</a><br>
     <a ng-click='githubLogin()'>Sign in with GitHub</a>
   </div>
+</div>
 </div>

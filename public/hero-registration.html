@@ -4,11 +4,11 @@
 </div>
 <div class='hero-box-content'>
 <form name='loginForm'>
-<input type='text' placeholder='Name' ng-model='registration.name' ng-minlength="3" required autocomplete="off" ><span></span></input>
-<input type='email' ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" placeholder='Email' ng-model='registration.email' ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }" required autocomplete="off"><span>
+<input type='text' placeholder='Name' ng-model='registration.name' ng-minlength="3" required autocomplete="off" ><span ng-if='registration.name'></span></input>
+<input type='email' ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" placeholder='Email' ng-model='registration.email' ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }" required autocomplete="off"><span ng-if='registration.email'>
 </span></input>
 
-<input type='password' placeholder = 'Password' ng-model='registration.password' required ng-minlength="4"><span></span></input>
+<input type='password' placeholder = 'Password' ng-model='registration.password' required ng-minlength="4"><span ng-if='registration.password'></span></input>
 <button class='hero-box-btn' ng-click='createNewUser(loginForm)'>Register now</button>
 </form>
 <p> - or - </p>

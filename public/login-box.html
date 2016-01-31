@@ -1,11 +1,17 @@
   <div class='login-box' id='login-box'>
 <h1>o.Survey </h1>
-  <span class='grey'>Email</span><br>
-  <input type='email' class="full-width" ng-model='login.email' ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }"></input><br><br>
-  <span class='grey'>Password</span><br>
-  <input class="full-width" ng-model='login.password' type='password'></input><br><br>
+  <form name='loginForm'>
+  <span class='grey input-label'>Email</span><br>
+  <input type='email' class="full-width" ng-model='login.email' ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }" required></input><br>
+  <div ng-show='errorMessageLogin' class='error-message' ng-class='{"active" : errorMessageLogin}'>This account has not yet been activated.<br> <a>Click here</a> to resend the activation link.</div>
+  <br>
+  <span class='grey input-label'>Password</span><br>
+  <input class="full-width" ng-model='login.password' type='password' required></input>
+  <div ng-show='errorMessagePassword' class='error-message' ng-class='{"active" : errorMessagePassword}'>Wrong username or password.<br>Please try again.</div>
+  <br><br>
   <span><a style='line-height:45px' class='alignleft' ng-click='updateView("pwreset-box")'>Forgot password?</a>
- <button class='btn btn-ok alignright' ng-click='authorizeLogin(login)'>Sign in</button></span><br><br><br><br>
+ <button class='btn btn-ok alignright' ng-click='authorizeLogin(loginForm)'>Sign in</button></span><br><br><br><br>
+ </form>
  <div style='text-align:center; line-height:32px'>
      <a href='#' ng-click='updateView("registration-box")'>Create new account</a><br>
   <a ng-click='FBlogin()'>Sign in with Facebook</a><br>
