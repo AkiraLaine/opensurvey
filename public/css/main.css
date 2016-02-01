@@ -581,6 +581,7 @@ h3 {
 .info-section-4 {
 	position:relative;
 	z-index:2;
+	float:left;
 	padding:110px 200px 110px 200px;
 	background:#dbdbdb;
 	width:100%;
@@ -1187,7 +1188,7 @@ canvas{
 }
 
 .data-table {
-	padding:30px 15px 30px 15px;
+	padding:30px 0px 30px 0px;
 }
 .new-survey-tile {
 	float:left;
@@ -2032,7 +2033,8 @@ body.modal-open {
 	border-radius:5px;
 	padding-top:8px;
 	padding-bottom:8px;
-	padding-right:15px;
+	padding-right:30px;
+	padding-left:15px;
 }
 
 
@@ -2099,7 +2101,7 @@ margin-right:auto;
 .dropdown ul li {
   cursor:pointer;
   text-align:center;
-  padding:10px 0px 10px 0px;
+  padding:10px 15px 10px 15px;
   border-bottom:1px solid #ccc;
 }
 .dropdown ul li:hover {
@@ -2107,6 +2109,13 @@ margin-right:auto;
 }
 .dropdown ul li:last-child {
   border-bottom:none;
+}
+
+.modal-content h4{
+	margin:0;
+}
+.modal-content p{
+	color:#333;
 }
 
 .dropdown ul {
@@ -2117,9 +2126,10 @@ margin-right:auto;
   padding:0px;
   list-style:none;
   display:none;
-  width:85%;
   line-height:normal;
   font-size:14px;
+  white-space:nowrap;
+  min-width:85%;
   color:#111;
   margin-left:1px;
   background:#fff;

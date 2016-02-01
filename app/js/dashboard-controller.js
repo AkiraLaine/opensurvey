@@ -152,7 +152,7 @@ var fieldAction = function() {
 	$scope.saveDraft = function(str){
     if (str === 'draft') {
       document.getElementById('save-draft-btn').classList.add('confirmed');
-      document.getElementById('save-draft-btn').innerHTML = '<i class="fa fa-check"></i> Draft saved';
+      document.getElementById('save-draft-btn').innerHTML = '<i class="fa fa-check"></i> Saved';
 
 }
 

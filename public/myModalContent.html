@@ -9,7 +9,7 @@
     </br>
     Question Type:
     <div class='dropdown'>
-      <button class='btn-white' style='margin-top:15px;width:200px'> {{(newQuestion.type) || "Select"}}</button>
+      <button class='btn-white' style='margin-top:15px'> {{(newQuestion.type) || "Select"}}</button>
       <span></span>
       <!-- dont remove, needed for closing the menu !-->
       <ul>
@@ -63,7 +63,7 @@
   <div class='modal-middle' ng-if='newQuestion.type ==="open question"'>
     <h4 ng-bind='newQuestion.name || "Your Question"'></h4>
     </br>
-    <textarea class='full-width' rows='6'></textarea>
+    <textarea class='full-width' rows='6' disabled></textarea>
   </div>
 
   <div ng-if="newQuestion.type === 'numerical scale'"  class='modal-middle'>
