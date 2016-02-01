@@ -228,7 +228,7 @@ a:active,a:link {
 }
 .animated-chart{
 width:0;
-height:445px;
+height:480px;
 top:50px;
 position:absolute;
 right:45px;
@@ -252,7 +252,7 @@ z-index:5;
 }
 
 .chart-expanded {
-	width:665px;
+	width:940px;
 	transition:all 1.5s ease-out;
 }
 .code-line {
@@ -605,6 +605,9 @@ h3 {
 	display:table;
 	text-align:center;
 	font-size:18px;
+    background-image: linear-gradient(#DDC 2px, transparent 2px), linear-gradient(90deg, #ddd 2px, transparent 2px),   linear-gradient(45deg, rgba(255,255,255,.3) 1px, transparent 1px);
+    background-size:75px 75px, 75px 75px, 20px 20px, 20px 20px;
+    background-position:-2px -2px, -2px -2px, -1px -1px, -1px -1px;
 }
 .info-section h1 {
 	margin-bottom:15px;
@@ -2197,6 +2200,7 @@ margin-right:auto;
 	float:right;
 	top:-180px;
 	z-index:0;
+	right:-260px;
 }
 
 
