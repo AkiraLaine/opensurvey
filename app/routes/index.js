@@ -1,7 +1,6 @@
 'use strict';
 
-var ClickHandler = require(process.cwd() + '/app/controllers/clickHandler.server.js');
-   var keys = require(process.cwd()+'/keys.js');
+var keys = require(process.cwd()+'/keys.js');
 var mailgun = require('mailgun-js')({apiKey: mailgunKey, domain: mailgunDomain});
 var mailcomposer = require('mailcomposer');
 module.exports = function (app, db, bcrypt,jwt,request,identicon,fmt) {
@@ -262,7 +261,7 @@ app.route('/login/facebook')
 .post(function(req,res){
   console.log('a facebook login is happening')
   console.log(req.body)
-  var email = req.body.email;
+  var email = req.body.email.toLowerCase();
   var fbid = req.body.id;
   var name = req.body.name;
   var image = req.body.image;
@@ -293,7 +292,7 @@ app.route('/login/facebook')
   app.route('/login')
   .post(function(req,res){
     console.log('trying login...')
-    var email = req.body.email;
+    var email = req.body.email.toLowerCase();
     var password = req.body.password;
     users.find({email:email}).limit(1).toArray(function(err,data){
     if (err) throw err;
@@ -390,13 +389,15 @@ app.route('/api/recover')
 app.route('/restore')
 .post (function(req,res){
   console.log(req.body.email)
-  if (req.body.email === undefined) res.end('user not found')
-  users.find({email:req.body.email}).toArray(function(err,data){
+
+  if (email === undefined) res.end('user not found')
+    var email = req.body.email.toLowerCase();
+  users.find({email:email}).toArray(function(err,data){
   if (data.length === 0) res.end('user not found');
   else {
     console.log(req.body)
   var restoreLink = bcrypt.hashSync(req.body.email,bcrypt.genSaltSync(10));
-  users.update({email:req.body.email},{$set:{restoreLink:restoreLink}});
+  users.update({email:email},{$set:{restoreLink:restoreLink}});
   console.log('sent restore link')
   var mail = mailcomposer({
 from: 'opensurvey <noresonse@opensurveys.org>',

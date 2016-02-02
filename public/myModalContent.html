@@ -7,7 +7,7 @@
     Question:
     <input class="full-width" ng-model='newQuestion.name'></input>
     </br>
-    Question Type:
+    <span class='input-label-vertical'>Question Type:</span>
     <div class='dropdown'>
       <button class='btn-white' style='margin-top:15px'> {{(newQuestion.type) || "Select"}}</button>
       <span></span>
@@ -26,8 +26,8 @@
       <p>A multiple choice question will present the user with several different options to choose from. The question can either be set to only receive one answer or multiple answers. You can enter the different answer options below.</p>
       </br>
       <div ng-repeat="element in newQuestion.options">
-        Option {{element.number}}:
-        <input class='form-control' ng-model='element.value'></input>
+        <span class='input-label-vertical'>Option {{element.number}}:</span>
+        <input ng-model='element.value' class='three-quarter' n></input>
       </div>
       </br>
       <button class='btn btn-default' type="button" ng-click="addField()"><i class='fa fa-plus fa-fw'></i> Add Option</button>
@@ -44,12 +44,16 @@
       <p>A numerical scale enables quantifiable opinions and attitude to an asked questions. The scale will offer a positive and a negative end. </p>
       </br>
       <div>
-        <div class='col-xs-5'>Negative:
-          <input ng-model='newQuestion.rangeOptions.scaleNegative'></input>
-        </div>
-        <div class='col-xs-5'>Positive:
-          <input ng-model='newQuestion.rangeOptions.scalePositive'></input>
-        </div>
+        <div style='display:table'>
+          <div style='display:table-row'>
+        <span class='input-label-vertical' style='display:table-cell'>Negative:</span>
+          <input style='display:table-cell' ng-model='newQuestion.rangeOptions.scaleNegative'></input>
+    </div>
+          <div style='display:table-row'>
+        <span class='input-label-vertical' style='display:table-cell'>Positive:</span>
+          <input style='display:table-cell' ng-model='newQuestion.rangeOptions.scalePositive'></input>
+    </div>
+      </div>
       </div>
       </br>
     </div>
@@ -70,24 +74,46 @@
     <h4 ng-bind='newQuestion.name || "Your Question"'></h4>
     </br>
     <div>
-      <div class='text-align-right'><span ng-bind='newQuestion.rangeOptions.scaleNegative'></span></div>
-      <div>
-        <input type='range' step='1' min='0' max='newQuestion.rangeOptions.max'>
-      </div>
-      <div><span ng-bind='newQuestion.rangeOptions.scalePositive'></span></div>
+			<div class='scale-container'>
+  <span ng-bind='newQuestion.rangeOptions.scaleNegative'></span>
+        <span><input class='scale' type='radio' name='{{question.name}}' value='1' ng-model='answers[question.name]' id='r1'></input>
+        <label class='scale' for="r1"></label></span>
+        <span><input class='scale' type='radio' name='{{question.name}}' value='2' ng-model='answers[question.name]' id='r2'></input>
+          <label class='scale' for="r2"></label></span>
+        <span><input class='scale'type='radio' name='{{question.name}}' value='3' ng-model='answers[question.name]' id='r3'></input>
+          <label class='scale' for="r3"></label></span>
+        <span><input class='scale' type='radio' name='{{question.name}}' value='4' ng-model='answers[question.name]' id='r4'></input>
+          <label class='scale' for="r4"></label></span>
+        <span><input class='scale' type='radio' name='{{question.name}}' value='5' ng-model='answers[question.name]' id='r5'></input>
+          <label class='scale' for="r5"></label></span>
+        <span><input class='scale' type='radio' name='{{question.name}}' value='6' ng-model='answers[question.name]' id='r6'></input>
+          <label class='scale' for="r6"></label></span>
+        <span><input class='scale' type='radio' name='{{question.name}}' value='7' ng-model='answers[question.name]' id='r7'></input>
+          <label class='scale' for="r7"></label></span>
+        <span><input class='scale' type='radio' name='{{question.name}}' value='8' ng-model='answers[question.name]' id='r8'></input>
+          <label class='scale' for="r8"></label></span>
+        <span><input class='scale' type='radio' name='{{question.name}}' value='9' ng-model='answers[question.name]' id='r9'></input>
+          <label class='scale' for="r9"></label></span>
+        <span><input class='scale' type='radio' name='{{question.name}}' value='10' ng-model='answers[question.name]' id='r10'></input>
+          <label class='scale' for="r10"></label></span>
+      </input><span ng-bind='newQuestion.rangeOptions.scalePositive'></span></div>
+		</div>
     </div>
-  </div>
+
 
   <div ng-if="newQuestion.type ==='multiple choice'" class='modal-middle'>
     <h4 ng-bind='newQuestion.name || "Your Question"'></h4>
     </br>
-    <div ng-repeat='element in newQuestion.options'>
+    <div class='multiplechoice-container'>
+    <div ng-repeat='element in newQuestion.options' class='multiplechoice-item'>
+      
+<input class='square' type='radio' name='{{element.name}}' value='{{element.value}}' id='{{element.value}}'></input>
+			<label class='square' for='{{element.value}}'></label><span class='multiplechoice-tag' ng-bind='element.value || "option"'></span></span></span>
 
-      <input type="radio" name='optRadio'>&nbsp;<span ng-bind='element.value === "" ? "Option "+element.number : element.value'></span></input>
-      </br>
-      </br>
+
     </div>
 
+  </div>
   </div>
 
   <div class="modal-footer">

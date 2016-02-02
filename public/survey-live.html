@@ -30,10 +30,10 @@
 </div>
 </span>
     <span ng-if='activeSurvey.filters.income' class='demographic-field-live'>
-           Annual Income: <input type='number' style='height:40px;border-radius:5px; border:1px solid #ccc' ng-model='answers.income'></input>
+           Annual Income: <input type='number' class='income' style='height:40px;border-radius:5px; border:1px solid #ccc' ng-model='answers.income'></input>
           </span>
           <span ng-if='activeSurvey.filters.age'>
-                  Age: <input type='number' style='height:40px;border-radius:5px; border:1px solid #ccc' ng-model='answers.age'></input>
+                  Age: <input type='number' class='age' style='height:40px;border-radius:5px; border:1px solid #ccc' ng-model='answers.age'></input>
                 </span>
 		<div ng-repeat='question in activeSurvey.questions' class='live-question'>
 			<h4 class='live-subheading' ng-bind='question.name'></h4>

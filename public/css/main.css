@@ -404,11 +404,20 @@ h3 {
 .frontpage-content {
 	text-align:left;
 	width:50%;
-				font-size:18px;
+	font-size:18px;
+	z-index:10;
 	line-height:150%;
 	letter-spacing:0.5px;
 	position:relative;
 }
+
+input.age {
+	width:70px;
+}
+input.income {
+	width:120px;
+}
+
 .hero p {
 	line-height:150%;
 	letter-spacing:0.5px;
@@ -711,6 +720,9 @@ color:#8475FF;
 	background:#222;
 	color:#ddd;
 }
+.modal-content input{
+	margin-bottom:20px;
+}
 .alignleft {
 	float:left;
 }
@@ -776,7 +788,7 @@ textarea, textarea.ng-pristine {
 .question-container-live {
 	display:block;
 	box-shadow:2px 2px 15px rgba(0,0,0,0.2);
-	width:60%;
+	width:700px;
 	margin:auto;
 	margin-top:25px;
 	margin-bottom:25px;
@@ -867,7 +879,7 @@ small {
 textarea {
 	box-sizing:border-box;
 	border-radius:5px;
-	padding:20px;
+	padding:15px;
 	font-size:100%;
 	font-family:inherit;
 }
@@ -957,6 +969,9 @@ input:focus {
 .input-label {
 	vertical-align:super;
 }
+.input-label-vertical {
+	padding-right:20px;
+}
 .error-message {
 	padding-top:5px;
 	color:tomato;
@@ -1026,6 +1041,7 @@ canvas{
 .heading-centered {
 	text-align:center;
 }
+
 .half-width {
 	width:50%;
 }
@@ -1391,6 +1407,21 @@ border:none;
 .survey-creation-container p {
 	margin-bottom:25px;
 }
+.multiplechoice-container  > span {
+	margin-left:50px;
+}
+.multiplechoice-item {
+	white-space:nowrap;
+	margin-bottom:20px;
+}
+.multiplechoice-tag {
+	display: inline-block;
+    vertical-align: middle;
+    white-space: normal;
+    word-break:break-word;
+    padding-right: 25px;
+
+}
 .checkbox-creation-container {
 	border:1px solid #ccc;
 	width:80%;
@@ -1528,7 +1559,7 @@ input[type="radio"].scale  + label {
 	width:20px;
 	height:20px;
 
-	margin:0px 10px 0px 10px;
+	margin:0px 5px 0px 5px;
 	text-align:center;
 	vertical-align:middle;
 	background:#fff;
@@ -2034,6 +2065,7 @@ body.modal-open {
 	min-width:120px;
 	border:1px solid #ccc;
 	border-radius:5px;
+	font-size:100%;
 	padding-top:8px;
 	padding-bottom:8px;
 	padding-right:30px;
@@ -2220,6 +2252,7 @@ margin-right:auto;
 	right:0;
 	bottom:8px;
 }
+
 .mobile-menu-button {
 	visibility:hidden;
 }
@@ -2281,9 +2314,6 @@ a {
     	right:-100px;
 			margin-right:-350px;
     }
-    	.question-container-live {
-		width:70%;
-	}
     	.info-section-2 {
 		padding-right:200px;
 	}
@@ -2305,9 +2335,6 @@ a {
 	}
 	.sidebar {
 		display:none;
-	}
-	.question-container-live {
-		width:80%;
 	}
 	.full-container {
 	padding:95px 50px 25px 50px;
