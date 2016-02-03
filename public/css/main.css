@@ -87,6 +87,9 @@ body,html,.container-fluid{
 	z-index:10;
 	transition:all 1s ease;
 }
+.dashboard-content canvas {
+	height:250px !important;
+}
 .mobile-navbar ul {
 	padding:0;
 	position:absolute;
@@ -370,11 +373,11 @@ h2.active {
 
 h2 {
 	font-weight:500;
-	font-size:140%;
+	font-size:120%;
 }
 h3 {
 	font-weight:500;
-	font-size:140%;
+	font-size:120%;
 }
 .progress-bar-steps li:last-child:after {
 	width:0px;
@@ -1325,7 +1328,7 @@ border:none;
 }
 
 .dashboard-tile {
-	min-height:460px;
+
 	display:table;
 	margin-bottom:25px;
 	width:100%;
@@ -1333,7 +1336,6 @@ border:none;
 }
 
 .dashboard-info {
-	font-size:1.1em;
 	line-height:4em;
 	color:#fff;
 	background:#111;
@@ -2018,6 +2020,7 @@ body.modal-open {
 	top:-82px;
 	text-align:center;
 	left:-43px;
+	z-index:5;
 	display:none;
 }
 .stat-icon-overlay:before {

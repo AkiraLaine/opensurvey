@@ -56,11 +56,16 @@
 						<h2> Question {{$index+1}}: <span ng-bind='question.name'></span></h2><br>
 
 						<textarea ng-if='question.type==="open question"' readonly rows='6'></textarea>
+							<div class='multiplechoice-container' ng-if='question.type==="multiple choice"'style='float:left;margin-top:5%'>
+							<div ng-repeat='option in question.options' class='multiplechoice-item'>
 
-						<span class='live-selection' ng-if='question.type==="multiple choice"'style='float:left;margin-top:5%' ng-repeat='option in question.options'>
-									<input name='optRadio' class='square' type='radio' id='{{option.value}}'>
-								</input>	<label for='{{option.value}}' class=square></label>		<span ng-bind='option.value'></span>
-							</span>
+					<input class='square' type='radio' name='{{question.name}}' value='{{option.value}}' id='{{option.value}}'></input>
+								<label class='square' for='{{option.value}}'></label><span class='multiplechoice-tag' ng-bind='option.value || "option"'></span></span></span>
+
+
+							</div>
+
+						</div>
 
 						<div ng-if='question.type==="numerical scale"'>
 										<div class='scale-container' style='float:left;margin-top:5%'>
@@ -107,11 +112,11 @@
 					</p>
 				</div>
 				<div class='question-button-container' ng-class='{"active" : newFormQuestions.length > $index+1}'>
-					<span class='fa-stack fa-fw fa-button'>
+					<span class='fa-stack fa-fw fa-button' ng-click='removeQuestion(question)'>
 						<i class='fa fa-square fa-stack-2x fa-fw danger '></i>
 						<i class='fa fa-times fa-inverse fa-stack-1x fa-fw fa-lg'></i>
 					</span><br>
-					<span class='fa-stack fa-fw fa-button ' ng-click='removeQuestion(question)'>
+					<span class='fa-stack fa-fw fa-button '>
 						<i class='fa fa-square fa-stack-2x fa-fw'></i>
 						<i class='fa fa-pencil fa-inverse fa-stack-1x fa-fw'></i>
 					</span><br>
