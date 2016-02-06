@@ -1,27 +1,30 @@
 {
-  "name": "clementinejs",
-  "version": "1.0.2",
-  "description": "A light-weight MEAN stack boilerplate.",
+  "name": "openesurveys",
+  "version": "0.1.0",
+  "engines": {
+    "node": "5.0.0"
+  },
+  "description": "An open source survey application",
   "main": "server.js",
   "scripts": {
     "start": "gulp"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/johnstonbl01/clementinejs"
+    "url": "git+https://github.com/tbgse/opensurvey/"
   },
-  "homepage": "http://johnstonbl01.github.io/clementinejs/",
-  "bugs": "https://github.com/johnstonbl01/clementinejs/issues",
+  "homepage": "https://github.com/tbgse/opensurvey/",
+  "bugs": "https://github.com/tbgse/opensurvey/issues",
   "keywords": [
-    "MEAN",
-    "MongoDB",
+    "Surveys",
+    "Open",
     "Express",
     "Angular",
     "Node",
     "javascript",
-    "boilerplate"
+    "mongoDB"
   ],
-  "author": "Blake Johnston",
+  "author": "Tobias Guse",
   "license": "MIT",
   "dependencies": {
     "angular-dragula": "^1.2.2",
