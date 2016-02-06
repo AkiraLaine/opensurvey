@@ -13,7 +13,7 @@ module.exports = function (app, db, bcrypt,jwt,request,identicon,fmt) {
 
    app.route('/api/profile')
     .get(function(req,res){
-     jwt.verify(req.headers.authorization,'cookiesandcream',function(err,decoded){
+     jwt.verify(req.headers.authorization,tokenKey,function(err,decoded){
        res.send(decoded)
      })
    })
@@ -67,6 +67,25 @@ res.end();
      console.log('serving file')
 
    })
+   app.route('/legal')
+    .get(function(req,res){
+      res.sendFile(process.cwd() +'/public/disclaimer.html')
+    })
+    app.route('/mailrequest')
+    .post(function(req,res){
+      console.log(req.body)
+      var data = {
+        from: req.body.email,
+        to: 'tobe.guse@gmail.com',
+        subject: req.body.title,
+        text: req.body.message
+      };
+
+      mailgun.messages().send(data, function (error, body) {
+        console.log(error)
+        console.log(body)
+      });
+    })
    app.route('/')
       .get(function (req, res) {
          res.sendFile(process.cwd() + '/public/index.html');
@@ -75,7 +94,7 @@ res.end();
       .post(function(req,res){
         console.log('server has received a draft:')
         console.log(req.body)
-        jwt.verify(req.headers.authorization, 'cookiesandcream', function(err, decoded) {
+        jwt.verify(req.headers.authorization, tokenKey, function(err, decoded) {
           if (err) throw err;
             req.body.email = decoded.email;
 
@@ -112,7 +131,7 @@ res.end();
           res.setHeader('Content-Type','application/json');
           console.log(req.headers)
             if (req.headers.authorization === undefined) {res.sendStatus(401); console.log('draft access denied')}
-            else jwt.verify(req.headers.authorization, 'cookiesandcream', function(err, decoded) {
+            else jwt.verify(req.headers.authorization, tokenKey, function(err, decoded) {
             if (err) res.sendStatus(401);
           drafts.find({'email':decoded.email}).toArray(function(err,data){
               if (err) throw err;
@@ -136,7 +155,7 @@ app.route('/api/survey')
 .get(function(req,res){
   console.log(req.headers)
   var id = req.headers.survey;
-  jwt.verify(req.headers.authorization,'cookiesandcream',function(err,decoded){
+  jwt.verify(req.headers.authorization,tokenKey,function(err,decoded){
     console.log(err)
     console.log(decoded)
     if (err) {res.redirect('/login'); res.end()}
@@ -154,7 +173,7 @@ app.route('/api/survey')
 app.route('/api/active')
 .get(function(req,res){
   if (req.headers.authorization === undefined) {res.sendStatus(401); console.log('draft access denied')}
-  else jwt.verify(req.headers.authorization, 'cookiesandcream', function(err, decoded) {
+  else jwt.verify(req.headers.authorization, tokenKey, function(err, decoded) {
   if (err) res.redirect('/login');
   else {drafts.find({'email':decoded.email, 'published':true}).toArray(function(err,data){
     if (err) throw err;
@@ -184,7 +203,7 @@ app.route('/api/results')
 })
 .get(function(req,res){
   if (req.headers.authorization === undefined) {res.sendStatus(401); console.log('draft access denied')}
-  else jwt.verify(req.headers.authorization, 'cookiesandcream', function(err, decoded) {
+  else jwt.verify(req.headers.authorization, tokenKey, function(err, decoded) {
   if (err) res.sendStatus(401);
   else {answers.find({'email':decoded.email}).toArray(function(err,data){
     if (err) throw err;
@@ -239,7 +258,7 @@ app.route('/api/results')
           console.log('added image');
         }
         if (data[0].password) delete data[0].password;
-        var token = jwt.sign(data[0],'cookiesandcream',{expiresIn:14400});
+        var token = jwt.sign(data[0],tokenKey,{expiresIn:14400});
         console.log('here is your token:')
         console.log(token)
         res.send({
@@ -278,7 +297,7 @@ app.route('/login/facebook')
     console.log('added image');
   }
   if (data[0].password) delete data[0].password;
-  var token = jwt.sign(data[0],'cookiesandcream',{expiresIn:14400});
+  var token = jwt.sign(data[0],tokenKey,{expiresIn:14400});
   console.log('here is your token:')
   console.log(token)
   res.send({
@@ -307,7 +326,7 @@ app.route('/login/facebook')
     else if (bcrypt.compareSync(password,data[0].password)){
     console.log('Successful Login.');
     delete data[0].password;
-    var token = jwt.sign(data[0],'cookiesandcream',{expiresIn:14400});
+    var token = jwt.sign(data[0],tokenKey,{expiresIn:14400});
     res.send({
       success:true,
       message:'your token is ready',
@@ -322,7 +341,7 @@ app.route('/login/facebook')
   app.route('/user')
   .get(function(req,res){
     if (req.headers.authorization === undefined) {res.sendStatus(401); console.log('user access denied')}
-    else jwt.verify(req.headers.authorization, 'cookiesandcream', function(err, decoded) {
+    else jwt.verify(req.headers.authorization, tokenKey, function(err, decoded) {
     if (err) res.sendStatus(401);
     else {users.find({'email':decoded.email}).toArray(function(err,data){
       if (err) throw err;
@@ -489,7 +508,7 @@ mail.build(function(mailBuildError, message) {
     if (req.headers.authorization === undefined) {
       res.redirect('/login')
     }
-    else jwt.verify(req.headers.authorization, 'cookiesandcream', function(err, decoded) {
+    else jwt.verify(req.headers.authorization, tokenKey, function(err, decoded) {
       if (err) res.sendStatus(401);
       else users.find({email: decoded.email}).toArray(function(data){
         if (err) res.sendStatus(401);

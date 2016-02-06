@@ -1,52 +1,60 @@
-<html >
+<html>
 
-   <head>
-      <title>Voting App</title>
-      <script src="/js/angular.js"></script>
-      <script src="/js/angular-animate.js"></script>
-      <script src="/js/survey-live.js"></script>
-      <script src='/js/angular-route.js'></script>
-      <link href="http://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet" type="text/css">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-      <link href="/public/css/main.css" rel="stylesheet" type="text/css">
-      <base href="/">
-   </head>
+<head>
+  <title>Voting App</title>
+  <script src="/js/angular.js"></script>
+  <script src="/js/angular-animate.js"></script>
+  <script src="/js/survey-live.js"></script>
+  <script src='/js/angular-route.js'></script>
+  <link href="http://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link href="/public/css/main.css" rel="stylesheet" type="text/css">
+  <base href="/">
+</head>
 
 
-	<body ng-app='livesurvey' ng-controller='liveCtrl'>
-<div id='thankyou-message' class='thankyou-message'><i class='fa fa-check fa-3x blue'></i><span class='blue'>Your response was sent.</span><br>Thank you for participating.</div>
-		<div class='question-container-live' id='question-container-live'>
-
-		<h1 class='center-heading' ng-bind='activeSurvey.name'></h1>
-		<h4>Demographic Information</h4>
-		<span ng-if='activeSurvey.filters.gender' class='demographic-field-live'>
+<body ng-app='livesurvey' ng-controller='liveCtrl'>
+  <div id='thankyou-message' class='thankyou-message'><i class='fa fa-check fa-3x blue'></i><span class='blue'>Your response was sent.</span>
+    <br>Thank you for participating.</div>
+  <div class='question-container-live' id='question-container-live'>
+    <h1 class='center-heading' ng-bind='activeSurvey.name'></h1>
+    <h4>Demographic Information</h4>
+    <div class='live-question'>
+    <span ng-if='activeSurvey.filters.gender' class='demographic-field-live'>
 		  Gender: 		<div class='dropdown'>
   <button class='btn-white' style='height:40px'><span ng-bind='answers.gender || "Select"'></span></button>
-  <span></span> <!-- dont remove, needed for closing the menu !-->
-  <ul>
-  <li ng-click='setGender("male")'>male</li>
-   <li ng-click='setGender("female")'>female</li>
-  </ul>
-</div>
-</span>
-    <span ng-if='activeSurvey.filters.income' class='demographic-field-live'>
+    <span></span>
+    <!-- dont remove, needed for closing the menu !-->
+    <ul>
+      <li ng-click='setGender("male")'>male</li>
+      <li ng-click='setGender("female")'>female</li>
+    </ul>
+  </div>
+  </span>
+  <span ng-if='activeSurvey.filters.income' class='demographic-field-live'>
            Annual Income: <input type='number' class='income' style='height:40px;border-radius:5px; border:1px solid #ccc' ng-model='answers.income'></input>
           </span>
-          <span ng-if='activeSurvey.filters.age'>
+  <span ng-if='activeSurvey.filters.age'>
                   Age: <input type='number' class='age' style='height:40px;border-radius:5px; border:1px solid #ccc' ng-model='answers.age'></input>
                 </span>
-		<div ng-repeat='question in activeSurvey.questions' class='live-question'>
-			<h4 class='live-subheading' ng-bind='question.name'></h4>
-			<textarea class='answer-box' rows='6' ng-if='question.type==="open question"' ng-model='answers[question.name]'></textarea>
-			<div ng-if='question.type==="multiple choice"'>
-	    <span class='live-selection' ng-repeat='option in question.options'><input class='square' type='radio' name='{{question.name}}' ng-model='answers[question.name]' value='{{option.value}}' id='{{option.value}}'></input>
-			<label class='square' for='{{option.value}}'></label>{{option.value}}</span>
+              </div>
+  <div ng-repeat='question in activeSurvey.questions' class='live-question'>
+    <h4 class='live-subheading' ng-bind='question.name'></h4>
+    <textarea class='answer-box' rows='6' ng-if='question.type==="open question"' ng-model='answers[question.name]'></textarea>
+    <div class='multiplechoice-container' ng-if='question.type==="multiple choice"'>
+      <div ng-repeat='option in question.options' class='multiplechoice-item'>
 
-</div>
-		<div ng-if='question.type==="numerical scale"'>
+        <input class='square' type='radio' name='{{question.name}}' value='{{option.value}}' id='{{option.value}}'></input>
+        <label class='square' for='{{option.value}}'></label><span class='multiplechoice-tag' ng-bind='option.value || "option"'></span></span>
+        </span>
 
-			<div class='scale-container' style='margin:0'>
-        	<span ng-bind='question.rangeOptions.scaleNegative'></span>
+
+      </div>
+
+    </div>
+    <div ng-if='question.type==="numerical scale"'>
+      <div class='scale-container'>
+        <span ng-bind='question.rangeOptions.scaleNegative' style='margin-right:10px'></span>
         <span><input class='scale' type='radio' name='{{question.name}}' value='1' ng-model='answers[question.name]' id='r1'></input>
         <label class='scale' for="r1"></label></span>
         <span><input class='scale' type='radio' name='{{question.name}}' value='2' ng-model='answers[question.name]' id='r2'></input>
@@ -67,25 +75,25 @@
           <label class='scale' for="r9"></label></span>
         <span><input class='scale' type='radio' name='{{question.name}}' value='10' ng-model='answers[question.name]' id='r10'></input>
           <label class='scale' for="r10"></label></span>
-      </input><span ng-bind='question.rangeOptions.scalePositive'></span></div>
-		</div>
-		<div ng-if='question.type==="demographic information"'>
-			<span ng-show='question.fullName'>Full Name:<input class='form-horizontal'></input></span>
-			<span ng-show='question.age'>Age:<input class='form-horizontal' type='number'></input></span>
-			<span ng-show='question.income'>Income:<input class='form-horizontal' type='number' ng-model='answers.income'></input></span>
+        </input><span ng-bind='question.rangeOptions.scalePositive' style='margin-left:10px'></span></div>
+    </div>
+    <div ng-if='question.type==="demographic information"'>
+      <span ng-show='question.fullName'>Full Name:<input class='form-horizontal'></input></span>
+      <span ng-show='question.age'>Age:<input class='form-horizontal' type='number'></input></span>
+      <span ng-show='question.income'>Income:<input class='form-horizontal' type='number' ng-model='answers.income'></input></span>
 
-			<span ng-show='question.gender'>Gender:<input class='form-horizontal' type='text' ng-model='answers.gender'></input></span>
+      <span ng-show='question.gender'>Gender:<input class='form-horizontal' type='text' ng-model='answers.gender'></input></span>
 
-		</div>
-		<div ng-if='question.type==="text paragraph"'>
-			<p><span ng-bind='question.text'></span></p>
-		</div>
+    </div>
+    <div ng-if='question.type==="text paragraph"'>
+      <p><span ng-bind='question.text'></span></p>
+    </div>
 
-	</div>
+  </div>
 
-<button class='btn btn-centered' style='width:300px; height:50px; margin-top:100px' ng-click='submitSurvey(activeSurvey)' ng-if='!submitted'>Submit</button>
-</div>
+  <button class='btn btn-centered' style='width:300px; height:50px; margin-top:100px' ng-click='submitSurvey(activeSurvey)' ng-if='!submitted'>Submit</button>
+  </div>
 
-	</body>
+</body>
 
 </html>

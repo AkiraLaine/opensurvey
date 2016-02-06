@@ -36,7 +36,7 @@ function fadeOut(id,speed){
   function draw(){
 
     if (element.style.opacity <= 0){
-      element.style.visibility = 'hidden';
+      element.style.display = 'none';
     }
       else {
     element.style.opacity -= 0.1;

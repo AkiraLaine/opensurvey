@@ -146,8 +146,10 @@ a:active,a:link {
 	background:url('/public/img/screen.jpg');
 	background-size:cover;
 	background-repeat:no-repeat;
-	height:650px;
+	height:620px;
+	max-width:1080px;
 	width:80%;
+	max-height:800px;
 	position:relative;
 	margin:auto;
 	bottom:0px;
@@ -410,7 +412,6 @@ h3 {
 	font-size:18px;
 	z-index:10;
 	line-height:150%;
-	letter-spacing:0.5px;
 	position:relative;
 }
 
@@ -608,6 +609,9 @@ input.income {
 	text-align:center;
 	font-size:18px;
 }
+.footer a {
+	color:inherit;
+}
 .info-section-3 {
 	position:relative;
 	z-index:2;
@@ -791,7 +795,7 @@ textarea, textarea.ng-pristine {
 .question-container-live {
 	display:block;
 	box-shadow:2px 2px 15px rgba(0,0,0,0.2);
-	width:700px;
+	width:800px;
 	margin:auto;
 	margin-top:25px;
 	margin-bottom:25px;
@@ -800,7 +804,11 @@ textarea, textarea.ng-pristine {
 
 }
 .live-question {
-	margin-bottom:50px;
+	margin-bottom:80px;
+	margin-left:25px;
+}
+.live-question h4 {
+	margin-left:-25px;
 }
 .center-heading {
 	margin-bottom:50px;
@@ -1783,7 +1791,6 @@ input[type="radio"].square + label:hover {
 .scale-container {
 	display: table;
     min-width:200px;
-    margin:auto;
     table-layout: fixed;
 }
 
@@ -1841,6 +1848,7 @@ transition:all .5s ease;
 	font-family:courier;
 	font-size:14px;
 	float:left;
+	margin-bottom:10px;
 	line-height:33px;
 	box-sizing:border-box;
 }
@@ -2006,7 +2014,9 @@ body.modal-open {
 	background:transparent;
 }
 .stat-icon-wrapper {
-	display:inline;
+	display:inline-block;
+	white-space:nowrap;
+	margin-bottom:10px;
 	position:relative;
 }
 .stat-icon-overlay {
@@ -2014,6 +2024,7 @@ body.modal-open {
 	background:#111;
 	color:#fff;
 	width:180px;
+	white-space:normal;
 	min-height:60px;
 	padding:10px;
 	border-radius:10px;
@@ -2390,7 +2401,8 @@ padding:75px 50px 75px 50px;
 		width:100%;
 	}
 	.ui-window {
-		background-size:contain;
+			background:url('/public/img/screen-mobile.jpg');
+			background-size:cover;
 	}
 	.question-image-wrapper {
 		margin-left:-450px;

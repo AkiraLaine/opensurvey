@@ -28,18 +28,31 @@ function randomArrayValue(arr) {
   return (arr[Math.floor(Math.random()*arr.length)])
 }
 
-function getNiceColor(){
-  var colors=['#27ae60','#2980b9','#16a085','#8e44ad','#2c3e50','#e74c3c','#7f8c8d','#e67e22'];
-  var nextColor = colors[(Math.floor(Math.random() * colors.length))]
 
-  return nextColor;
+
+function assignColor(arr,filterArr){
+  var colorsetA = ['#27ae60','#16a085','#2c3e50','#e74c3c','#7f8c8d','#e67e22']
+  var activeColors = [];
+  filterArr.forEach(function(x){
+    activeColors.push(x[3]);
+  });
+  if (arr[1] === 'male') return '#2980b9';
+  if (arr[1] === 'female') return '#8e44ad';
+  if (arr[1] === 'income') {
+  for (var i=0;i<colorsetA.length;i++){
+  if (activeColors.indexOf(colorsetA[i]) < 0){
+    return colorsetA[i];
+  }
+  }
+  return colorsetA[0];
 }
-
-function assignColor(arr){
-  if (arr[1] === 'male') return  randomArrayValue(['#27ae60','#2980b9','#16a085','#8e44ad','#2c3e50','#e74c3c','#7f8c8d','#e67e22']);
-  if (arr[1] === 'female') return randomArrayValue(['#27ae60','#2980b9','#16a085','#8e44ad','#2c3e50','#e74c3c','#7f8c8d','#e67e22']);
-  if (arr[1] === 'income') return randomArrayValue(['#27ae60','#2980b9','#16a085','#8e44ad','#2c3e50','#e74c3c','#7f8c8d','#e67e22']);
-  if (arr[1] === 'age') return randomArrayValue(['#27ae60','#2980b9','#16a085','#8e44ad','#2c3e50','#e74c3c','#7f8c8d','#e67e22']);
+  if (arr[1] === 'age')
+  for (var i=0;i<colorsetA.length;i++){
+  if (activeColors.indexOf(colorsetA[i]) < 0){
+    return colorsetA[i];
+  }
+  }
+  return colorsetA[0];
 }
 
 function fadeOut(id,speed){
@@ -375,12 +388,12 @@ app.directive('barGraph',function(){
 			scope.lowestResultPercent = (results.min()/scope.obj.length*100).toFixed(2);
 			scope.$watch('filter[num]',function(newThing,oldThing){
 				if (newThing !== undefined){
-              var nextColor = assignColor(newThing)
+        var nextColor = assignColor(newThing,scope.activeFilters)
 				var result = countArrayStrings(newThing[0],labels)
 				var newDataset = {
 					label: "Women",
 					fillColor: nextColor,
-					highlightFill: "rgba(92,155,204,0.5)",
+					highlightFill: nextColor,
 					data: result,
 				}
           myNewChart.options.barValueSpacing += 5;
@@ -501,11 +514,11 @@ app.directive('numericalGraph',function(){
   scope.$watch('filter[num]',function(newThing,oldThing){
 
     if (newThing !== undefined){
-  var nextColor = assignColor(newThing)
+  var nextColor = assignColor(newThing,scope.activeFilters)
       var result = countArrayStrings(newThing[0],labels)
       var newDataset = {
         fillColor: nextColor,
-        highlightFill: "rgba(92,155,204,0.5)",
+        highlightFill: nextColor,
         strokeColor: nextColor,
         data: result,
       }

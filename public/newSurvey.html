@@ -56,7 +56,7 @@
 						<h2> Question {{$index+1}}: <span ng-bind='question.name'></span></h2><br>
 
 						<textarea ng-if='question.type==="open question"' readonly rows='6'></textarea>
-							<div class='multiplechoice-container' ng-if='question.type==="multiple choice"'style='float:left;margin-top:5%'>
+							<div class='multiplechoice-container' ng-if='question.type==="multiple choice"'style='margin-top:10px'>
 							<div ng-repeat='option in question.options' class='multiplechoice-item'>
 
 					<input class='square' type='radio' name='{{question.name}}' value='{{option.value}}' id='{{option.value}}'></input>
@@ -68,7 +68,7 @@
 						</div>
 
 						<div ng-if='question.type==="numerical scale"'>
-										<div class='scale-container' style='float:left;margin-top:5%'>
+										<div class='scale-container' style='float:left;margin-top:10px'>
 					        	<span ng-bind='question.rangeOptions.scaleNegative'></span>
 					        <span><input class='scale' type='radio' name='{{question.name}}' value='1' ng-model='answers[question.name]' id='r1'></input>
 					        <label class='scale' for="r1"></label></span>
