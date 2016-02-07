@@ -18,11 +18,11 @@
 		<div class='dropdown'>
   <button class='btn-white' ng-if='questiontype !== "open question"'>Add filter</button>
   <span></span> <!-- dont remove, needed for closing the menu !-->
-  <ul>
-<li ng-click='overlay("gender")'>Gender</li>
-				<li ng-click='overlay("income")'>Income</li>
-				<li ng-click='overlay("age")'>Age</li>
-  </ul>
+  <div class='dropdown-container'>
+<a ng-click='overlay("gender")'>Gender</a>
+				<a ng-click='overlay("income")'>Income</a>
+				<a ng-click='overlay("age")'>Age</a>
+  </div>
 
 </div>
 		</div>

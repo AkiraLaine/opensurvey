@@ -12,12 +12,12 @@
       <button class='btn-white' style='margin-top:15px'> {{(newQuestion.type) || "Select"}}</button>
       <span></span>
       <!-- dont remove, needed for closing the menu !-->
-      <ul>
-        <li ng-click="newQuestion.type = 'open question'">open question</li>
-        <li ng-click="newQuestion.type = 'multiple choice'">multiple choice</li>
-        <li ng-click="newQuestion.type = 'numerical scale'">numerical scale</li>
-        <li ng-click="newQuestion.type = 'text paragraph'">text paragraph</li>
-      </ul>
+      <div class='dropdown-container'>
+        <a ng-click="newQuestion.type = 'open question'">open question</a>
+        <a ng-click="newQuestion.type = 'multiple choice'">multiple choice</a>
+        <a ng-click="newQuestion.type = 'numerical scale'">numerical scale</a>
+        <a ng-click="newQuestion.type = 'text paragraph'">text paragraph</a>
+      </div>
     </div>
     </br>
     </br>
@@ -106,7 +106,7 @@
     </br>
     <div class='multiplechoice-container'>
     <div ng-repeat='element in newQuestion.options' class='multiplechoice-item'>
-      
+
 <input class='square' type='radio' name='{{element.name}}' value='{{element.value}}' id='{{element.value}}'></input>
 			<label class='square' for='{{element.value}}'></label><span class='multiplechoice-tag' ng-bind='element.value || "option"'></span></span></span>
 

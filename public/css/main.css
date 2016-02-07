@@ -2259,7 +2259,9 @@ margin-right:auto;
 .dropdown button:focus ~ .dropdown-container{
   visibility:visible;
 }
-
+.dropdown button:active ~ .dropdown-container{
+  visibility:visible;
+}
 
 .dropdown button:focus {
   outline:none;
