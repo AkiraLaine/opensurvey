@@ -1,6 +1,6 @@
 'use strict';
 
-var keys = require(process.cwd()+'/keys.js');
+//var keys = require(process.cwd()+'/keys.js');
 var mailgun = require('mailgun-js')({apiKey: mailgunKey, domain: mailgunDomain});
 var mailcomposer = require('mailcomposer');
 module.exports = function (app, db, bcrypt,jwt,request,identicon,fmt) {
