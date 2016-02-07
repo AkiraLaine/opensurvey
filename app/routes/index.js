@@ -288,15 +288,17 @@ app.route('/login/facebook')
   if (data[0] === undefined){
   console.log('no existing user found, creating new user');
   users.insert({fbid:fbid, name:name, email:email, imageMd:image},function(err,data){
-  console.log('user creation successful')
-  var token = jwt.sign(fbid,process.env.tokenKey,{expiresIn:14400});
-  console.log('here is your token:')
-  console.log(token)
-  res.send({
-    success:true,
-    message:'your token is ready',
-    token: token
-  });
+  console.log('user creation succcessful')
+  users.find({email:email}).limit(1).toArray(function(err,data){
+    var token = jwt.sign(data[0],process.env.tokenKey,{expiresIn:14400});
+    console.log('here is your token:')
+    console.log(token)
+    res.send({
+      success:true,
+      message:'your token is ready',
+      token: token
+    });
+  })
   })
   }
   else {
