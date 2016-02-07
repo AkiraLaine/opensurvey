@@ -550,16 +550,21 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$wi
 			},15)
 		}
 	}
+  var scroll = 0;
 	window.onscroll = function() {
-		if (document.body.scrollTop > 0 && !document.getElementById('navbar').classList.contains('stick')) {
-						document.getElementById('navbar').classList.remove('top-navbar');
+    if (document.body.scrollTop > document.documentElement.scrollTop){
+      console.log(document.body.scrollTop)
+      scroll = document.body.scrollTop;
+    }
+    else {
+      scroll = document.documentElement.scrollTop;
+      console.log(scroll)
+    }
+		if (scroll > 0  && !document.getElementById('navbar').classList.contains('stick')) {
 			document.getElementById('navbar').classList.add('stick');
-
 		}
-		if (document.body.scrollTop < 5 && !document.getElementById('navbar').classList.contains('top-navbar')) {
-						document.getElementById('navbar').classList.add('top-navbar');
+		if (scroll < 5 && document.getElementById('navbar').classList.contains('stick')) {
 			document.getElementById('navbar').classList.remove('stick');
-//animate();
 		}
 
 		if (document.body.scrollTop >= document.getElementById('lineCharts').offsetTop-300 && !section3){

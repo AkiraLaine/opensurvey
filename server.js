@@ -1,5 +1,5 @@
 'use strict';
-
+var keys = require(process.cwd()+'/keys.js');
 var express = require('express');
 var mongo = require('mongodb');
 var bodyParser = require('body-parser');
@@ -15,7 +15,7 @@ mongo.connect(process.env.MONGOLAB_URI, function (err, db) {
    if (err) {
       throw new Error('Database failed to connect!');
    } else {
-      console.log('Successfully connected to MongoDB on port 27017.');
+      console.log('Successfully connected to MongoDB.');
    }
 
    app.use(bodyParser.urlencoded({extended:false}));

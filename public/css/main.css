@@ -47,8 +47,8 @@ body,html,.container-fluid{
 	text-align:center;
 	z-index:2;
 }
-.stick {
-	position:fixed;
+.top-navbar.stick {
+		position:fixed;
 	 top: 0;
 	 z-index:100;
 	 background:#111;
@@ -144,7 +144,6 @@ a:active,a:link {
 	font-family:Oxygen;
 	background-image: linear-gradient(#7766EE,30%,#662288);
 	background-image: linear-gradient(to bottom,#7766EE,#662288);
-
 		background-image: -webkit-linear-gradient(#7766EE,30%,#662288);
 	background-size:cover;
 	height:100%;
