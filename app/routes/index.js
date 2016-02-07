@@ -1,7 +1,7 @@
 'use strict';
 
 //var keys = require(process.cwd()+'/keys.js');
-var mailgun = require('mailgun-js')({apiKey: process.env.mailgunKey, domain: mailgunDomain});
+var mailgun = require('mailgun-js')({apiKey: process.env.mailgunKey, domain: process.env.mailgunDomain});
 var mailcomposer = require('mailcomposer');
 module.exports = function (app, db, bcrypt,jwt,request,identicon,fmt) {
 
@@ -13,7 +13,7 @@ module.exports = function (app, db, bcrypt,jwt,request,identicon,fmt) {
 
    app.route('/api/profile')
     .get(function(req,res){
-     jwt.verify(req.headers.authorization,tokenKey,function(err,decoded){
+     jwt.verify(req.headers.authorization,process.env.tokenKey,function(err,decoded){
        res.send(decoded)
      })
    })
@@ -94,7 +94,7 @@ res.end();
       .post(function(req,res){
         console.log('server has received a draft:')
         console.log(req.body)
-        jwt.verify(req.headers.authorization, tokenKey, function(err, decoded) {
+        jwt.verify(req.headers.authorization, process.env.tokenKey, function(err, decoded) {
           if (err) throw err;
             req.body.email = decoded.email;
 
@@ -131,7 +131,7 @@ res.end();
           res.setHeader('Content-Type','application/json');
           console.log(req.headers)
             if (req.headers.authorization === undefined) {res.sendStatus(401); console.log('draft access denied')}
-            else jwt.verify(req.headers.authorization, tokenKey, function(err, decoded) {
+            else jwt.verify(req.headers.authorization, process.env.tokenKey, function(err, decoded) {
             if (err) res.sendStatus(401);
           drafts.find({'email':decoded.email}).toArray(function(err,data){
               if (err) throw err;
@@ -155,7 +155,7 @@ app.route('/api/survey')
 .get(function(req,res){
   console.log(req.headers)
   var id = req.headers.survey;
-  jwt.verify(req.headers.authorization,tokenKey,function(err,decoded){
+  jwt.verify(req.headers.authorization,process.env.tokenKey,function(err,decoded){
     console.log(err)
     console.log(decoded)
     if (err) {res.redirect('/login'); res.end()}
@@ -173,7 +173,7 @@ app.route('/api/survey')
 app.route('/api/active')
 .get(function(req,res){
   if (req.headers.authorization === undefined) {res.sendStatus(401); console.log('draft access denied')}
-  else jwt.verify(req.headers.authorization, tokenKey, function(err, decoded) {
+  else jwt.verify(req.headers.authorization, process.env.tokenKey, function(err, decoded) {
   if (err) res.redirect('/login');
   else {drafts.find({'email':decoded.email, 'published':true}).toArray(function(err,data){
     if (err) throw err;
@@ -203,7 +203,7 @@ app.route('/api/results')
 })
 .get(function(req,res){
   if (req.headers.authorization === undefined) {res.sendStatus(401); console.log('draft access denied')}
-  else jwt.verify(req.headers.authorization, tokenKey, function(err, decoded) {
+  else jwt.verify(req.headers.authorization, process.env.tokenKey, function(err, decoded) {
   if (err) res.sendStatus(401);
   else {answers.find({'email':decoded.email}).toArray(function(err,data){
     if (err) throw err;
@@ -222,7 +222,7 @@ app.route('/api/results')
   app.route('/login/github')
   .get(function(req,res){
   console.log('received a github login')
-  request.post('https://github.com/login/oauth/access_token?client_id=f0ccba6a396af395540f&client_secret='+githubSecret+'&code='+req.query.code) ///use main function with body instead.
+  request.post('https://github.com/login/oauth/access_token?client_id=f0ccba6a396af395540f&client_secret='+process.env.githubSecret+'&code='+req.query.code) ///use main function with body instead.
   .on('data', function(data) {
     console.log(data)
     console.log('decoded chunk: ' + data)
@@ -258,7 +258,7 @@ app.route('/api/results')
           console.log('added image');
         }
         if (data[0].password) delete data[0].password;
-        var token = jwt.sign(data[0],tokenKey,{expiresIn:14400});
+        var token = jwt.sign(data[0],process.env.tokenKey,{expiresIn:14400});
         console.log('here is your token:')
         console.log(token)
         res.send({
@@ -297,7 +297,7 @@ app.route('/login/facebook')
     console.log('added image');
   }
   if (data[0].password) delete data[0].password;
-  var token = jwt.sign(data[0],tokenKey,{expiresIn:14400});
+  var token = jwt.sign(data[0],process.env.tokenKey,{expiresIn:14400});
   console.log('here is your token:')
   console.log(token)
   res.send({
@@ -326,7 +326,7 @@ app.route('/login/facebook')
     else if (bcrypt.compareSync(password,data[0].password)){
     console.log('Successful Login.');
     delete data[0].password;
-    var token = jwt.sign(data[0],tokenKey,{expiresIn:14400});
+    var token = jwt.sign(data[0],process.env.tokenKey,{expiresIn:14400});
     res.send({
       success:true,
       message:'your token is ready',
@@ -341,7 +341,7 @@ app.route('/login/facebook')
   app.route('/user')
   .get(function(req,res){
     if (req.headers.authorization === undefined) {res.sendStatus(401); console.log('user access denied')}
-    else jwt.verify(req.headers.authorization, tokenKey, function(err, decoded) {
+    else jwt.verify(req.headers.authorization, process.env.tokenKey, function(err, decoded) {
     if (err) res.sendStatus(401);
     else {users.find({'email':decoded.email}).toArray(function(err,data){
       if (err) throw err;
@@ -432,7 +432,7 @@ var dataToSend = {
     to: 'tobe.guse@gmail.com',
     message: message.toString('ascii')
 };
-dataToSend.message = dataToSend.message.replace(/###confirmation.link###/g,address +'/restore?code&#61;'+restoreLink)
+dataToSend.message = dataToSend.message.replace(/###confirmation.link###/g,process.env.address +'/restore?code&#61;'+restoreLink)
 console.log(dataToSend.message)
 mailgun.messages().sendMime(dataToSend, function (sendError, body) {
     if (sendError) {
@@ -465,7 +465,7 @@ mailgun.messages().sendMime(dataToSend, function (sendError, body) {
       var mail = mailcomposer({
   from: 'opensurvey <noresonse@opensurveys.org>',
   to: 'tobe.guse@gmail.com',
-  subject: 'Test email subject',
+  subject: 'Welcome to opensurvey',
   body: 'Test email text',
   html: {path: process.cwd() +'/public/email/welcome.html'}
 });
@@ -476,7 +476,7 @@ mail.build(function(mailBuildError, message) {
         to: 'tobe.guse@gmail.com',
         message: message.toString('ascii')
     };
- dataToSend.message = dataToSend.message.replace(/###confirmation.link###/g,address +'/validate?code&#61;'+confirmationLink).replace(/###user.name###/g,name)
+ dataToSend.message = dataToSend.message.replace(/###confirmation.link###/g,process.env.address +'/validate?code&#61;'+confirmationLink).replace(/###user.name###/g,name)
  console.log(dataToSend.message)
     mailgun.messages().sendMime(dataToSend, function (sendError, body) {
         if (sendError) {
@@ -508,7 +508,7 @@ mail.build(function(mailBuildError, message) {
     if (req.headers.authorization === undefined) {
       res.redirect('/login')
     }
-    else jwt.verify(req.headers.authorization, tokenKey, function(err, decoded) {
+    else jwt.verify(req.headers.authorization, process.env.tokenKey, function(err, decoded) {
       if (err) res.sendStatus(401);
       else users.find({email: decoded.email}).toArray(function(data){
         if (err) res.sendStatus(401);
