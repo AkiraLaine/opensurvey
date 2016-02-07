@@ -536,7 +536,7 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$wi
 	$scope.scrollPage = function(id){
 		var elm = document.getElementById(id);
 
-		var counter = init;
+
     var measurement = 0;
     if (document.body.scrollTop > document.documentElement.scrollTop) {
       measurement = document.body.scrollTop;
@@ -545,8 +545,12 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$wi
       measurement = document.documentElement.scrollTop;
     }
     var init = measurement;
+    var counter = init;
+    console.log('initiating scroll at '+init)
+    console.log('needing to scroll to '+elm.offsetTop)
 		if (elm.offsetTop > measurement) {
 			var scrollAmount = elm.offsetTop - measurement;
+      console.log('scrolling for '+scrollAmount+' px')
 			var scrollInterval = setInterval(function(){
 				window.scroll(0,counter)
 				counter += Math.max(20,scrollAmount/50);
