@@ -142,8 +142,10 @@ a:active,a:link {
 }
 .hero {
 	font-family:Oxygen;
-	background-image: -webkit-linear-gradient(#7766EE,30%,#662288);
 	background-image: linear-gradient(#7766EE,30%,#662288);
+	background-image: linear-gradient(to bottom,#7766EE,30%,#662288);
+
+		background-image: -webkit-linear-gradient(#7766EE,30%,#662288);
 	background-size:cover;
 	height:100%;
 	width:100%;
