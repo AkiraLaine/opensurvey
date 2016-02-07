@@ -535,7 +535,7 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$wi
 
 	$scope.scrollPage = function(id){
 		var elm = document.getElementById(id);
-		var init = document.body.scrollTop;
+
 		var counter = init;
     var measurement = 0;
     if (document.body.scrollTop > document.documentElement.scrollTop) {
@@ -544,6 +544,7 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$wi
     else {
       measurement = document.documentElement.scrollTop;
     }
+    var init = measurement;
 		if (elm.offsetTop > measurement) {
 			var scrollAmount = elm.offsetTop - measurement;
 			var scrollInterval = setInterval(function(){
