@@ -567,14 +567,14 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$wi
 			document.getElementById('navbar').classList.remove('stick');
 		}
 
-		if (document.body.scrollTop >= document.getElementById('lineCharts').offsetTop-300 && !section3){
+		if (scroll >= document.getElementById('lineCharts').offsetTop-300 && !section3){
 			document.getElementById('chartBlue').classList.add('chart-expanded');
 			window.setTimeout(function(){
 					document.getElementById('chartOrange').classList.add('chart-expanded');
 			},1000)
 			section3 = true;
 		}
-		if (document.body.scrollTop >= document.getElementById('questionChoice').offsetTop-400 && !section2) {
+		if (scroll >= document.getElementById('questionChoice').offsetTop-400 && !section2) {
 					fadeIn(document.getElementById('question-image-wrapper').children[0],40);
 					window.setTimeout(function(){
 						fadeIn(document.getElementById('question-image-wrapper').children[1],40);
@@ -584,7 +584,7 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$wi
 					},400);
 					section2 = true;
 	}
-	if (document.body.scrollTop >= document.getElementById('dashboardInfo').offsetTop-220 && !document.getElementById('dashboard-window').classList.contains('dashboard-window-expanded')){
+	if (scroll >= document.getElementById('dashboardInfo').offsetTop-220 && !document.getElementById('dashboard-window').classList.contains('dashboard-window-expanded')){
 		fadeIn('dashboard-window')
 		document.getElementById('dashboard-window').classList.add('dashboard-window-expanded');
 		document.getElementById('dashboard-text').classList.add('active')

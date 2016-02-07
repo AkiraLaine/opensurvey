@@ -25,10 +25,10 @@
   <button class='btn-white' style='height:40px'><span ng-bind='answers.gender || "Select"'></span></button>
     <span></span>
     <!-- dont remove, needed for closing the menu !-->
-    <ul>
-      <li ng-click='setGender("male")'>male</li>
-      <li ng-click='setGender("female")'>female</li>
-    </ul>
+    <div class='dropdown-container'>
+      <a ng-click='setGender("male")'>male</a>
+      <a ng-click='setGender("female")'>female</a>
+    </div>
   </div>
   </span>
   <span ng-if='activeSurvey.filters.income' class='demographic-field-live'>

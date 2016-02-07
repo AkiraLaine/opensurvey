@@ -313,12 +313,14 @@ z-index:5;
 	color:#ccc;
 	position:relative;
  line-height:58px;
+ z-index:5;
 }
 .survey-creation-container {
 height:25%;
 padding:20px 0 40px 0;
 width:100%;
-display:table
+display:table;
+position:relative;
 }
 
 
@@ -336,12 +338,10 @@ display:table
 .progress-icon.question-icon:before {
 	content:"\f086";
 }
-.progress-icon.endicon:after {
+.progress-line.endicon {
 	height:0px;
 }
-.progress-icon.qendicon:after {
-	height:70%;
-}
+
 .progress-icon:before{
 	content:counter(step);
 font-family: FontAwesome;
@@ -365,14 +365,13 @@ font-family: FontAwesome;
 	-webkit-transition: all .5s;
 	transition:all .5s;
 }
-.progress-icon.active:after {
+.progress-line.active{
 	background:#5C9BCC;
 	-webkit-transition: background .5s;
 	transition:background .5s;
 }
 
-
-.progress-icon:after {
+.progress-line {
 	top:60px;
 	position:absolute;
 	content:'';
@@ -381,6 +380,7 @@ font-family: FontAwesome;
 	width:2px;
 	background:#ccc;
 }
+
 h2.active {
 	-webkit-transition: color .5s;
 	transition:color .5s;
@@ -2207,13 +2207,14 @@ margin-right:auto;
 	right:15px;
 	left:auto;
 }
-.dropdown ul li {
+.dropdown-container a {
   cursor:pointer;
   text-align:center;
   padding:10px 15px 10px 15px;
+	display:block;
   border-bottom:1px solid #ccc;
 }
-.dropdown ul li:hover {
+.dropdown-container a:hover {
   background:#eef;
 }
 .dropdown ul li:last-child {
@@ -2227,14 +2228,15 @@ margin-right:auto;
 	color:#333;
 }
 
-.dropdown ul {
+.dropdown-container {
   box-shadow:1px 1px 6px 0px rgba(0,0,0,0.2);
   left:0;
   border:1px solid #ccc;
   border-radius:5px;
   padding:0px;
   list-style:none;
-  display:none;
+  visibility:hidden;
+	display:block;
   line-height:normal;
   font-size:14px;
   white-space:nowrap;
@@ -2246,12 +2248,16 @@ margin-right:auto;
   position:absolute;
   z-index:2;
 }
-.dropdown ul:active {
-  display:block;
-}
-.dropdown button:focus ~ ul{
-  display:block;
 
+
+.dropdown-container a:active {
+  visibility:visible;
+	background:transparent;
+	color:transparent;
+	border:none;
+}
+.dropdown button:focus ~ .dropdown-container{
+  visibility:visible;
 }
 
 

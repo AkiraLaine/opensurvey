@@ -7,6 +7,7 @@ app.controller('liveCtrl',function($scope,$window,$http){
       console.log(data)
 		$scope.answers = {};
 		$scope.setGender = function(str){
+			console.log('setting something')
 			$scope.answers.gender = str;
 		}
 			$scope.activeSurvey = data.data;
