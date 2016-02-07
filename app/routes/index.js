@@ -249,7 +249,14 @@ app.route('/api/results')
         users.find({email:email}).limit(1).toArray(function(err,data){
         if (data[0] === undefined){
         console.log('no existing user found, creating new user');
-        users.insert({githubId:githubId, name:name, email:email, imageMd:image})
+        users.insert({githubId:githubId, name:name, email:email, imageMd:image},function(err,data){
+          var token = jwt.sign(email,process.env.tokenKey,{expiresIn:14400});
+          res.send({
+            success:true,
+            message:'your token is ready',
+            token: token
+          });
+        })
         }
         else {
         console.log('user found!')
