@@ -537,16 +537,23 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$wi
 		var elm = document.getElementById(id);
 		var init = document.body.scrollTop;
 		var counter = init;
-		if (elm.offsetTop > document.body.scrollTop) {
-			var scrollAmount = elm.offsetTop - document.body.scrollTop;
+    var measurement = 0;
+    if (document.body.scrollTop > document.documentElement.scrollTop) {
+      measurement = document.body.scrollTop;
+    }
+    else {
+      measurement = document.documentElement.scrollTop;
+    }
+		if (elm.offsetTop > measurement) {
+			var scrollAmount = elm.offsetTop - measurement;
 			var scrollInterval = setInterval(function(){
 				window.scroll(0,counter)
 				counter += Math.max(20,scrollAmount/50);
 				if (counter >= init+scrollAmount) clearInterval(scrollInterval);
 				},15)
 			}
-		else if (elm.offsetTop < document.body.scrollTop) {
-			var scrollAmount = document.body.scrollTop-elm.offsetTop;
+		else if (elm.offsetTop < measurement) {
+			var scrollAmount = measurement-elm.offsetTop;
 			console.log(scrollAmount)
 			var scrollInterval = setInterval(function(){
 				window.scroll(0,counter)
@@ -563,7 +570,6 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$wi
     }
     else {
       scroll = document.documentElement.scrollTop;
-      console.log(scroll)
     }
 		if (scroll > 0  && !document.getElementById('navbar').classList.contains('stick')) {
 			document.getElementById('navbar').classList.add('stick');
