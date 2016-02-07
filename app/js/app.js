@@ -762,9 +762,12 @@ window.onscroll = null;
 		 FB.login(function(response){
 			 if (response.status === 'connected'){
          FB.api('/me/picture', {type:'normal'},function(res){
+           console.log(res.data)
            FB.api('/me', {fields:'email,name'},function(response) {
              response.image = res.data.url;
            $http.post('/login/facebook',response).then(function(data){
+             console.log('facebook login success')
+             console.log(data.data)
              $window.localStorage.token = data.data.token;
              $location.path('/dashboard')
            })

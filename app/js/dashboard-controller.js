@@ -437,17 +437,22 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$wi
 		 fjs.parentNode.insertBefore(js, fjs);
 	 }(document, 'script', 'facebook-jssdk'));
 
-	 $scope.FBlogin = function(){
+   $scope.FBlogin = function(){
 		 FB.login(function(response){
 			 if (response.status === 'connected'){
-				 FB.api('/me', {fields:'email,name'},function(response) {
-					 console.log(response)
-				 $http.post('/login/facebook',response).then(function(data){
-					 console.log(data.data.token)
-					 $window.localStorage.token = data.data.token;
-					 $location.path('/dashboard')
-				 })
-		 })
+         FB.api('/me/picture', {type:'normal'},function(res){
+           console.log(res.data)
+           FB.api('/me', {fields:'email,name'},function(response) {
+             response.image = res.data.url;
+           $http.post('/login/facebook',response).then(function(data){
+             console.log('facebook login success')
+             console.log(data.data)
+             $window.localStorage.token = data.data.token;
+             $location.path('/dashboard')
+           })
+       })
+         })
+
 			 }
 
 		 },{scope:'email'});
