@@ -249,14 +249,7 @@ app.route('/api/results')
         users.find({email:email}).limit(1).toArray(function(err,data){
         if (data[0] === undefined){
         console.log('no existing user found, creating new user');
-        users.insert({githubId:githubId, name:name, email:email, imageMd:image},function(err,data){
-          var token = jwt.sign(email,process.env.tokenKey,{expiresIn:14400});
-          res.send({
-            success:true,
-            message:'your token is ready',
-            token: token
-          });
-        })
+        users.insert({githubId:githubId, name:name, email:email, imageMd:image})
         }
         else {
         console.log('user found!')
@@ -294,7 +287,17 @@ app.route('/login/facebook')
   users.find({email:email}).limit(1).toArray(function(err,data){
   if (data[0] === undefined){
   console.log('no existing user found, creating new user');
-  users.insert({fbid:fbid, name:name, email:email, imageMd:image})
+  users.insert({fbid:fbid, name:name, email:email, imageMd:image},function(err,data){
+  console.log('user creation successful')
+  var token = jwt.sign(fbid,process.env.tokenKey,{expiresIn:14400});
+  console.log('here is your token:')
+  console.log(token)
+  res.send({
+    success:true,
+    message:'your token is ready',
+    token: token
+  });
+  })
   }
   else {
   console.log('user found!')
