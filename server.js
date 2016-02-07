@@ -10,7 +10,7 @@ var bcrypt = require('bcrypt-nodejs');
 var jwt = require('jsonwebtoken');
 var identicon = require('identicon-github');
 var fmt = require('util').format;
-mongo.connect('mongodb://localhost:27017/clementinejs', function (err, db) {
+mongo.connect(process.env.MONGOLAB_URI, function (err, db) {
 
    if (err) {
       throw new Error('Database failed to connect!');
