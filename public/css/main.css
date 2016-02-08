@@ -341,7 +341,9 @@ position:relative;
 .progress-line.qendicon {
 	height:70%;
 }
-
+.progress-line.endicon {
+	height:0px;
+}
 .progress-icon:before{
 	content:counter(step);
 font-family: FontAwesome;
