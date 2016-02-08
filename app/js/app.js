@@ -58,7 +58,6 @@ function assignColor(arr,filterArr){
 function fadeOut(id,speed){
   var element = document.getElementById(id)
   element.style.opacity = 1;
-  draw();
   function draw(){
 
     if (element.style.opacity <= 0){
@@ -70,6 +69,7 @@ function fadeOut(id,speed){
     requestAnimationFrame(draw)
       }
 }
+  draw();
 }
 
 function fadeIn(id,speed){
@@ -82,7 +82,7 @@ function fadeIn(id,speed){
   var counter = 0;
   element.style.opacity = 0;
   element.style.visibility = 'visible';
-  draw();
+
   function draw(){
   	counter += 0.1;
   element.style.opacity = counter;
@@ -90,7 +90,7 @@ function fadeIn(id,speed){
   requestAnimationFrame(draw)
   }
   }
-
+  draw();
 }
 }
 function weeklyView(data) {
