@@ -482,7 +482,7 @@ angular.module('votingapp').controller('frontpageCtrl',function($scope,$http,$wi
 
 					document.getElementById('hero-box-overlay').classList.add('overlay-expanded');
 					window.setTimeout(function(){
-						document.getElementById('hero-box-overlay').innerHTML='<h2>Welcome!</h2><span class="hero-box-overlay-text" id="hero-box-overlay-text">We have sent you a confirmation email to make sure you will be able to receive notifications survey responses and to enable you to reset your password in the future. <br><br>After you have clicked on the confirmation link in the email, you will be able to login to your dashboard and create your first survey.<br><br>Not received your email? <a href="#">Click here</a> and we will send it again.</span>'
+						document.getElementById('hero-box-overlay').innerHTML='<h2>Welcome!</h2><br><span class="hero-box-overlay-text" id="hero-box-overlay-text">We have sent you a confirmation email to make sure you will be able to receive notifications survey responses and to enable you to reset your password in the future. <br><br>After you have clicked on the confirmation link in the email, you will be able to login to your dashboard and create your first survey.<br><br>Not received your email? <a href="#" class="blue">Click here</a> and we will send it again.</span>'
 					},200)
 					window.setTimeout(function(){
 						document.getElementById('hero-box-overlay-text').classList.add('fadein')
