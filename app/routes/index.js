@@ -432,7 +432,7 @@ app.route('/restore')
   console.log('sent restore link')
   var mail = mailcomposer({
 from: 'opensurvey <noresonse@opensurveys.org>',
-to: 'tobe.guse@gmail.com',
+to: email,
 subject: 'Reset your opensurvey password',
 body: '',
 html: {path: process.cwd() +'/public/email/recover.html'}
@@ -441,7 +441,7 @@ html: {path: process.cwd() +'/public/email/recover.html'}
 mail.build(function(mailBuildError, message) {
 
 var dataToSend = {
-    to: 'tobe.guse@gmail.com',
+    to: email,
     message: message.toString('ascii')
 };
 dataToSend.message = dataToSend.message.replace(/###confirmation.link###/g,process.env.address +'/restore?code&#61;'+restoreLink)
@@ -476,7 +476,7 @@ mailgun.messages().sendMime(dataToSend, function (sendError, body) {
       users.insert({email: email, name:name, password:hash,confirmationLink:confirmationLink, avatar:avatar, activated:false});
       var mail = mailcomposer({
   from: 'opensurvey <noresonse@opensurveys.org>',
-  to: 'tobe.guse@gmail.com',
+  to: email,
   subject: 'Welcome to opensurvey',
   body: 'Test email text',
   html: {path: process.cwd() +'/public/email/welcome.html'}
@@ -485,7 +485,7 @@ mailgun.messages().sendMime(dataToSend, function (sendError, body) {
 mail.build(function(mailBuildError, message) {
 
     var dataToSend = {
-        to: 'tobe.guse@gmail.com',
+        to: email,
         message: message.toString('ascii')
     };
  dataToSend.message = dataToSend.message.replace(/###confirmation.link###/g,process.env.address +'/validate?code&#61;'+confirmationLink).replace(/###user.name###/g,name)
