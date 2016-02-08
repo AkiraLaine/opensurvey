@@ -44,8 +44,8 @@
     <div class='multiplechoice-container' ng-if='question.type==="multiple choice"'>
       <div ng-repeat='option in question.options' class='multiplechoice-item'>
 
-        <input class='square' type='radio' name='{{question.name}}' value='{{option.value}}' id='{{option.value}}'></input>
-        <label class='square' for='{{option.value}}'></label><span class='multiplechoice-tag' ng-bind='option.value || "option"'></span></span>
+        <input class='square' type='radio' name='{{question.name}}' value='{{option.value}}' id='{{option.value + "." +question.name}}'></input>
+        <label class='square' for='{{option.value + "." +question.name}}'></label><span class='multiplechoice-tag' ng-bind='option.value || "option"'></span></span>
         </span>
 
 
