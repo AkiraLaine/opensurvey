@@ -338,8 +338,8 @@ position:relative;
 .progress-icon.question-icon:before {
 	content:"\f086";
 }
-.progress-line.endicon {
-	height:0px;
+.progress-line.qendicon {
+	height:70%;
 }
 
 .progress-icon:before{
@@ -794,6 +794,7 @@ textarea {
 }
 .question-button-container {
 position:absolute;
+z-index:5;
 left:15px;
 top:45%;
 color:#aaa;
