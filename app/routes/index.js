@@ -244,12 +244,16 @@ app.route('/api/results')
         var githubId = obj.id;
         var name = obj.name;
         var image = obj.avatar_url;
-        console.log(email)
-        console.log(name)
+        //keeping email as unique identifier, will prevent 'null' mails in the system
+        if (email === null || email === undefined){
+          email = githubId;
+        }
+        console.log(email);
+        console.log(name);
         users.find({email:email}).limit(1).toArray(function(err,data){
         if (data[0] === undefined){
         console.log('no existing user found, creating new user');
-        users.insert({githubId:githubId, name:name, email:email, imageMd:image})
+        users.insert({email:email, name:name, email:email, imageMd:image})
         }
         else {
         console.log('user found!')
